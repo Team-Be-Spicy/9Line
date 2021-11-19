@@ -8,6 +8,13 @@
 - Navigate to repo: `cd 9Line`.
 - You can run `git status` to check which branch you are on.
 
+### Set up Dev Environment
+1. Create MYSQL database called nineline
+2. Start the Spring backend, use Java 17
+3. `cd src/frontend`
+4. `npm start`
+5. You should see a message saying "Backend is working"
+
 ### Feature branching
 
 1. When working on a new feature, create a feature branch and switch to that branch. Use a descriptive name so team members know what feature it is for. `git checkout -b my-feature-branch`.
