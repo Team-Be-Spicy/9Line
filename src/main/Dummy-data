@@ -1,50 +1,50 @@
 [
-{
-"requester": "ThunderStruck 2-1",
-"dispatch": "Fedex-Main",
-"responder": "Osprey 2-5",
-"status": "Assigned", (need a pending and a complete)
-"location": "10S-GJ-06832-44683",
-"frequency": "53.80, A6B88",
-"patients-by-p": "2-Urgent",
-"special-equipment": "B-Hoist",
-"patients-by-t": "2-Litter",
-"security": "N-No enemy troops",
-"marking": "A-VS 17 panel",
-"nationality": "A-US/Coalition Military",
-"nbc-contamination": "N-Nuclear"
-}
+    {
+        "responder": "Osprey 2-5",
+        "location": "10S-GJ-06832-44683",
+        "callSign": "53.80 ThunderStruck 2-1 A6B88",
+        "totalPatient": "2",
+        "precedence": "Urgent",
+        "equipment": "Hoist",
+        "litter": 1,
+        "ambulatory": 0,
+        "marking":  "VS 17 panel",
+        "security": "No enemy troops",
+        "national": US/Coalition Military",
+        "line9": "Nuclear",
+        "status": null
+    }
 ,
-{
-"requester": "Lightning 1-7",
-"dispatch": "MASH-Main",
-"responder": "Pelican 2-2",
-"status": "Pending",
-"location": "10S-GJ-05432-50681",
-"frequency": "101.10, B4C42",
-"patients-by-p": "2-Urgent Surgical",
-"special-equipment": "D-Ventilator",
-"patients-by-t": "2-Litter",
-"security": "E-Confirmed Enemy Troops in Area",
-"marking": "C-Smoke Color Purple",
-"nationality": "B-US/Coalition Civilian",
-"nbc-contamination": "C-Chemical"
-}
+    {
+        "responder": "Pelican 2-2",
+        "location": "10S-GJ-05432-50681",
+        "callSign": "101.10 Lightning 1-7 B4C42",
+        "totalPatient": "3",
+        "precedence": "Urgent-Surgical",
+        "equipment": "Ventilator",
+        "litter": 2,
+        "ambulatory": 1,
+        "marking": "Smoke Color Purple",
+        "security": "Confirmed Enemy Troops in Area",
+        "nationality": "US/Coalition Civilian",
+        "nbc-contamination": "Chemical"
+        "status": "Pending"
+    }
 ,
-{
-"requester": "Messenger 1-6B",
-"dispatch": "Fedex-Main",
-"responder": "Osprey 2-5",
-"status": "Complete",
-"location": "10G-CQ-07661-03452",
-"frequency": "22.60, C5A11",
-"patients-by-p": "3-Routine",
-"special-equipment": "None",
-"patients-by-t": "3-Ambulatory",
-"security": "N-No enemy troops",
-"marking": "B-Pyro, Star-cluster",
-"nationality": "E-Enemy Prisoner of War",
-"nbc-contamination": "None"
-}
+    {
+        "responder": "Osprey 2-5",
+        "location": "10G-CQ-07661-03452",
+        "callSign": "22.60 Messenger 1-6B C5A11",
+        "totalPatient": "3",
+        "precedence": "Routine",
+        "equipment": "None",
+        "litter": 0,
+        "ambulatory": 3,
+        "marking": "Pyro, Star-cluster",
+        "security": "No enemy troops",
+        "nationality": "Enemy Prisoner of War",
+        "nbc-contamination": "None"
+        "status": "Complete"
+    }
 
 ]
