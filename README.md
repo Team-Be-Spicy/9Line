@@ -12,8 +12,9 @@
 1. Create MYSQL database called nineline
 2. Start the Spring backend, use Java 17
 3. `cd src/frontend`
-4. `npm start`
-5. You should see a message saying "Backend is working"
+4. `npm i`
+5. `npm start`
+6. You should see a message saying "Backend is working"
 
 ### Feature branching
 
