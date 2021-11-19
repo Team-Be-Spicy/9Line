@@ -3,7 +3,7 @@
         "responder": "Osprey 2-5",
         "location": "10S-GJ-06832-44683",
         "callSign": "53.80 ThunderStruck 2-1 A6B88",
-        "totalPatient": "2",
+        "totalPatient": "1",
         "precedence": "Urgent",
         "equipment": "Hoist",
         "litter": 1,
@@ -26,8 +26,8 @@
         "ambulatory": 1,
         "marking": "Smoke Color Purple",
         "security": "Confirmed Enemy Troops in Area",
-        "nationality": "US/Coalition Civilian",
-        "nbc-contamination": "Chemical"
+        "national": "US/Coalition Civilian",
+        "line9": "Chemical"
         "status": "Pending"
     }
 ,
@@ -42,8 +42,8 @@
         "ambulatory": 3,
         "marking": "Pyro, Star-cluster",
         "security": "No enemy troops",
-        "nationality": "Enemy Prisoner of War",
-        "nbc-contamination": "None"
+        "national": "Enemy Prisoner of War",
+        "line9": "None"
         "status": "Complete"
     }
 
