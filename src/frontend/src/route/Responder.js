@@ -1,11 +1,11 @@
 import RequestList from "../component/RequestList";
 
-const Dispatcher = () => {
+const Responder = () => {
     return (
         <div>
-            <p>Dispatcher page</p>
+            <RequestList user={"responder"}/>
         </div>
     );
 }
 
-export default Dispatcher;
+export default Responder;
