@@ -24,12 +24,4 @@ public class RequestService {
         Request request = requestRepository.findById(id).orElseThrow(() -> new RequestExistsException("Request not found"));
         return request;
     }
-
-
-
-
-
-
-
-
 }
