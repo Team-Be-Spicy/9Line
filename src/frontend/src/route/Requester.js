@@ -94,9 +94,9 @@ const Requester = () => {
 
     return (
         <>
-            {alert && <Alert onClose={() => {
+            {alert && <Alert sx={{marginBottom: '28px'}} onClose={() => {
                 setAlert(false)
-            }} severity="success">This is a success alert — check it out!</Alert>}
+            }} severity="success">Request Submitted. A dispatcher will contact you soon.</Alert>}
 
             <Container maxWidth="sm">
                 <Typography variant='h4'>MEDEVAC Request Form</Typography>
