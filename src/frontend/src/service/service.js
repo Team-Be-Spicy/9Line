@@ -7,3 +7,7 @@ export const testBackend = async () => {
 export const submitForm = async (formData) => {
     return axios.post('/api/request', formData);
 }
+
+export const fetchRequests = async () => {
+    return axios.get('/api/request/');
+}
