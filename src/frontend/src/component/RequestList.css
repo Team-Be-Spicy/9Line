@@ -1,6 +1,19 @@
 .RequestList {
     height: 40vh;
-    width: 75vw;
+    width: 100%;
+}
+
+.actionButtonContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3px 10px;
+    background-color: #F4F5F1;
+}
+
+.requestTable {
+    height: 100%;
 }
 
 .colHeader {
