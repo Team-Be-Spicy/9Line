@@ -10,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ModalRow from "./ModalRow";
 
 
-const DetailModal = ({button1Label, button2Label, button1Action, button2Action, open, handleClose, ...other}) => {
+const DetailModal = ({button1Label, button2Label, button1Action, button2Action, open, handleClose, data, ...other}) => {
 
 
     return (
@@ -30,18 +30,18 @@ const DetailModal = ({button1Label, button2Label, button1Action, button2Action, 
             </IconButton>
         </DialogTitle>
             <DialogContent dividers sx={{alignContent:"center"}}>
-                <ModalRow label="Status" value="John Doe"/>
-                <ModalRow label='Location' value="10TQS1234567890"/>
-                <ModalRow label="Call Sign" value="John Doe"/>
-                <ModalRow label="Number of Patients" value="John Doe"/>
-                <ModalRow label="Precedence" value="John Doe"/>
-                <ModalRow label="Special Equipment" value="Ventilator, Extracttion Equipment, Hoist"/>
-                <ModalRow label="Litter Patients" value="John Doe"/>
-                <ModalRow label="Ambulatory Patients" value="John Doe"/>
-                <ModalRow label="Security at Pick-up site" value="John Doe"/>
-                <ModalRow label="Method of Marking" value="John Doe"/>
-                <ModalRow label="Patient Nationality and status" value="John Doe"/>
-                <ModalRow label="NBC Contamination" value="John Doe"/>
+                <ModalRow label="Status" value={data.status || 'Pending'}/>
+                <ModalRow label='Location' value={data.location}/>
+                <ModalRow label="Call Sign" value={data.callSign}/>
+                <ModalRow label="Number of Patients" value={data.totalPatient}/>
+                <ModalRow label="Precedence" value={data.precedence}/>
+                <ModalRow label="Special Equipment" value={data.equipment}/>
+                <ModalRow label="Litter Patients" value={data.litter}/>
+                <ModalRow label="Ambulatory Patients" value={data.ambulatory}/>
+                <ModalRow label="Security at Pick-up site" value={data.security}/>
+                <ModalRow label="Method of Marking" value={data.marking}/>
+                <ModalRow label="Patient Nationality and status" value={data.national}/>
+                <ModalRow label="NBC Contamination" value={data.line9}/>
 
             </DialogContent>
             {(button1Label || button2Label) && <DialogActions>

@@ -23,6 +23,7 @@ const Requester = () => {
     const [alert, setAlert] = useState(false);
     const {register, reset, control, handleSubmit, setValue, formState: {errors}} = useForm();
     const [open, setOpen] = useState(false);
+    const [data, setData] = useState({});
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -37,11 +38,12 @@ const Requester = () => {
         try {
             await submitForm(newData);
             setAlert(true);
+            setData(newData);
             reset({
                 location: '',
                 callSign: '',
                 totalPatient: '0',
-                precedence: '',
+                precedence: 'Urgent',
                 equipment: [],
                 litter: '',
                 ambulatory: '',
@@ -321,6 +323,7 @@ const Requester = () => {
             </Container>
             <DetailModal
                 open={open}
+                data={data}
                 handleClose={handleClose}/>
         </>
     )
