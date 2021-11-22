@@ -30,7 +30,7 @@
 ### Rules
 
 - NEVER PUSH TO `main`. All changes to `main` should come through a PR of a feature branch.
-- Use descriptive branch names, should succinctly describe the feature. The final two words of a feature branch should always be `feature-branch`.  Use dashes between words: `landing-page-feature-branch`.
+- Use descriptive branch names, should succinctly describe the feature. Use dashes between words: `landing-page-feature-branch`.
 - Commit frequently and use descriptive commit messages. Describe what the commit is accomplishing.
 - Pull Requests should be approved by 2 other team members before being merged.
 
