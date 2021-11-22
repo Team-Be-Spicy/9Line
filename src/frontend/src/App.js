@@ -9,15 +9,6 @@ import {testBackend} from "./service/service";
 import Dispatcher from "./route/Dispatcher";
 
 const App = () => {
-    const [successMessage, setSuccessMessage] = useState('');
-
-    useEffect(() => {
-        testBackend().then((res) => {
-            setSuccessMessage(res.data);
-        }).catch((e) => {
-            console.log(e);
-        });
-    }, []);
 
   return (
     <div>
@@ -25,7 +16,6 @@ const App = () => {
         <Link to="/requester">Requester Page</Link>
         <Link to="/responder">Responder Page</Link>
         <Link to="/dispatcher">Dispatcher Page</Link>
-        <p style={{color: 'lightgreen', fontSize: '32px'}}>{successMessage}</p>
 
         <Routes>
             <Route path="/" element={<WelcomePage />} />
