@@ -25,6 +25,7 @@ public class RequestController {
     private Iterable<Request> listAllRequests() {
         return requestService.listRequests();
     }
+
     @GetMapping("/{id}")
     private ResponseEntity<Request> getRequestById(@PathVariable Long id) throws Exception{
         return new ResponseEntity<>(requestService.getRequest(id),HttpStatus.OK);
