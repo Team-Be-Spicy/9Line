@@ -1,5 +1,6 @@
 package com.teamb.nineline.controller;
 
+import com.teamb.nineline.exception.RequestExistsException;
 import com.teamb.nineline.model.Request;
 import com.teamb.nineline.repository.RequestRepository;
 import com.teamb.nineline.service.RequestService;
@@ -27,7 +28,7 @@ public class RequestController {
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<Request> getRequestById(@PathVariable Long id) throws Exception{
+    private ResponseEntity<Request> getRequestById(@PathVariable Long id) throws RequestExistsException {
         return new ResponseEntity<>(requestService.getRequest(id),HttpStatus.OK);
     }
 }
