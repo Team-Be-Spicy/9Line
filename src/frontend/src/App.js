@@ -6,6 +6,8 @@ import Responder from "./route/Responder";
 import {Link, Route, Routes} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {testBackend} from "./service/service";
+import DetailModal from "./component/DetailModal";
+
 
 const App = () => {
 
@@ -14,6 +16,8 @@ const App = () => {
         <Link to="/">Welcome Page</Link>
         <Link to="/requester">Requester Page</Link>
         <Link to="/responder">Responder Page</Link>
+        <DetailModal/>
+
 
         <Routes>
             <Route path="/" element={<WelcomePage />} />

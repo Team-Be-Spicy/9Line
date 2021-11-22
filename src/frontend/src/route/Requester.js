@@ -4,9 +4,9 @@ import {
     Container,
     FormControl,
     FormControlLabel,
-    FormLabel,
+    FormLabel, IconButton,
     InputLabel,
-    MenuItem, Radio, RadioGroup,
+    MenuItem, Modal, Radio, RadioGroup,
     Select,
     TextField
 } from "@mui/material";
@@ -15,11 +15,22 @@ import {useForm, Controller} from "react-hook-form";
 import Button from "@mui/material/Button";
 import {useEffect, useState} from "react";
 import {submitForm} from "../service/service";
+import DetailModal from "../component/DetailModal";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Requester = () => {
     const [selectedItems, setSelectedItems] = useState([]);
     const [alert, setAlert] = useState(false);
     const {register, reset, control, handleSubmit, setValue, formState: {errors}} = useForm();
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const onSubmit = async (data) => {
         const newData = {...data, equipment: data.equipment.join(', ')};
@@ -94,9 +105,17 @@ const Requester = () => {
 
     return (
         <>
-            {alert && <Alert sx={{marginBottom: '28px'}} onClose={() => {
-                setAlert(false)
-            }} severity="success">Request Submitted. A dispatcher will contact you soon.</Alert>}
+            {alert && <Alert sx={{marginBottom: '28px'}} severity="success" action={
+                <Box>
+                    <Button color="success" onClick={handleClickOpen}>View Details</Button>
+                    <IconButton
+                        color='success'
+                        onClick={()=>setAlert(false)}
+                    >
+                        <CloseIcon/>
+                    </IconButton>
+                </Box>
+            }>Request Submitted. A dispatcher will contact you soon.</Alert>}
 
             <Container maxWidth="sm">
                 <Typography variant='h4'>MEDEVAC Request Form</Typography>
@@ -300,6 +319,9 @@ const Requester = () => {
                     </Box>
                 </form>
             </Container>
+            <DetailModal
+                open={open}
+                handleClose={handleClose}/>
         </>
     )
 }
