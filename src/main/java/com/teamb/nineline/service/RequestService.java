@@ -1,5 +1,6 @@
 package com.teamb.nineline.service;
 
+import com.teamb.nineline.exception.RequestExistsException;
 import com.teamb.nineline.model.Request;
 import com.teamb.nineline.repository.RequestRepository;
 import lombok.AllArgsConstructor;
@@ -16,14 +17,12 @@ public class RequestService {
     public Request createRequest(Request body){
         return requestRepository.save(body);
     }
-    public Iterable<Request> listRequests(){return this.requestRepository.findAll();}
-    public Request getRequest(Long id) throws Exception{
-        Optional<Request> optionalRequest = requestRepository.findById(id);
-        try{return optionalRequest.get();}
-        catch(Exception e){
-            throw new Exception(e);
-        }
 
+    public Iterable<Request> listRequests(){return this.requestRepository.findAll();}
+
+    public Request getRequest(Long id) throws RequestExistsException {
+        Request request = requestRepository.findById(id).orElseThrow(() -> new RequestExistsException("Request not found"));
+        return request;
     }
 
 
