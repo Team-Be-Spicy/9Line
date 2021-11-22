@@ -140,4 +140,14 @@ class RequestControllerTest {
                 .andExpect(jsonPath("$.location", is("38STM1234567890")));
     }
 
+    @Test
+    @Transactional
+    @Rollback
+    public void catchRequestExistsException() throws Exception{
+
+        MockHttpServletRequestBuilder request = get("/api/request/" + 1);
+
+        mvc.perform(request)
+                .andExpect(status().isBadRequest());
+    }
 }
