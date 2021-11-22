@@ -61,6 +61,12 @@ const App = () => {
                         style={{textDecoration: 'none'}}
                     >Responder Page</Link>
                 </ListItem>
+                <ListItem>
+                    <Link
+                        to="/dispatcher"
+                        style={{textDecoration: 'none'}}
+                    >Dispatcher Page</Link>
+                </ListItem>
 
             </List>
             <Divider/>
