@@ -21,7 +21,7 @@ const App = () => {
     <div>
         <Link to="/">Welcome Page</Link>
         <Link to="/requester">Requester Page</Link>
-        <p style={{color: 'lightgreen', fontSize: '32px'}}>{successMessage}</p>
+
 
         <Routes>
             <Route path="/" element={<WelcomePage />} />
