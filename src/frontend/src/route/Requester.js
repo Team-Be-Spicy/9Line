@@ -34,7 +34,8 @@ const Requester = () => {
     };
 
     const onSubmit = async (data) => {
-        const newData = {...data, equipment: data.equipment.join(', ')};
+        const newData = {...data, equipment: data.equipment.join(', '), status: 'Pending'};
+        console.log(newData);
         try {
             await submitForm(newData);
             setAlert(true);
