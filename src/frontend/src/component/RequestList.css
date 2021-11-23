@@ -1,6 +1,7 @@
 .RequestList {
     height: 40vh;
     width: 100%;
+    box-shadow: none;
 }
 
 .actionButtonContainer {
@@ -14,6 +15,7 @@
 
 .requestTable {
     height: 100%;
+
 }
 
 .colHeader {

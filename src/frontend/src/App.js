@@ -11,6 +11,8 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import Dispatcher from "./route/Dispatcher";
+import SWFLogo from "./images/swf-log.png"
+
 
 const App = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState({left: false});
@@ -76,12 +78,23 @@ const App = () => {
                 </React.Fragment>
             ))}
 
+            <div className={"top-banner"}>
+                <span><img src={SWFLogo} alt={"swf logo"}/></span>
+            </div>
+            {/*<AppBar color="inherit">*/}
+            {/*     <Toolbar>*/}
+            {/*     <img src="logo.png" alt="logo"/>*/}
+            {/*     </Toolbar>*/}
+            {/* </AppBar>*/}
+
+
             <Routes>
                 <Route path="/" element={<WelcomePage />} />
                 <Route path="/requester" element={<Requester />} />
                 <Route path="/responder" element={<Responder />} />
                 <Route path="/dispatcher" element={<Dispatcher />} />
             </Routes>
+
         </div>
     );
 }
