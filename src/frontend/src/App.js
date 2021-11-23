@@ -1,37 +1,25 @@
 import './App.css';
-import * as React from 'react';
+import React, {useState} from 'react';
 import Button from '@mui/material/Button';
 import WelcomePage from "./route/WelcomePage";
 import Requester from "./route/Requester";
 import Responder from "./route/Responder";
 import {Link, Route, Routes} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {testBackend} from "./service/service";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import Dispatcher from "./route/Dispatcher";
 
 const App = () => {
-    const [successMessage, setSuccessMessage] = React.useState({left: false});
-    useEffect(() => {
-        testBackend().then((res) => {
-            setSuccessMessage(res.data);
-        }).catch((e) => {
-            console.log(e);
-        });
-    }, []);
-
+    const [isDrawerOpen, setIsDrawerOpen] = useState({left: false});
 
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
-
-        setSuccessMessage({...successMessage, [anchor]: open});
+        setIsDrawerOpen({...isDrawerOpen, [anchor]: open});
     };
 
     const list = (anchor) => (
@@ -80,7 +68,7 @@ const App = () => {
                     <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
                     <Drawer
                         anchor={anchor}
-                        open={successMessage[anchor]}
+                        open={isDrawerOpen[anchor]}
                         onClose={toggleDrawer(anchor, false)}
                     >
                         {list(anchor)}
