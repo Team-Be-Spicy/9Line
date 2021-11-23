@@ -15,3 +15,7 @@ export const fetchRequests = async () => {
 export const updateStatus = async (requestId) => {
     return await axios.patch('/api/request/status/' + requestId);
 }
+
+export const updateResponder = async (id,respName) => {
+    return await axios.patch('/api/request/responder/' + id, {responder: respName});
+}

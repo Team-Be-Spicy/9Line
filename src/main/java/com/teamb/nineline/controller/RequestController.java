@@ -33,6 +33,11 @@ public class RequestController {
         return new ResponseEntity<>(requestService.getRequest(id),HttpStatus.OK);
     }
 
+    @PatchMapping("/responder/{id}")
+    private ResponseEntity<Request> updateRequestResponder(@PathVariable Long id, @RequestBody Request responder) throws RequestExistsException {
+        return new ResponseEntity<>(requestService.updateRequestResponder(id, responder),HttpStatus.OK);
+    }
+
     @PatchMapping("/status/{id}")
     private ResponseEntity<Request> patchStatusRequestById(@PathVariable Long id) throws RequestExistsException {
         return new ResponseEntity<>(requestService.updateStatus(id),HttpStatus.OK);
