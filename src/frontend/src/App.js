@@ -14,6 +14,7 @@ import Dispatcher from "./route/Dispatcher";
 import SWFLogo from "./images/swf-log.png"
 
 import MenuIcon from '@mui/icons-material/Menu';
+import {AppBar} from "@mui/material";
 
 const App = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -58,25 +59,27 @@ const App = () => {
 
     return (
         <div>
-                <div>
-                    <MenuIcon sx={{cursor: 'pointer', margin: '12px'}} onClick={()=>setIsDrawerOpen(true)}>Test</MenuIcon>
-                    <Drawer
-                        anchor='left'
-                        open={isDrawerOpen}
-                        onClose={()=>setIsDrawerOpen(false)}>
-                        {list()}
-                    </Drawer>
-                </div>
+            <AppBar sx={{display:"flex",flexDirection:"row", height:'60px', backgroundColor:'#F7F7F7', position:'relative', alignItems:'center', marginBottom:'20px'}}>
 
-            <div className={"top-banner"}>
-                <span><img src={SWFLogo} alt={"swf logo"}/></span>
-            </div>
+                    <MenuIcon sx={{cursor: 'pointer', margin: '12px', color:"#737373"}} onClick={()=>setIsDrawerOpen(true)}>Test</MenuIcon>
+                        <Drawer
+                            anchor='left'
+                            open={isDrawerOpen}
+                            onClose={()=>setIsDrawerOpen(false)}>
+                            {list()}
+                        </Drawer>
 
+
+                <Box sx={{marginLeft: '20px'}}>
+                    <img src={SWFLogo} alt={"swf logo"}/>
+                </Box>
+        </AppBar>
             <Routes>
                 <Route path="/" element={<WelcomePage />} />
                 <Route path="/requester" element={<Requester />} />
                 <Route path="/responder" element={<Responder />} />
                 <Route path="/dispatcher" element={<Dispatcher />} />
+
             </Routes>
         </div>
     );
