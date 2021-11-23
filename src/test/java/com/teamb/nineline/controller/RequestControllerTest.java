@@ -188,7 +188,7 @@ class RequestControllerTest {
     @Rollback
     public void catchRequestExistsException() throws Exception{
 
-        MockHttpServletRequestBuilder request = get("/api/request/" + 10);
+        MockHttpServletRequestBuilder request = get("/api/request/" + 1);
 
         mvc.perform(request)
                 .andExpect(status().isBadRequest());

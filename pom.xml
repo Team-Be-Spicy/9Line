@@ -71,11 +71,10 @@
 	</build>
 
 	<profiles>
-
 		<profile>
 			<id>jib-push-to-dockerhub</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<build>
 				<plugins>
