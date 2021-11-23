@@ -3,21 +3,24 @@ import "./Responder.css";
 import {useEffect, useState} from "react";
 import {fetchRequests, updateStatus} from "../service/service";
 import {Alert, Box, IconButton} from "@mui/material";
-import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
+import DetailModal from "../component/DetailModal";
 
 const Responder = () => {
 
     const [requests, setRequests] = useState([]);
     const [alert, setAlert] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
+    const [open, setOpen] = useState(false);
+    const [data, setData] = useState({});
 
     useEffect(() => {
         fetchRequests().then(res => setRequests(res.data));
     }, []);
 
-    const onViewClicked = (param) => {
-        alert(param);
+    const onViewClicked = (requestId) => {
+        setData(requests.find(request => request.id === requestId));
+        setOpen(true);
     };
 
     const handleMarkComplete = async (selectedIds) => {
@@ -29,7 +32,12 @@ const Responder = () => {
         }
         const res = await fetchRequests();
         setRequests(res.data);
+        closeModal();
     };
+
+    const closeModal = () => {
+        setOpen(false);
+    }
 
     return (
         <>
@@ -50,6 +58,15 @@ const Responder = () => {
                                  onViewSelected={onViewClicked}/>
                 </div>
             </div>
+            <DetailModal
+                data={data}
+                open={open}
+                button1Label={"Mark as Complete"}
+                button2Label={"Close"}
+                button1Action={() => handleMarkComplete([data.id])}
+                button2Action={closeModal}
+                handleClose={closeModal}
+            />
         </>
     );
 }

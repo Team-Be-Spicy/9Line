@@ -14,6 +14,7 @@ h1 {
   object-fit: cover;
 }
 
+
 .landing-page {
 
   /*background-image: url("../src/images/Dustoff_Picture.jpeg");*/
@@ -30,6 +31,12 @@ h1 {
   border-color: gold;
   background: black;
 
+}
+
+.top-banner {
+  display: inline;
+  width: 100%;
+  border-bottom: 1px solid darkgray;
 }
 
 .welcome-title {
