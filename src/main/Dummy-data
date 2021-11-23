@@ -10,7 +10,7 @@
         "ambulatory": 0,
         "marking":  "VS 17 panel",
         "security": "No enemy troops",
-        "national": US/Coalition Military",
+        "national": "US/Coalition Military",
         "line9": "Nuclear",
         "status": null
     }
@@ -27,7 +27,7 @@
         "marking": "Smoke Color Purple",
         "security": "Confirmed Enemy Troops in Area",
         "national": "US/Coalition Civilian",
-        "line9": "Chemical"
+        "line9": "Chemical",
         "status": "Pending"
     }
 ,

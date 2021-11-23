@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const testBackend = async () => {
-    return axios.get('/api/test');
+    return await axios.get('/api/test');
 }
 
 export const submitForm = async (formData) => {
@@ -9,5 +9,9 @@ export const submitForm = async (formData) => {
 }
 
 export const fetchRequests = async () => {
-    return axios.get('/api/request/');
+    return await axios.get('/api/request');
+}
+
+export const updateStatus = async () => {
+    return await axios.patch('/api/request/status');
 }

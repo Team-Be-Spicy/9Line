@@ -2,9 +2,12 @@ import "./RequestList.css";
 
 import {DataGrid} from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
+import {useState} from "react";
 
+const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
 
-const RequestList = ({user, requests, onRequestSelected, onViewSelected}) => {
+    const [selectedRequestIds, setSelectedRequestIds] = useState([]);
+    const [pageSize, setPageSize] = useState(5);
 
     const statusColumn = {
         field: "status",
@@ -68,6 +71,8 @@ const RequestList = ({user, requests, onRequestSelected, onViewSelected}) => {
         }
     ];
 
+    const buttonText = user === "responder" ? "Mark as Complete" : "Assign";
+
     const getColumns = () => user === "responder" ? [statusColumn, ...dispatcherColumns] : dispatcherColumns;
 
     const getRows = () => requests && requests.map(request => {
@@ -83,17 +88,33 @@ const RequestList = ({user, requests, onRequestSelected, onViewSelected}) => {
         }
     });
     return (
-        <div>
-            <div>Requests</div>
-            <div className="RequestList">
+        <div className="RequestList">
+            {selectedRequestIds.length > 0 ?
+                <div className="actionButtonContainer">
+                    <p>{selectedRequestIds.length} selected</p>
+                    <Button color="success" variant="outlined" onClick={() => {
+                        onActionClicked(selectedRequestIds);
+                        setSelectedRequestIds([]);
+                    }}>
+                        {buttonText}
+                    </Button>
+                </div>
+                :
+                <h3>Requests</h3>
+            }
+            <div className="requestTable">
                 <DataGrid
                     columns={getColumns()}
                     checkboxSelection
-                    onSelectionModelChange={onRequestSelected}
+                    selectionModel={selectedRequestIds}
+                    onSelectionModelChange={params => setSelectedRequestIds(params)}
                     disableSelectionOnClick
                     rows={getRows()}
-                    pageSize={5}
-                    rowsPerPageOptions={[5]}
+                    pageSize={pageSize}
+                    hideFooterSelectedRowCount
+                    onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                    rowsPerPageOptions={[5, 10, 25]}
+                    pagination
                 />
             </div>
         </div>

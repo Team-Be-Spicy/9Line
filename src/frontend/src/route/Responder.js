@@ -1,81 +1,34 @@
 import RequestList from "../component/RequestList";
-
-const requests = [
-    {
-        id: 1,
-        status: "Pending",
-        location: "here",
-        callSign: "B12",
-        precedence: "urgent",
-        equipment: "none",
-        security: "sdadf",
-        marking: "smoke",
-        details: "view"
-    }, {
-        id: 2,
-        status: "Pending",
-        location: "here",
-        callSign: "B12",
-        precedence: "urgent",
-        equipment: "none",
-        security: "sdadf",
-        marking: "smoke",
-        details: "view"
-    }, {
-        id: 3,
-        status: "Pending",
-        location: "here",
-        callSign: "B12",
-        precedence: "urgent",
-        equipment: "none",
-        security: "sdadf",
-        marking: "smoke",
-        details: "view"
-    }, {
-        id: 4,
-        status: "Pending",
-        location: "here",
-        callSign: "B12",
-        precedence: "urgent",
-        equipment: "none",
-        security: "sdadf",
-        marking: "smoke",
-        details: "view"
-    }, {
-        id: 5,
-        status: "Pending",
-        location: "here",
-        callSign: "B12",
-        precedence: "urgent",
-        equipment: "none",
-        security: "sdadf",
-        marking: "smoke",
-        details: "view"
-    }, {
-        id: 6,
-        status: "Pending",
-        location: "here",
-        callSign: "B12",
-        precedence: "urgent",
-        equipment: "none",
-        security: "sdadf",
-        marking: "smoke",
-        details: "view"
-    }];
+import "./Responder.css";
+import {useEffect, useState} from "react";
+import {fetchRequests, updateStatus} from "../service/service";
 
 const Responder = () => {
 
-    const onRowSelected = (selectedIDs) => {
-        alert(selectedIDs);
-    }
+    const [requests, setRequests] = useState([]);
+
+    useEffect(() => {
+        fetchRequests().then(res => setRequests(res.data));
+    }, []);
 
     const onViewClicked = (param) => {
         alert(param);
-    }
+    };
+
+    const handleMarkComplete = (selectedIds) => {
+        selectedIds.forEach(async id => {
+            await updateStatus(id)
+        })
+        fetchRequests().then(res => setRequests(res.data));
+    };
 
     return (
-        <div className={"Responder"}>
-            <RequestList user={"responder"} requests={requests} onRequestSelected={onRowSelected} onViewSelected={onViewClicked}/>
+        <div className="Responder">
+            <div className="requestListContainer">
+                <h1>MEDEVAC Assignment</h1>
+                <RequestList user="responder" requests={requests} onActionClicked={handleMarkComplete}
+                             onViewSelected={onViewClicked}/>
+            </div>
         </div>
     );
 }
