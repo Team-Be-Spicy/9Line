@@ -15,11 +15,12 @@ const Responder = () => {
         alert(param);
     };
 
-    const handleMarkComplete = (selectedIds) => {
-        selectedIds.forEach(async id => {
-            await updateStatus(id)
-        })
-        fetchRequests().then(res => setRequests(res.data));
+    const handleMarkComplete = async (selectedIds) => {
+        for (const id of selectedIds) {
+            await updateStatus(id);
+        }
+        const res = await fetchRequests();
+        setRequests(res.data);
     };
 
     return (
