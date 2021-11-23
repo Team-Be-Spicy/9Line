@@ -1,26 +1,14 @@
 import {
-    Box, Button,
+    Button,
     Dialog, DialogActions,
     DialogContent,
     DialogTitle,
     IconButton, MenuItem, Select,
     Typography
 } from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
-import {updateResponder} from "../service/service";
-import {useState} from "react";
+import CloseIcon from '@mui/icons-material/Close'
 
-
-const AssignResponderModal = ({open, handleClose, data, ...other}) => {
-
-    const [selectedResponder, setSelectedResponder] = useState('');
-
-    const assignResponder = () => {
-        data.forEach(request => {
-            updateResponder(request,selectedResponder).then();
-        })
-        handleClose();
-    }
+const AssignResponderModal = ({open, handleClose, assignResponder, setSelectedResponder}) => {
 
     return (
         <Dialog fullWidth onClose={() => {

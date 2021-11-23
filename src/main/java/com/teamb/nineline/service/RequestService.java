@@ -25,7 +25,7 @@ public class RequestService {
         return request;
     }
     public Request updateRequestResponder(Long id, Request responder) throws RequestExistsException{
-        Request request = requestRepository.findById(id).orElseThrow(() -> new RequestExistsException("Request not found"));
+        Request request = requestRepository.findById(id).orElseThrow(() -> new RequestExistsException(REQUEST_NOT_FOUND));
         request.setResponder(responder.getResponder());
         return requestRepository.save(request);
     }

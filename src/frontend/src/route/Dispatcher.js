@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import RequestList from "../component/RequestList";
 import DetailModal from "../component/DetailModal";
-import {fetchRequests} from "../service/service";
+import {fetchRequests, updateResponder} from "../service/service";
 import AssignResponderModal from "../component/AssignResponderModal";
 
 const Dispatcher = () => {
@@ -11,12 +11,18 @@ const Dispatcher = () => {
     const [open, setOpen] = useState(false);
     const [assignOpen, setAssignOpen] = useState(false);
     const [selectedIDs, setSelectedIDs] = useState([]);
+    const [selectedResponder, setSelectedResponder] = useState('');
 
     useEffect(() => {
         fetchRequests().then(res => setRequests(res.data));
     }, []);
 
-
+    const assignResponder = async () => {
+        for (const id of selectedIDs) {
+            await updateResponder(id, selectedResponder);
+        }
+        handleAssignClose();
+    }
 
     const handleClose = () =>{
         setOpen(false);
@@ -38,8 +44,13 @@ const Dispatcher = () => {
 
     return (
         <div className={"Dispatcher"}>
-            {<AssignResponderModal open={assignOpen} data={selectedIDs} handleClose={handleAssignClose}/>}
-            {<DetailModal data={currentRequest} open={open} handleClose={handleClose}/>}
+            <AssignResponderModal open={assignOpen}
+                                  handleClose={handleAssignClose}
+                                  setSelectedResponder={setSelectedResponder}
+                                  assignResponder={assignResponder}/>
+            <DetailModal data={currentRequest}
+                         open={open}
+                         handleClose={handleClose}/>
             <RequestList user={"dispatcher"}
                          requests={requests}
                          onActionClicked={onActionClicked}
