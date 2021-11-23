@@ -31,4 +31,9 @@ public class RequestController {
     private ResponseEntity<Request> getRequestById(@PathVariable Long id) throws RequestExistsException {
         return new ResponseEntity<>(requestService.getRequest(id),HttpStatus.OK);
     }
+
+    @PatchMapping("/responder/{id}")
+    private ResponseEntity<Request> updateRequestResponder(@PathVariable Long id, @RequestBody Request responder) throws RequestExistsException {
+        return new ResponseEntity<>(requestService.updateRequestResponder(id, responder),HttpStatus.OK);
+    }
 }

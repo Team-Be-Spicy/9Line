@@ -21,7 +21,12 @@ public class RequestService {
     public Iterable<Request> listRequests(){return this.requestRepository.findAll();}
 
     public Request getRequest(Long id) throws RequestExistsException {
+        return requestRepository.findById(id).orElseThrow(() -> new RequestExistsException("Request not found"));
+    }
+
+    public Request updateRequestResponder(Long id, Request responder) throws RequestExistsException{
         Request request = requestRepository.findById(id).orElseThrow(() -> new RequestExistsException("Request not found"));
-        return request;
+        request.setResponder(responder.getResponder());
+        return requestRepository.save(request);
     }
 }

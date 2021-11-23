@@ -19,6 +19,7 @@ import static org.hamcrest.Matchers.*;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -149,5 +150,38 @@ class RequestControllerTest {
 
         mvc.perform(request)
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void updateRequestResponder() throws Exception{
+        Request request1 = new Request();
+        request1.setLocation("38STM1234567890");
+        request1.setResponder(null);
+        request1.setCallSign("raptor1");
+        request1.setTotalPatient(3);
+        request1.setPrecedence("urgent");
+        request1.setEquipment("hoist");
+        request1.setAmbulatory(3);
+        request1.setLitter(0);
+        request1.setMarking("smoke");
+        request1.setSecurity("clear");
+        request1.setNational("US");
+        request1.setLine9("no nbc");
+        request1.setStatus(null);
+
+        this.requestRepository.save(request1);
+
+        MockHttpServletRequestBuilder request = patch("/api/request/responder/" + request1.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\n" +
+                        "\"responder\":\"Responder One\"\n" +
+                        "}");
+
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.responder", is("Responder One")));
+
     }
 }
