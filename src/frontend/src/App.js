@@ -11,6 +11,8 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import Dispatcher from "./route/Dispatcher";
+import SWFLogo from "./images/swf-log.png"
+
 import MenuIcon from '@mui/icons-material/Menu';
 
 const App = () => {
@@ -48,6 +50,7 @@ const App = () => {
                         style={{textDecoration: 'none'}}
                     >Dispatcher Page</Link>
                 </ListItem>
+
             </List>
             <Divider/>
         </Box>
@@ -64,6 +67,10 @@ const App = () => {
                         {list()}
                     </Drawer>
                 </div>
+
+            <div className={"top-banner"}>
+                <span><img src={SWFLogo} alt={"swf logo"}/></span>
+            </div>
 
             <Routes>
                 <Route path="/" element={<WelcomePage />} />

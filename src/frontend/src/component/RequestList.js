@@ -4,6 +4,7 @@ import {DataGrid} from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import {useState} from "react";
 
+
 const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
 
     const [selectedRequestIds, setSelectedRequestIds] = useState([]);
@@ -14,7 +15,8 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
         headerName: "Status",
         headerClassName: "colHeader",
         headerAlign: "center",
-        align: "right"
+        align: "center",
+        flex: 1
     };
     const dispatcherColumns = [
         {
@@ -22,49 +24,56 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
             headerName: "Location",
             headerClassName: "colHeader",
             headerAlign: "center",
-            align: "right"
+            align: "center",
+            flex: 1
         },
         {
             field: "callSign",
             headerName: "Call Sign",
             headerClassName: "colHeader",
             headerAlign: "center",
-            align: "right"
+            align: "center",
+            flex: 1
         },
         {
             field: "precedence",
             headerName: "Precedence",
             headerClassName: "colHeader",
             headerAlign: "center",
-            align: "right"
+            align: "center",
+            flex: 1
         },
         {
             field: "equipment",
             headerName: "Special Equipment",
             headerClassName: "colHeader",
             headerAlign: "center",
-            align: "right"
+            align: "center",
+            flex: 1
         },
         {
             field: "security",
             headerName: "Security",
             headerClassName: "colHeader",
             headerAlign: "center",
-            align: "right"
+            align: "center",
+            flex: 1
         },
         {
             field: "marking",
             headerName: "Marking",
             headerClassName: "colHeader",
             headerAlign: "center",
-            align: "right"
+            align: "center",
+            flex: 1
         },
         {
             field: "details",
             headerName: "Details",
             headerClassName: "colHeader",
             headerAlign: "center",
-            align: "right",
+            align: "center",
+            flex: 1,
             renderCell: (param) => (
                 <Button onClick={() => onViewSelected(param.id)}>VIEW</Button>
             )
@@ -90,20 +99,22 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
     return (
         <div className="RequestList">
             {selectedRequestIds.length > 0 ?
-                <div className="actionButtonContainer">
-                    <p>{selectedRequestIds.length} selected</p>
-                    <Button color="success" variant="outlined" onClick={() => {
-                        onActionClicked(selectedRequestIds);
-                        setSelectedRequestIds([]);
-                    }}>
-                        {buttonText}
-                    </Button>
-                </div>
+                        <div className="actionButtonContainer">
+                            <p>{selectedRequestIds.length} selected</p>
+                            <Button color="success" variant="outlined" onClick={() => {
+                                onActionClicked(selectedRequestIds);
+                                setSelectedRequestIds([]);
+                            }}>
+                                {buttonText}
+                            </Button>
+                        </div>
+
                 :
                 <h3>Requests</h3>
             }
-            <div className="requestTable">
+            <div className="requestTable" >
                 <DataGrid
+                    style={{border: 0}}
                     columns={getColumns()}
                     checkboxSelection
                     selectionModel={selectedRequestIds}
@@ -115,6 +126,9 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
                     onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
                     rowsPerPageOptions={[5, 10, 25]}
                     pagination
+                    autoHeight {...getRows()}
+
+
                 />
             </div>
         </div>
