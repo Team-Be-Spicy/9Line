@@ -13,23 +13,16 @@ import ListItem from '@mui/material/ListItem';
 import Dispatcher from "./route/Dispatcher";
 import SWFLogo from "./images/swf-log.png"
 
+import MenuIcon from '@mui/icons-material/Menu';
 
 const App = () => {
-    const [isDrawerOpen, setIsDrawerOpen] = useState({left: false});
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-    const toggleDrawer = (anchor, open) => (event) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-            return;
-        }
-        setIsDrawerOpen({...isDrawerOpen, [anchor]: open});
-    };
-
-    const list = (anchor) => (
+    const list = () => (
         <Box
-            sx={{width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250}}
+            sx={{width: 250}}
             role="presentation"
-            onClick={toggleDrawer(anchor, false)}
-            onKeyDown={toggleDrawer(anchor, false)}
+            onClick={()=>setIsDrawerOpen(false)}
         >
             <List>
                 <ListItem>
@@ -65,28 +58,19 @@ const App = () => {
 
     return (
         <div>
-            {['\u2630'].map((anchor) => (
-                <React.Fragment key={anchor}>
-                    <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+                <div>
+                    <MenuIcon sx={{cursor: 'pointer', margin: '12px'}} onClick={()=>setIsDrawerOpen(true)}>Test</MenuIcon>
                     <Drawer
-                        anchor={anchor}
-                        open={isDrawerOpen[anchor]}
-                        onClose={toggleDrawer(anchor, false)}
-                    >
-                        {list(anchor)}
+                        anchor='left'
+                        open={isDrawerOpen}
+                        onClose={()=>setIsDrawerOpen(false)}>
+                        {list()}
                     </Drawer>
-                </React.Fragment>
-            ))}
+                </div>
 
             <div className={"top-banner"}>
                 <span><img src={SWFLogo} alt={"swf logo"}/></span>
             </div>
-            {/*<AppBar color="inherit">*/}
-            {/*     <Toolbar>*/}
-            {/*     <img src="logo.png" alt="logo"/>*/}
-            {/*     </Toolbar>*/}
-            {/* </AppBar>*/}
-
 
             <Routes>
                 <Route path="/" element={<WelcomePage />} />
@@ -94,7 +78,6 @@ const App = () => {
                 <Route path="/responder" element={<Responder />} />
                 <Route path="/dispatcher" element={<Dispatcher />} />
             </Routes>
-
         </div>
     );
 }

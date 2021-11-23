@@ -1,81 +1,34 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import RequestList from "../component/RequestList";
-
-const requests = [
-    {
-        id: 1,
-        status: "Pending",
-        location: "here",
-        callSign: "B12",
-        precedence: "urgent",
-        equipment: "none",
-        security: "sdadf",
-        marking: "smoke",
-        details: "view"
-    }, {
-        id: 2,
-        status: "Pending",
-        location: "here",
-        callSign: "B12",
-        precedence: "urgent",
-        equipment: "none",
-        security: "sdadf",
-        marking: "smoke",
-        details: "view"
-    }, {
-        id: 3,
-        status: "Pending",
-        location: "here",
-        callSign: "B12",
-        precedence: "urgent",
-        equipment: "none",
-        security: "sdadf",
-        marking: "smoke",
-        details: "view"
-    }, {
-        id: 4,
-        status: "Pending",
-        location: "here",
-        callSign: "B12",
-        precedence: "urgent",
-        equipment: "none",
-        security: "sdadf",
-        marking: "smoke",
-        details: "view"
-    }, {
-        id: 5,
-        status: "Pending",
-        location: "here",
-        callSign: "B12",
-        precedence: "urgent",
-        equipment: "none",
-        security: "sdadf",
-        marking: "smoke",
-        details: "view"
-    }, {
-        id: 6,
-        status: "Pending",
-        location: "here",
-        callSign: "B12",
-        precedence: "urgent",
-        equipment: "none",
-        security: "sdadf",
-        marking: "smoke",
-        details: "view"
-    }];
+import DetailModal from "../component/DetailModal";
+import {fetchRequests} from "../service/service";
 
 const Dispatcher = () => {
+
+    const [requests, setRequests] = useState([]);
+    const [currentRequest, setCurrentRequest] = useState({});
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        fetchRequests().then(res => setRequests(res.data));
+    }, []);
 
     const onRowSelected = (selectedIDs) => {
         alert(selectedIDs);
     }
 
+    const handleClose = () =>{
+        setOpen(false);
+    }
+
     const onViewClicked = (param) => {
-        alert(param);
+        setCurrentRequest(requests.find(x => x.id === param));
+        setOpen(true);
     }
 
     return (
         <div className={"Dispatcher"}>
+            {open && <DetailModal data={currentRequest} open={open} handleClose={handleClose}/>}
             <RequestList user={"dispatcher"} requests={requests} onRequestSelected={onRowSelected} onViewSelected={onViewClicked}/>
         </div>
     );

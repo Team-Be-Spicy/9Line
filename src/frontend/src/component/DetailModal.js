@@ -1,5 +1,5 @@
 import {
-    Box, Button,
+    Button,
     Dialog, DialogActions,
     DialogContent,
     DialogTitle,
@@ -10,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ModalRow from "./ModalRow";
 
 
-const DetailModal = ({button1Label, button2Label, button1Action, button2Action, open, handleClose, data, ...other}) => {
+const DetailModal = ({button1Label, button2Label, button1Action, button2Action, open, handleClose, data}) => {
 
 
     return (
