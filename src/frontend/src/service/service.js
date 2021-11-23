@@ -12,8 +12,8 @@ export const fetchRequests = async () => {
     return await axios.get('/api/request');
 }
 
-export const updateStatus = async () => {
-    return await axios.patch('/api/request/status');
+export const updateStatus = async (requestId) => {
+    return await axios.patch('/api/request/status/' + requestId);
 }
 
 export const updateResponder = async (id,respName) => {

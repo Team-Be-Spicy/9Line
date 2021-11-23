@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/request")
 @AllArgsConstructor
 public class RequestController {
-    public RequestService requestService;
+
+    private RequestService requestService;
 
     @PostMapping
     private ResponseEntity<Request> createNewRequest(@RequestBody Request body){
@@ -35,5 +36,10 @@ public class RequestController {
     @PatchMapping("/responder/{id}")
     private ResponseEntity<Request> updateRequestResponder(@PathVariable Long id, @RequestBody Request responder) throws RequestExistsException {
         return new ResponseEntity<>(requestService.updateRequestResponder(id, responder),HttpStatus.OK);
+    }
+
+    @PatchMapping("/status/{id}")
+    private ResponseEntity<Request> patchStatusRequestById(@PathVariable Long id) throws RequestExistsException {
+        return new ResponseEntity<>(requestService.updateStatus(id),HttpStatus.OK);
     }
 }

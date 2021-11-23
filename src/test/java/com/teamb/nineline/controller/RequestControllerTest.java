@@ -144,6 +144,50 @@ class RequestControllerTest {
     @Test
     @Transactional
     @Rollback
+    public void updateRequestStatusById() throws Exception {
+        Request request1 = new Request();
+        request1.setLocation("38STM1234567890");
+        request1.setResponder(null);
+        request1.setCallSign("raptor1");
+        request1.setTotalPatient(3);
+        request1.setPrecedence("urgent");
+        request1.setEquipment("hoist");
+        request1.setAmbulatory(3);
+        request1.setLitter(0);
+        request1.setMarking("smoke");
+        request1.setSecurity("clear");
+        request1.setNational("US");
+        request1.setLine9("no nbc");
+        request1.setStatus("Pending");
+
+        Request savedRequest = this.requestRepository.save(request1);
+
+        Request request2 = new Request();
+        request2.setId(savedRequest.getId());
+        request2.setLocation("38STM1234567890");
+        request2.setResponder(null);
+        request2.setCallSign("raptor1");
+        request2.setTotalPatient(3);
+        request2.setPrecedence("urgent");
+        request2.setEquipment("hoist");
+        request2.setAmbulatory(3);
+        request2.setLitter(0);
+        request2.setMarking("smoke");
+        request2.setSecurity("clear");
+        request2.setNational("US");
+        request2.setLine9("no nbc");
+        request2.setStatus("Complete");
+
+        MockHttpServletRequestBuilder request = patch("/api/request/status/" + savedRequest.getId());
+
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(request2)));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
     public void catchRequestExistsException() throws Exception{
 
         MockHttpServletRequestBuilder request = get("/api/request/" + 1);
