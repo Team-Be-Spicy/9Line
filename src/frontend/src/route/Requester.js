@@ -5,8 +5,7 @@ import {
     FormControl,
     FormControlLabel,
     FormLabel, IconButton,
-    InputLabel,
-    MenuItem, Modal, Radio, RadioGroup,
+    MenuItem, Radio, RadioGroup,
     Select,
     TextField
 } from "@mui/material";
@@ -113,7 +112,7 @@ const Requester = () => {
                     <Button color="success" onClick={handleClickOpen}>View Details</Button>
                     <IconButton
                         color='success'
-                        onClick={()=>setAlert(false)}
+                        onClick={() => setAlert(false)}
                     >
                         <CloseIcon/>
                     </IconButton>
@@ -188,14 +187,12 @@ const Requester = () => {
                                             control={
                                                 <Controller
                                                     name="equipment"
-                                                    render={({}) => {
-                                                        return (
-                                                            <Checkbox
-                                                                checked={selectedItems.includes(option.label)}
-                                                                onChange={() => handleSelect(option.label)}
-                                                            />
-                                                        );
-                                                    }}
+                                                    render={() =>
+                                                        <Checkbox
+                                                            checked={selectedItems.includes(option.label)}
+                                                            onChange={() => handleSelect(option.label)}
+                                                        />
+                                                    }
                                                     control={control}
                                                 />
                                             }

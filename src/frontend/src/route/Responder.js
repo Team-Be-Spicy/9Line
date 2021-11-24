@@ -15,7 +15,7 @@ const Responder = () => {
     const [data, setData] = useState({});
 
     useEffect(() => {
-        fetchRequests().then(res => setRequests(res.data));
+        fetchRequests("responder").then(res => setRequests(res.data));
     }, []);
 
     const onViewClicked = (requestId) => {
