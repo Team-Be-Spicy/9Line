@@ -12,7 +12,6 @@ env:
   MYSQL_USER: root
   MYSQL_PASSWORD: root
   JAVA_VERSION: 17
-  CI: false
 
 jobs:
   build:
@@ -22,6 +21,7 @@ jobs:
         run: |
           sudo /etc/init.d/mysql start
           mysql -e 'CREATE DATABASE ${{ env.MYSQL_DB }};' -u${{ env.MYSQL_USER }} -p${{ env.MYSQL_PASSWORD }}
+          ALTER USER 'root'@'localhost' IDENTIFIED BY 'password';
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v2
         with:
