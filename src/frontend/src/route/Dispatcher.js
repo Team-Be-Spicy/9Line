@@ -18,10 +18,7 @@ const Dispatcher = () => {
     const [selectedResponder, setSelectedResponder] = useState("");
 
     useEffect(() => {
-        fetchRequests("dispatcher").then(res => {
-            setRequests(res.data);
-            console.log(res);
-        });
+        fetchRequests("dispatcher").then(res => setRequests(res.data));
     }, []);
 
     const assignResponderToSingle = async () => {
