@@ -21,6 +21,7 @@ jobs:
         run: |
           sudo /etc/init.d/mysql start
           mysql -e 'CREATE DATABASE ${{ env.MYSQL_DB }};' -u${{ env.MYSQL_USER }} -p${{ env.MYSQL_PASSWORD }}
+          mysql -e 'ALTER USER "'"root"'"@"'"localhost"'" IDENTIFIED BY "'"password"'";' -uroot -proot
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v2
         with:
