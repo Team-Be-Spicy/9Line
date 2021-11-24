@@ -10,7 +10,7 @@ env:
   MYSQL_VERSION: 5.7
   MYSQL_DB: nineline
   MYSQL_USER: root
-  MYSQL_PASSWORD: password
+  MYSQL_PASSWORD: root
   JAVA_VERSION: 17
 
 jobs:
