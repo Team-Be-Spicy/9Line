@@ -8,8 +8,8 @@ export const submitForm = async (formData) => {
     return axios.post('/api/request', formData);
 }
 
-export const fetchRequests = async () => {
-    return await axios.get('/api/request');
+export const fetchRequests = async (role) => {
+    return await axios.get('/api/request', {headers: {Authorization: role}});
 }
 
 export const updateStatus = async (requestId) => {

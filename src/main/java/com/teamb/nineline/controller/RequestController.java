@@ -2,10 +2,8 @@ package com.teamb.nineline.controller;
 
 import com.teamb.nineline.exception.RequestExistsException;
 import com.teamb.nineline.model.Request;
-import com.teamb.nineline.repository.RequestRepository;
 import com.teamb.nineline.service.RequestService;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +22,8 @@ public class RequestController {
     }
 
     @GetMapping
-    private Iterable<Request> listAllRequests() {
-        return requestService.listRequests();
+    private Iterable<Request> getRequestsByRole(@RequestHeader String authorization) {
+        return requestService.getRequestsByRole(authorization);
     }
 
     @GetMapping("/{id}")

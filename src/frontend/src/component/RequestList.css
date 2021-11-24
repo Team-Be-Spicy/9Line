@@ -22,9 +22,3 @@
     font-size: 16px;
     font-weight: bolder;
 }
-
-@media screen and (max-width: 600px) {
-    .RequestList {
-        height: 75vh;
-    }
-}
