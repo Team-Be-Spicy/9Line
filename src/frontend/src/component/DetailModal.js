@@ -3,14 +3,14 @@ import {
     Dialog, DialogActions,
     DialogContent,
     DialogTitle,
-    IconButton,
+    IconButton, MenuItem, Select,
     Typography
 } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import ModalRow from "./ModalRow";
 
 
-const DetailModal = ({button1Label, button2Label, button1Action, button2Action, open, handleClose, data}) => {
+const DetailModal = ({button1Label, button2Label, button1Action, button2Action, open, handleClose, data, isDispatcher, setSelectedResponder}) => {
 
 
     return (
@@ -42,7 +42,17 @@ const DetailModal = ({button1Label, button2Label, button1Action, button2Action, 
                 <ModalRow label="Method of Marking" value={data.marking}/>
                 <ModalRow label="Patient Nationality and status" value={data.national}/>
                 <ModalRow label="NBC Contamination" value={data.line9}/>
-
+                {isDispatcher &&  <Select
+                    defaultValue={''}
+                    onChange={(e) => setSelectedResponder(e.target.value)}
+                    sx={{width: '100%'}} >
+                    <MenuItem value='Responder One'>
+                        Responder One
+                    </MenuItem>
+                    <MenuItem value='Responder Two'>
+                        Responder Two
+                    </MenuItem>
+                </Select>}
             </DialogContent>
             {(button1Label || button2Label) && <DialogActions>
                 <Button color={"success"} onClick={button1Action}> <Typography

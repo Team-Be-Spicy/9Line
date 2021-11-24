@@ -5,8 +5,7 @@ import {
     FormControl,
     FormControlLabel,
     FormLabel, IconButton,
-    InputLabel,
-    MenuItem, Modal, Radio, RadioGroup,
+    MenuItem, Radio, RadioGroup,
     Select,
     TextField
 } from "@mui/material";
