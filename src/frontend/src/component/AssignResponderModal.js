@@ -29,6 +29,7 @@ const AssignResponderModal = ({open, handleClose, assignResponder, setSelectedRe
             <DialogContent
                 dividers sx={{alignContent:"center"}}>
                 <Select
+                    defaultValue={''}
                     onChange={(e) => setSelectedResponder(e.target.value)}
                     sx={{width: '100%'}} >
                     <MenuItem value='Responder One'>
