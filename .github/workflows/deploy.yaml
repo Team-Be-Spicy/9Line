@@ -19,10 +19,10 @@ env:
   AWS_REGION: us-east-2
   EB_ENVIRONMENT_NAME: Acb-env
   EB_APPLICATION_NAME: ACB
-  EB_DEPLOYMENT_PACKAGE: elasticbeanstalk/docker-compose.yml
+  EB_DEPLOYMENT_PACKAGE: elasticbeanstalk/docker-compose.yaml
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Set up MySQL
