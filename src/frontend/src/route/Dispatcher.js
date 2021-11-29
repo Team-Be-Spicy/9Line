@@ -18,13 +18,18 @@ const Dispatcher = () => {
     const [selectedResponder, setSelectedResponder] = useState("");
 
     useEffect(() => {
-        fetchRequests("dispatcher").then(res => setRequests(res.data));
+        fetchFromDB();
     }, []);
+
+    const fetchFromDB = () => {
+        fetchRequests("dispatcher").then(res => setRequests(res.data));
+    }
 
     const assignResponderToSingle = async () => {
         await updateResponder(currentRequest.id, selectedResponder);
         setAlert(true);
         handleDetailClose();
+        fetchFromDB();
     }
 
     const assignResponderToMultiple = async () => {
@@ -33,6 +38,7 @@ const Dispatcher = () => {
         }
         setAlert(true);
         handleAssignClose();
+        fetchFromDB();
     }
 
     const handleDetailClose = () => {
