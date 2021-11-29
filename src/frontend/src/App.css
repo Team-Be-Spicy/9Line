@@ -9,12 +9,22 @@ h1 {
 
 .active-link {
   color: green;
+  padding: 5px;
   text-decoration: none;
+  width: 100%;
 }
 
 .inactive-link {
   color: black;
+  padding: 5px;
   text-decoration: none;
+  width: 100%;
+}
+
+.inactive-link:hover {
+  transform: scale(1.01);
+  transition-duration: 100ms;
+  background-color: rgb(237, 247, 237);
 }
 
 .full-size-img{
