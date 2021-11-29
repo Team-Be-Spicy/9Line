@@ -22,7 +22,7 @@ const Dispatcher = () => {
     }, []);
 
     const assignResponderToSingle = async () => {
-        await updateResponder(currentRequest.id, "TEST");
+        await updateResponder(currentRequest.id, selectedResponder);
         setAlert(true);
         handleDetailClose();
     }
