@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import WelcomePage from "./route/WelcomePage";
 import Requester from "./route/Requester";
 import Responder from "./route/Responder";
-import {Link, Route, Routes} from "react-router-dom";
+import {NavLink, Route, Routes} from "react-router-dom";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -26,29 +26,29 @@ const App = () => {
         >
             <List>
                 <ListItem>
-                    <Link
+                    <NavLink
                         to="/"
-                        style={{textDecoration: 'none'}}
+                        className={({isActive}) => isActive ? "active-link" : "inactive-link"}
                     >
-                        Welcome Page</Link>
+                        Welcome Page</NavLink>
                 </ListItem>
                 <ListItem>
-                    <Link
+                    <NavLink
                         to="/requester"
-                        style={{textDecoration: 'none'}}
-                    >Requester Page</Link>
+                        className={({isActive}) => isActive ? "active-link" : "inactive-link"}
+                    >Requester Page</NavLink>
                 </ListItem>
                 <ListItem>
-                    <Link
+                    <NavLink
                         to="/responder"
-                        style={{textDecoration: 'none'}}
-                    >Responder Page</Link>
+                        className={({isActive}) => isActive ? "active-link" : "inactive-link"}
+                    >Responder Page</NavLink>
                 </ListItem>
                 <ListItem>
-                    <Link
+                    <NavLink
                         to="/dispatcher"
-                        style={{textDecoration: 'none'}}
-                    >Dispatcher Page</Link>
+                        className={({isActive}) => isActive ? "active-link" : "inactive-link"}
+                    >Dispatcher Page</NavLink>
                 </ListItem>
 
             </List>
@@ -78,7 +78,6 @@ const App = () => {
                 <Route path="/requester" element={<Requester />} />
                 <Route path="/responder" element={<Responder />} />
                 <Route path="/dispatcher" element={<Dispatcher />} />
-
             </Routes>
         </div>
     );
