@@ -3,7 +3,7 @@ import {
     Box, Checkbox,
     Container,
     FormControl,
-    FormControlLabel,
+    FormControlLabel, FormHelperText,
     FormLabel, IconButton,
     MenuItem, Radio, RadioGroup,
     Select,
@@ -34,7 +34,11 @@ const Requester = () => {
     };
 
     const onSubmit = async (data) => {
-        const newData = {...data, equipment: data.equipment.join(', '), status: 'Pending'};
+        const newData = {
+            ...data,
+            equipment: ((data.equipment.length === 0) ? 'None' : data.equipment.join(', ')),
+            status: 'Pending'
+        };
         console.log(newData);
         try {
             await submitForm(newData);
@@ -121,37 +125,59 @@ const Requester = () => {
             }>Request Submitted. A dispatcher will contact you soon.</Alert>}
 
             <Container maxWidth="sm">
-                <Typography variant='h4'>MEDEVAC Request Form</Typography>
-
+                <h1>MEDEVAC Request Form</h1>
                 <form>
                     <Box sx={{display: 'flex', flexDirection: 'column'}}>
                         <Controller
                             defaultValue=''
                             name='location'
                             control={control}
-                            render={({field: {onChange, value}}) => (
-                                <TextField margin="dense" onChange={onChange} value={value} label="Location"/>
+                            rules={{required: "Location is required"}}
+                            render={({field: {onChange, value}, fieldState: {error}}) => (
+                                <TextField error={!!error}
+                                           helperText={error ? error.message : null}
+                                           margin="dense"
+                                           onChange={onChange}
+                                           value={value}
+                                           label="Location"/>
                             )}
                         />
                         <Controller
                             defaultValue=''
                             name='callSign'
                             control={control}
-                            render={({field: {onChange, value}}) => (
-                                <TextField margin="dense" onChange={onChange} value={value}
-                                           label="Radio Frequency/ Call Sign/ Suffix"/>
+                            rules={{required: "Radio Freq/Call Sign/Suffix is required"}}
+                            render={({field: {onChange, value}, fieldState: {error}}) => (
+                                <TextField
+                                    error={!!error}
+                                    helperText={error ? error.message : null}
+                                    margin="dense"
+                                    onChange={onChange}
+                                    value={value}
+                                    label="Radio Frequency/ Call Sign/ Suffix"/>
                             )}
                         />
                     </Box>
 
-                    <Box sx={{display: 'flex', marginTop: '16px'}}>
+                    <Box sx={{display: 'flex', alignItems: 'flex-start', marginTop: '16px'}}>
                         <Controller
                             defaultValue='0'
                             name='totalPatient'
                             control={control}
-                            render={({field: {onChange, value}}) => (
-                                <TextField sx={{marginRight: '16px'}} onChange={onChange} value={value}
-                                           label="Patient Number"/>
+                            rules={{
+                                validate: {
+                                    positive: v => parseInt(v) > 0,
+                                    max: v => parseInt(v) <= 9999,
+                                },
+                            }}
+                            render={({field: {onChange, value}, fieldState: {error}}) => (
+                                <TextField
+                                    error={!!error}
+                                    helperText={error ? 'Patient number not valid' : null}
+                                    sx={{marginRight: '16px'}}
+                                    onChange={onChange}
+                                    value={value}
+                                    label="Patient Number"/>
                             )}
                         />
                         <Controller
@@ -210,18 +236,42 @@ const Requester = () => {
                             defaultValue=''
                             name='litter'
                             control={control}
-                            render={({field: {onChange, value}}) => (
-                                <TextField sx={{width: '100%', marginRight: '16px'}} margin="dense" onChange={onChange}
-                                           value={value} label="Litter Patient Number"/>
+                            rules={{
+                                validate: {
+                                    positive: v => parseInt(v) >= 0,
+                                    max: v => parseInt(v) <= 9999,
+                                },
+                            }}
+                            render={({field: {onChange, value}, fieldState: {error}}) => (
+                                <TextField
+                                    error={!!error}
+                                    helperText={error ? 'Patient number not valid' : null}
+                                    sx={{width: '100%', marginRight: '8px'}}
+                                    margin="dense"
+                                    onChange={onChange}
+                                    value={value}
+                                    label="Litter Patient Number"/>
                             )}
                         />
                         <Controller
                             defaultValue=''
                             name='ambulatory'
                             control={control}
-                            render={({field: {onChange, value}}) => (
-                                <TextField sx={{width: '100%'}} margin="dense" onChange={onChange} value={value}
-                                           label="Ambulatory Patient Number"/>
+                            rules={{
+                                validate: {
+                                    positive: v => parseInt(v) >= 0,
+                                    max: v => parseInt(v) <= 9999,
+                                },
+                            }}
+                            render={({field: {onChange, value}, fieldState: {error}}) => (
+                                <TextField
+                                    error={!!error}
+                                    helperText={error ? 'Patient number not valid' : null}
+                                    sx={{width: '100%', marginLeft: '8px'}}
+                                    margin="dense"
+                                    onChange={onChange}
+                                    value={value}
+                                    label="Ambulatory Patient Number"/>
                             )}
                         />
                     </Box>
@@ -254,17 +304,24 @@ const Requester = () => {
                             defaultValue={false}
                             name='marking'
                             control={control}
-                            render={({field: {onChange, value}}) => (
-                                <RadioGroup value={value} onChange={onChange}>
-                                    <FormLabel>Marking Equipment</FormLabel>
-                                    {markingOptions.map(singleOption =>
-                                        <FormControlLabel
-                                            key={singleOption.label}
-                                            value={singleOption.label}
-                                            label={singleOption.label}
-                                            control={<Radio/>}
-                                        />)}
-                                </RadioGroup>
+                            rules={{required: true}}
+                            render={({field: {onChange, value}, fieldState: {error}}) => (
+                                <FormControl
+                                    error={!!error}>
+                                    <RadioGroup
+                                        value={value}
+                                        onChange={onChange}>
+                                        <FormLabel>Marking Equipment</FormLabel>
+                                        {markingOptions.map(singleOption =>
+                                            <FormControlLabel
+                                                key={singleOption.label}
+                                                value={singleOption.label}
+                                                label={singleOption.label}
+                                                control={<Radio/>}
+                                            />)}
+                                    </RadioGroup>
+                                    <FormHelperText>{error ? "Select Marking" : null}</FormHelperText>
+                                </FormControl>
                             )}
                         />
                     </Box>
@@ -311,11 +368,16 @@ const Requester = () => {
                                     <MenuItem value='Chemical'>
                                         Chemical
                                     </MenuItem>
+                                    <MenuItem value='Chemical'>
+                                        None
+                                    </MenuItem>
                                 </Select>
                             )}
                         />
                     </Box>
-                    <Box sx={{display: 'flex', justifyContent: 'end', marginY: '28px'}}>
+                    <Box onClick={() => {
+                        window.scrollTo({top: 0, behavior: 'smooth'});
+                    }} sx={{display: 'flex', justifyContent: 'end', marginY: '28px'}}>
                         <Button variant='contained' color="success" onClick={handleSubmit(onSubmit)}>Submit</Button>
                     </Box>
                 </form>
