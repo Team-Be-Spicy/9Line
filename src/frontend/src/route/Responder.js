@@ -41,7 +41,7 @@ const Responder = () => {
 
     return (
         <>
-            {alert && <Alert sx={{marginBottom: '28px'}} severity="success" action={
+            {alert && <Alert sx={{marginBottom: '28px', display: 'flex', alignItems: 'center'}} severity="success" action={
                 <Box>
                     <IconButton
                         color='success'

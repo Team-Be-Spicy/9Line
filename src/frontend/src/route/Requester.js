@@ -7,7 +7,7 @@ import {
     FormLabel, IconButton,
     MenuItem, Radio, RadioGroup,
     Select,
-    TextField
+    TextField, useMediaQuery
 } from "@mui/material";
 import {Typography} from '@mui/material';
 import {useForm, Controller} from "react-hook-form";
@@ -23,6 +23,7 @@ const Requester = () => {
     const {register, reset, control, handleSubmit, setValue, formState: {errors}} = useForm();
     const [open, setOpen] = useState(false);
     const [data, setData] = useState({});
+    const isSmallScreen = useMediaQuery('(max-width:800px)');
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -107,8 +108,8 @@ const Requester = () => {
 
     return (
         <>
-            {alert && <Alert sx={{marginBottom: '28px'}} severity="success" action={
-                <Box>
+            {alert && <Alert sx={{marginBottom: '28px', display: 'flex', alignItems: 'center'}} severity="success" action={
+                <Box sx={{display: 'flex', flexWrap: 'no-wrap'}}>
                     <Button color="success" onClick={handleClickOpen}>View Details</Button>
                     <IconButton
                         color='success'
@@ -204,7 +205,7 @@ const Requester = () => {
                             </div>
                         </FormControl>
                     </Box>
-                    <Box sx={{display: 'flex', marginTop: '8px'}}>
+                    <Box sx={{display: 'flex', marginTop: '8px', flexDirection: (isSmallScreen ? 'column' : 'row')}}>
                         <Controller
                             defaultValue=''
                             name='litter'
@@ -224,7 +225,7 @@ const Requester = () => {
                             )}
                         />
                     </Box>
-                    <Box sx={{marginTop: '16px'}}>
+                    <Box sx={{marginTop: (isSmallScreen ? '8px' : '16px')}}>
                         <Controller
                             defaultValue="No Enemy troop in area"
                             control={control}
@@ -237,7 +238,7 @@ const Requester = () => {
                                     <MenuItem value='Possible Enemy troop'>
                                         Possible Enemy troop
                                     </MenuItem>
-                                    <MenuItem value='Enemy in Area, Proceed with Caution'>
+                                    <MenuItem value='Enemy in area, proceed with caution'>
                                         Enemy in Area, Proceed with caution
                                     </MenuItem>
                                     <MenuItem value='Enemy in Area, Escort Required'>

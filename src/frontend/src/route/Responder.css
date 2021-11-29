@@ -1,12 +1,17 @@
 .Responder {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-
+    align-items: center;
     width: 100vw;
 }
 
 .requestListContainer {
-    width: 75%;
+    min-width: 75%;
+}
+
+@media only screen and (max-width: 800px) {
+    .requestListContainer {
+        min-width: 95%;
+    }
 }
