@@ -3,6 +3,7 @@ import "./RequestList.css";
 import {DataGrid} from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import {useState} from "react";
+import {Stack} from "@mui/material";
 
 
 const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
@@ -99,22 +100,37 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
     return (
         <div className="RequestList">
             {selectedRequestIds.length > 0 ?
-                        <div className="actionButtonContainer">
-                            <p>{selectedRequestIds.length} selected</p>
-                            <Button color="success" variant="outlined" onClick={() => {
-                                onActionClicked(selectedRequestIds);
-                                setSelectedRequestIds([]);
-                            }}>
-                                {buttonText}
-                            </Button>
-                        </div>
+                <div className="actionButtonContainer">
+                    <p>{selectedRequestIds.length} selected</p>
+                    <Button color="success" variant="outlined" onClick={() => {
+                        onActionClicked(selectedRequestIds);
+                        setSelectedRequestIds([]);
+                    }}>
+                        {buttonText}
+                    </Button>
+                </div>
 
                 :
                 <h3>Requests</h3>
             }
-            <div className="requestTable" >
+
+
+            <div className="requestTable">
+
                 <DataGrid
-                    style={{border: 0}}
+                    components={{
+                        NoRowsOverlay: () => (
+                            <Stack height="150px" alignItems="center" justifyContent="center">
+                                No active requests.
+                            </Stack>
+                        ),
+                        NoResultsOverlay: () => (
+                            <Stack height="`150px`" alignItems="center" justifyContent="center">
+                                Local filter returns no result
+                            </Stack>
+                        )
+                    }}
+                    style={{border: 0,}}
                     columns={getColumns()}
                     checkboxSelection
                     selectionModel={selectedRequestIds}
@@ -127,8 +143,6 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
                     rowsPerPageOptions={[5, 10, 25]}
                     pagination
                     autoHeight {...getRows()}
-
-
                 />
             </div>
         </div>
