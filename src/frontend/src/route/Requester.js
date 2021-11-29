@@ -7,15 +7,21 @@ import {
     FormLabel, IconButton,
     MenuItem, Radio, RadioGroup,
     Select,
-    TextField
+    TextField, useMediaQuery
 } from "@mui/material";
-import {Typography} from '@mui/material';
 import {useForm, Controller} from "react-hook-form";
 import Button from "@mui/material/Button";
 import {useEffect, useState} from "react";
 import {submitForm} from "../service/service";
 import DetailModal from "../component/DetailModal";
 import CloseIcon from "@mui/icons-material/Close";
+import {
+    ENEMY_IN_AREA_ESCORT_REQUIRED,
+    ENEMY_IN_AREA_PROCEED_WITH_CAUTION,
+    NO_ENEMY_TROOPS_IN_AREA,
+    POSSIBLE_ENEMY_TROOPS,
+    AMBULATORY_PATIENT_NUMBER, LITTER_PATIENT_NUMBER, PATIENT_NUMBER_NOT_VALID
+} from "../constant/RequestConstants";
 
 const Requester = () => {
     const [selectedItems, setSelectedItems] = useState([]);
@@ -23,6 +29,7 @@ const Requester = () => {
     const {register, reset, control, handleSubmit, setValue, formState: {errors}} = useForm();
     const [open, setOpen] = useState(false);
     const [data, setData] = useState({});
+    const isSmallScreen = useMediaQuery('(max-width:800px)');
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -51,7 +58,7 @@ const Requester = () => {
                 equipment: [],
                 litter: '',
                 ambulatory: '',
-                security: 'No Enemy troop in area',
+                security: NO_ENEMY_TROOPS_IN_AREA,
                 marking: false,
                 national: 'US Military',
                 line9: 'Nuclear'
@@ -111,8 +118,8 @@ const Requester = () => {
 
     return (
         <>
-            {alert && <Alert sx={{marginBottom: '28px'}} severity="success" action={
-                <Box>
+            {alert && <Alert sx={{marginBottom: '28px', display: 'flex', alignItems: 'center'}} severity="success" action={
+                <Box sx={{display: 'flex', flexWrap: 'no-wrap'}}>
                     <Button color="success" onClick={handleClickOpen}>View Details</Button>
                     <IconButton
                         color='success'
@@ -145,7 +152,7 @@ const Requester = () => {
                             defaultValue=''
                             name='callSign'
                             control={control}
-                            rules={{required: "Radio Freq/Call Sign/Suffix is required"}}
+                            rules={{required: "Radio Freq/ Call Sign/ Suffix is required"}}
                             render={({field: {onChange, value}, fieldState: {error}}) => (
                                 <TextField
                                     error={!!error}
@@ -164,15 +171,12 @@ const Requester = () => {
                             name='totalPatient'
                             control={control}
                             rules={{
-                                validate: {
-                                    positive: v => parseInt(v) > 0,
-                                    max: v => parseInt(v) <= 9999,
-                                },
+                                pattern: /^[1-9]\d*$/i,
                             }}
                             render={({field: {onChange, value}, fieldState: {error}}) => (
                                 <TextField
                                     error={!!error}
-                                    helperText={error ? 'Patient number not valid' : null}
+                                    helperText={error ? PATIENT_NUMBER_NOT_VALID : null}
                                     sx={{marginRight: '16px'}}
                                     onChange={onChange}
                                     value={value}
@@ -230,26 +234,24 @@ const Requester = () => {
                             </div>
                         </FormControl>
                     </Box>
-                    <Box sx={{display: 'flex', marginTop: '8px'}}>
+                    <Box sx={{display: 'flex', marginTop: '8px', flexDirection: (isSmallScreen ? 'column' : 'row'), gap: (isSmallScreen ? '0' : '16px')}}>
                         <Controller
                             defaultValue=''
                             name='litter'
                             control={control}
                             rules={{
-                                validate: {
-                                    positive: v => parseInt(v) >= 0,
-                                    max: v => parseInt(v) <= 9999,
-                                },
+                                pattern: /^[0-9]\d*$/i,
+
                             }}
                             render={({field: {onChange, value}, fieldState: {error}}) => (
                                 <TextField
                                     error={!!error}
-                                    helperText={error ? 'Patient number not valid' : null}
-                                    sx={{width: '100%', marginRight: '8px'}}
+                                    helperText={error ? PATIENT_NUMBER_NOT_VALID : null}
+                                    sx={{width: '100%'}}
                                     margin="dense"
                                     onChange={onChange}
                                     value={value}
-                                    label="Litter Patient Number"/>
+                                    label={LITTER_PATIENT_NUMBER}/>
                             )}
                         />
                         <Controller
@@ -257,41 +259,38 @@ const Requester = () => {
                             name='ambulatory'
                             control={control}
                             rules={{
-                                validate: {
-                                    positive: v => parseInt(v) >= 0,
-                                    max: v => parseInt(v) <= 9999,
-                                },
+                                pattern: /^[0-9]\d*$/i,
                             }}
                             render={({field: {onChange, value}, fieldState: {error}}) => (
                                 <TextField
                                     error={!!error}
-                                    helperText={error ? 'Patient number not valid' : null}
-                                    sx={{width: '100%', marginLeft: '8px'}}
+                                    helperText={error ? PATIENT_NUMBER_NOT_VALID : null}
+                                    sx={{width: '100%'}}
                                     margin="dense"
                                     onChange={onChange}
                                     value={value}
-                                    label="Ambulatory Patient Number"/>
+                                    label={AMBULATORY_PATIENT_NUMBER}/>
                             )}
                         />
                     </Box>
-                    <Box sx={{marginTop: '16px'}}>
+                    <Box sx={{marginTop: (isSmallScreen ? '8px' : '16px')}}>
                         <Controller
-                            defaultValue="No Enemy troop in area"
+                            defaultValue={NO_ENEMY_TROOPS_IN_AREA}
                             control={control}
                             name='security'
                             render={({field: {onChange, value}}) => (
                                 <Select sx={{width: '100%'}} onChange={onChange} value={value}>
-                                    <MenuItem value='No Enemy troop in area'>
-                                        No Enemy troop in area
+                                    <MenuItem value={NO_ENEMY_TROOPS_IN_AREA}>
+                                        {NO_ENEMY_TROOPS_IN_AREA}
                                     </MenuItem>
-                                    <MenuItem value='Possible Enemy troop'>
-                                        Possible Enemy troop
+                                    <MenuItem value={POSSIBLE_ENEMY_TROOPS}>
+                                        {POSSIBLE_ENEMY_TROOPS}
                                     </MenuItem>
-                                    <MenuItem value='Enemy in Area, Proceed with Caution'>
-                                        Enemy in Area, Proceed with caution
+                                    <MenuItem value={ENEMY_IN_AREA_PROCEED_WITH_CAUTION}>
+                                        {ENEMY_IN_AREA_PROCEED_WITH_CAUTION}
                                     </MenuItem>
-                                    <MenuItem value='Enemy in Area, Escort Required'>
-                                        Enemy in Area, Escort Required
+                                    <MenuItem value={ENEMY_IN_AREA_ESCORT_REQUIRED}>
+                                        {ENEMY_IN_AREA_ESCORT_REQUIRED}
                                     </MenuItem>
                                 </Select>
                             )}
