@@ -55,18 +55,6 @@ jobs:
             -P jib-push-to-dockerhub \
               -Dapp.image.tag=${{steps.build-number.outputs.BUILD_NUMBER}}
 
-#      - name: Update and commit app version in docker-compose.yaml
-#        run: |
-#          BUILD_NUMBER=${{steps.build-number.outputs.BUILD_NUMBER}}
-#          echo -e "Current elasticbeanstalk/docker-compose.yml\n$(cat elasticbeanstalk/docker-compose.yml)"
-#          sed -i -E 's_(egorkra/nineline:)([^"]*)_\1'${BUILD_NUMBER}'_' elasticbeanstalk/docker-compose.yml
-#          echo -e "Current elasticbeanstalk/docker-compose.yml\n$(cat elasticbeanstalk/docker-compose.yml)"
-#          git config user.name github-actions
-#          git config user.email github-actions@github.com
-#          git add elasticbeanstalk/docker-compose.yml
-#          git commit -m "new app version: ${BUILD_NUMBER}"
-#          git push
-
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@ebe3476a4ce991d54336935e75e78dd9d86f9408
         with:
