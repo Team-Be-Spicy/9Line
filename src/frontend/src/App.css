@@ -1,11 +1,30 @@
+h1 {
+  font-size: 40px;
+  font-weight: 200;
+}
+
 .App {
   text-align: center;
 }
 
-h1 {
-  font-size: 40px;
-  font-weight: 200;
-  margin: 0;
+.active-link {
+  color: green;
+  padding: 5px;
+  text-decoration: none;
+  width: 100%;
+}
+
+.inactive-link {
+  color: black;
+  padding: 5px;
+  text-decoration: none;
+  width: 100%;
+}
+
+.inactive-link:hover {
+  transform: scale(1.01);
+  transition-duration: 100ms;
+  background-color: rgb(237, 247, 237);
 }
 
 .full-size-img{
@@ -25,40 +44,4 @@ h1 {
 .welcome-title {
   color: gold;
   text-align: center;
-  height: 10%;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
