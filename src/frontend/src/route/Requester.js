@@ -237,7 +237,7 @@ const Requester = () => {
                             control={control}
                             rules={{
                                 validate: {
-                                    positive: v => parseInt(v) > 0,
+                                    positive: v => parseInt(v) >= 0,
                                     max: v => parseInt(v) <= 9999,
                                 },
                             }}
@@ -258,7 +258,7 @@ const Requester = () => {
                             control={control}
                             rules={{
                                 validate: {
-                                    positive: v => parseInt(v) > 0,
+                                    positive: v => parseInt(v) >= 0,
                                     max: v => parseInt(v) <= 9999,
                                 },
                             }}
