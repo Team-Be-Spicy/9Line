@@ -1,9 +1,9 @@
-import DustOff from "../images/Dustoff_Picture.jpeg"
+import DustOff from "../images/Dustoff_Picture.jpeg";
+import Box from "@mui/material/Box";
 
 const WelcomePage = () =>
-    <div className="landing-page">
-        <h1 className="welcome-title">9-Line Medevac</h1>
+    <Box mt={-10}>
         <img className="full-size-img" src={DustOff} alt="Helicopter landing in the desert"/>
-    </div>
+    </Box>
 
 export default WelcomePage;

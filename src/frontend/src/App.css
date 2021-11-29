@@ -5,32 +5,15 @@
 h1 {
   font-size: 40px;
   font-weight: 200;
+  margin: 0;
 }
 
 .full-size-img{
   display: flex;
   width: 100%;
   height: 100%;
+  position: fixed;
   object-fit: cover;
-}
-
-
-.landing-page {
-
-  /*background-image: url("../src/images/Dustoff_Picture.jpeg");*/
-  /*image-rendering: high-quality;*/
-  /*image-resolution: inherit;*/
-  /*background-size: 100vw 100vh;*/
-  /*height: 100%;*/
-  /*background-attachment: scroll;*/
-  /*background-repeat: no-repeat;*/
-  font-family: Arial;
-  font-size: 1rem;
-  border-style: solid;
-  border-width: 5px;
-  border-color: gold;
-  background: black;
-
 }
 
 .top-banner {
@@ -42,6 +25,7 @@ h1 {
 .welcome-title {
   color: gold;
   text-align: center;
+  height: 10%;
 }
 
 .App-logo {
