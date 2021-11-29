@@ -10,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ModalRow from "./ModalRow";
 
 
-const DetailModal = ({button1Label, button2Label, button1Action, button2Action, open, handleClose, data, isDispatcher, setSelectedResponder}) => {
+const DetailModal = ({button1Label, button2Label, button1Action, button2Action, open, handleClose, data, isDispatcher, setSelectedResponder, selectedResponder}) => {
 
 
     return (
@@ -43,7 +43,7 @@ const DetailModal = ({button1Label, button2Label, button1Action, button2Action, 
                 <ModalRow label="Patient Nationality and status" value={data.national}/>
                 <ModalRow label="NBC Contamination" value={data.line9}/>
                 {isDispatcher &&  <Select
-                    defaultValue={''}
+                    defaultValue={selectedResponder}
                     onChange={(e) => setSelectedResponder(e.target.value)}
                     sx={{width: '100%'}} >
                     <MenuItem value='Responder One'>

@@ -15,7 +15,7 @@ const Dispatcher = () => {
     const [detailOpen, setDetailOpen] = useState(false);
     const [assignOpen, setAssignOpen] = useState(false);
     const [selectedIDs, setSelectedIDs] = useState([]);
-    const [selectedResponder, setSelectedResponder] = useState("");
+    const [selectedResponder, setSelectedResponder] = useState("Responder One");
 
     useEffect(() => {
         fetchFromDB();
@@ -75,6 +75,7 @@ const Dispatcher = () => {
             }>Assigned to {selectedResponder}</Alert>}
             <AssignResponderModal open={assignOpen}
                                   handleClose={handleAssignClose}
+                                  selectedResponder={selectedResponder}
                                   setSelectedResponder={setSelectedResponder}
                                   assignResponder={assignResponderToMultiple}/>
             <DetailModal data={currentRequest}
@@ -85,6 +86,7 @@ const Dispatcher = () => {
                          button2Label={"cancel"}
                          button2Action={handleDetailClose}
                          isDispatcher={true}
+                         selectedResponder={selectedResponder}
                          setSelectedResponder={setSelectedResponder}
             />
             <div className="Dispatcher">
