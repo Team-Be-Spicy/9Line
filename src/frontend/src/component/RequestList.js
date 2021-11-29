@@ -5,7 +5,6 @@ import Button from "@mui/material/Button";
 import {useState} from "react";
 import {Stack} from "@mui/material";
 
-
 const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
 
     const [selectedRequestIds, setSelectedRequestIds] = useState([]);
@@ -17,7 +16,8 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
         headerClassName: "colHeader",
         headerAlign: "center",
         align: "center",
-        flex: 1
+        flex: 1,
+        minWidth: 100,
     };
     const dispatcherColumns = [
         {
@@ -26,7 +26,8 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
             headerClassName: "colHeader",
             headerAlign: "center",
             align: "center",
-            flex: 1
+            flex: 1,
+            minWidth: 150,
         },
         {
             field: "callSign",
@@ -34,7 +35,8 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
             headerClassName: "colHeader",
             headerAlign: "center",
             align: "center",
-            flex: 1
+            flex: 1,
+            minWidth: 100,
         },
         {
             field: "precedence",
@@ -42,7 +44,8 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
             headerClassName: "colHeader",
             headerAlign: "center",
             align: "center",
-            flex: 1
+            flex: 1,
+            minWidth: 120,
         },
         {
             field: "equipment",
@@ -50,7 +53,8 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
             headerClassName: "colHeader",
             headerAlign: "center",
             align: "center",
-            flex: 1
+            flex: 1,
+            minWidth: 170,
         },
         {
             field: "security",
@@ -58,7 +62,8 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
             headerClassName: "colHeader",
             headerAlign: "center",
             align: "center",
-            flex: 1
+            flex: 1,
+            minWidth: 180,
         },
         {
             field: "marking",
@@ -66,7 +71,8 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
             headerClassName: "colHeader",
             headerAlign: "center",
             align: "center",
-            flex: 1
+            flex: 1,
+            minWidth: 120,
         },
         {
             field: "details",
@@ -75,6 +81,7 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
             headerAlign: "center",
             align: "center",
             flex: 1,
+            minWidth: 100,
             renderCell: (param) => (
                 <Button onClick={() => onViewSelected(param.id)}>VIEW</Button>
             )
@@ -114,37 +121,33 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
                 <h3>Requests</h3>
             }
 
-
-            <div className="requestTable">
-
-                <DataGrid
-                    components={{
-                        NoRowsOverlay: () => (
-                            <Stack height="150px" alignItems="center" justifyContent="center">
-                                No active requests.
-                            </Stack>
-                        ),
-                        NoResultsOverlay: () => (
-                            <Stack height="`150px`" alignItems="center" justifyContent="center">
-                                Local filter returns no result
-                            </Stack>
-                        )
-                    }}
-                    style={{border: 0,}}
-                    columns={getColumns()}
-                    checkboxSelection
-                    selectionModel={selectedRequestIds}
-                    onSelectionModelChange={params => setSelectedRequestIds(params)}
-                    disableSelectionOnClick
-                    rows={getRows()}
-                    pageSize={pageSize}
-                    hideFooterSelectedRowCount
-                    onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                    rowsPerPageOptions={[5, 10, 25]}
-                    pagination
-                    autoHeight {...getRows()}
-                />
-            </div>
+            <DataGrid
+                components={{
+                    NoRowsOverlay: () => (
+                        <Stack height="150px" alignItems="center" justifyContent="center">
+                            No active requests.
+                        </Stack>
+                    ),
+                    NoResultsOverlay: () => (
+                        <Stack height="`150px`" alignItems="center" justifyContent="center">
+                            Local filter returns no result
+                        </Stack>
+                    )
+                }}
+                style={{border: 0}}
+                columns={getColumns()}
+                checkboxSelection
+                selectionModel={selectedRequestIds}
+                onSelectionModelChange={params => setSelectedRequestIds(params)}
+                disableSelectionOnClick
+                rows={getRows()}
+                pageSize={pageSize}
+                hideFooterSelectedRowCount
+                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                rowsPerPageOptions={[5, 10, 25]}
+                pagination
+                autoHeight {...getRows()}
+            />
         </div>
     );
 
