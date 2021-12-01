@@ -1,7 +1,18 @@
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography} from "@mui/material";
+import {
+    AppBar,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    IconButton,
+    Slide,
+    Toolbar,
+    Typography
+} from "@mui/material";
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import CloseIcon from "@mui/icons-material/Close";
-import {useEffect, useRef, useState} from "react";
+import {forwardRef, useEffect, useRef, useState} from "react";
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mgrs from "mgrs";
 import Box from "@mui/material/Box";
@@ -9,22 +20,13 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZWdvcmtyYSIsImEiOiJja21uMXk5OHMwdTN4Mm9wbDVpOXllcGY0In0.ZheSrkcBpR9hmpfG0qW5EQ';
 
+const Transition = forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
 export default function MapModal({open, handleClose, setLocation}) {
     return (
-        <Dialog maxWidth onClose={handleClose} open={open}>
-            <DialogTitle sx={{m: 0, p: 1.5}}>Select a location
-                <IconButton
-                    onClick={handleClose}
-                    sx={{
-                        position: 'absolute',
-                        right: 8,
-                        top: 8,
-                        color: (theme) => theme.palette.grey[500],
-                    }}
-                >
-                    <CloseIcon/>
-                </IconButton>
-            </DialogTitle>
+        <Dialog fullScreen TransitionComponent={Transition} onClose={handleClose} open={open}>
             <MapboxWrapper handleClose={handleClose} setLocation={setLocation}/>
         </Dialog>
     );
@@ -88,27 +90,40 @@ const MapboxWrapper = ({handleClose, setLocation}) => {
     }, [])
 
     return (
-        <DialogContent
-            sx={{alignContent: "center", padding: 0, marginLeft: 1.5, marginRight: 1.5, marginBottom: 0.5}}>
-            <Box ref={mapContainer} sx={{
-                height: "800px",
-                width: "800px",
-                borderRadius: '25px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}>
-                <ClipLoader color="#000000" loading={!mapLoaded} size={150}/>
-            </Box>
-            <DialogActions>
-                <Button disabled={!mapLoaded} color="success" variant="contained" onClick={() => {
-                    setLocation(markerLocation);
-                    handleClose();
-                }}> <Typography
-                    fontWeight={"bold"}> Set Location </Typography> </Button>
-
-            </DialogActions>
-
-        </DialogContent>
+        <>
+            <AppBar sx={{position: 'relative'}}>
+                <Toolbar>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        onClick={handleClose}
+                        aria-label="close"
+                    >
+                        <CloseIcon/>
+                    </IconButton>
+                    <Typography sx={{ml: 2, flex: 1}} variant="h6" component="div">
+                        Pick a location
+                    </Typography>
+                    <Button autoFocus variant="outlined" disabled={!mapLoaded} color="inherit" onClick={() => {
+                        setLocation(markerLocation);
+                        handleClose();
+                    }}>
+                        Set Location
+                    </Button>
+                </Toolbar>
+            </AppBar>
+            <DialogContent
+                sx={{alignContent: "center", padding: 0, margin: 0}}>
+                <Box ref={mapContainer} sx={{
+                    width: "100%",
+                    height: "100%",
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}>
+                    <ClipLoader color="#000000" loading={!mapLoaded} size={150}/>
+                </Box>
+            </DialogContent>
+        </>
     );
 }
