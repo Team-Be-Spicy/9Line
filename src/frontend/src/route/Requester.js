@@ -12,25 +12,46 @@ import {
 import {Typography} from '@mui/material';
 import {useForm, Controller} from "react-hook-form";
 import Button from "@mui/material/Button";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {submitForm} from "../service/service";
 import DetailModal from "../component/DetailModal";
 import CloseIcon from "@mui/icons-material/Close";
+import mgrs from "mgrs";
+import PersonPinIcon from '@mui/icons-material/PersonPin';
+import MapIcon from '@mui/icons-material/Map';
 
 const Requester = () => {
+    let ref = useRef(null);
     const [selectedItems, setSelectedItems] = useState([]);
     const [alert, setAlert] = useState(false);
     const {register, reset, control, handleSubmit, setValue, formState: {errors}} = useForm();
     const [open, setOpen] = useState(false);
     const [data, setData] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [location, setLocation] = useState();
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+    useEffect(() => {
+        getCurrentLocation();
+    }, []);
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const getCurrentLocation = () => {
+        if (navigator.geolocation) {
+            setLoading(true);
+            navigator.geolocation.getCurrentPosition(position => {
+                const mgrsLocation = mgrs.forward([position.coords.longitude, position.coords.latitude,], 5);
+                setLocation(mgrsLocation);
+                reset({location: mgrsLocation});
+                setLoading(false);
+            }, () => {
+                console.error("Error getting your location");
+            });
+        } else {
+            console.error("Geolocation is not supported by this browser.");
+        }
+    }
+
+    const handleClickOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const onSubmit = async (data) => {
         const newData = {
@@ -127,20 +148,31 @@ const Requester = () => {
                 <h1>MEDEVAC Request Form</h1>
                 <form>
                     <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                        <Controller
-                            defaultValue=''
-                            name='location'
-                            control={control}
-                            rules={{required: "Location is required"}}
-                            render={({field: {onChange, value}, fieldState: {error}}) => (
-                                <TextField error={!!error}
-                                           helperText={error ? error.message : null}
-                                           margin="dense"
-                                           onChange={onChange}
-                                           value={value}
-                                           label="Location"/>
-                            )}
-                        />
+                        <Box sx={{display: 'flex', justifyContent: 'stretch'}}>
+                            <Controller
+                                defaultValue=""
+                                name='location'
+                                control={control}
+                                rules={{required: "Location is required"}}
+                                render={({field: {onChange, value}, fieldState: {error}}) => (
+                                    <TextField
+                                        sx={{width: '100%'}}
+                                        error={!!error}
+                                        helperText={error ? error.message : loading ? 'Getting location...' : null}
+                                        margin="dense"
+                                        onChange={onChange}
+                                        value={value}
+                                        label="Location"/>
+                                )}
+                            />
+                            <IconButton onClick={() => getCurrentLocation()} sx={{marginLeft: '6px'}} color="primary"
+                                        size="large">
+                                <PersonPinIcon fontSize="large"/>
+                            </IconButton>
+                            <IconButton sx={{marginLeft: '6px'}} color="primary" size="large">
+                                <MapIcon fontSize="large"/>
+                            </IconButton>
+                        </Box>
                         <Controller
                             defaultValue=''
                             name='callSign'
