@@ -19,6 +19,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import mgrs from "mgrs";
 import PersonPinIcon from '@mui/icons-material/PersonPin';
 import MapIcon from '@mui/icons-material/Map';
+import MapModal from "../component/MapModal";
 
 const Requester = () => {
     let ref = useRef(null);
@@ -29,6 +30,7 @@ const Requester = () => {
     const [data, setData] = useState({});
     const [loading, setLoading] = useState(true);
     const [location, setLocation] = useState();
+    const [isMapOpen, setIsMapOpen] = useState(false);
 
     useEffect(() => {
         getCurrentLocation();
@@ -132,6 +134,7 @@ const Requester = () => {
 
     return (
         <>
+            {isMapOpen && <MapModal open={isMapOpen} handleClose={() => setIsMapOpen(false)}/>}
             {alert && <Alert sx={{marginBottom: '28px'}} severity="success" action={
                 <Box>
                     <Button color="success" onClick={handleClickOpen}>View Details</Button>
@@ -169,7 +172,9 @@ const Requester = () => {
                                         size="large">
                                 <PersonPinIcon fontSize="large"/>
                             </IconButton>
-                            <IconButton sx={{marginLeft: '6px'}} color="primary" size="large">
+                            <IconButton
+                                onClick={() => setIsMapOpen(true)}
+                                sx={{marginLeft: '6px'}} color="primary" size="large">
                                 <MapIcon fontSize="large"/>
                             </IconButton>
                         </Box>
