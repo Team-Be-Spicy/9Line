@@ -2,9 +2,7 @@ import {
     AppBar,
     Button,
     Dialog,
-    DialogActions,
     DialogContent,
-    DialogTitle,
     IconButton,
     Slide,
     Toolbar,
@@ -16,7 +14,7 @@ import {forwardRef, useEffect, useRef, useState} from "react";
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mgrs from "mgrs";
 import Box from "@mui/material/Box";
-import ClipLoader from "react-spinners/ClipLoader";
+import {CircleLoader} from "react-spinners";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZWdvcmtyYSIsImEiOiJja21uMXk5OHMwdTN4Mm9wbDVpOXllcGY0In0.ZheSrkcBpR9hmpfG0qW5EQ';
 
@@ -86,7 +84,6 @@ const MapboxWrapper = ({handleClose, setLocation}) => {
             initializeMap([69.154956, 34.536558]);
         }
 
-
     }, [])
 
     return (
@@ -102,7 +99,7 @@ const MapboxWrapper = ({handleClose, setLocation}) => {
                         <CloseIcon/>
                     </IconButton>
                     <Typography sx={{ml: 2, flex: 1}} variant="h6" component="div">
-                        Pick a location
+                        Drag marker to HLZ
                     </Typography>
                     <Button autoFocus variant="outlined" disabled={!mapLoaded} color="inherit" onClick={() => {
                         setLocation(markerLocation);
@@ -121,7 +118,7 @@ const MapboxWrapper = ({handleClose, setLocation}) => {
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
-                    <ClipLoader color="#000000" loading={!mapLoaded} size={150}/>
+                    <CircleLoader color="#1976D2" loading={!mapLoaded} size={200}/>
                 </Box>
             </DialogContent>
         </>
