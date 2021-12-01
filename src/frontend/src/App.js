@@ -57,7 +57,7 @@ const App = () => {
             </List>
             <Divider/>
             {isAuthenticated ?
-                <Button onClick={() => logout()}>Logout</Button>
+                <Button onClick={() => logout({returnTo: "http://localhost:3000/"})}>Logout</Button>
                 :
                 <Button onClick={() => loginWithRedirect()}>Login</Button>
             }
