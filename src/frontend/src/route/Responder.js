@@ -8,7 +8,7 @@ import DetailModal from "../component/DetailModal";
 import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Loading from "../component/Loading";
 
-const Responder = () => {
+const Responder = ({getToken, isAuthenticated, isLoading}) => {
 
     const [requests, setRequests] = useState([]);
     const [alert, setAlert] = useState(false);
@@ -17,8 +17,16 @@ const Responder = () => {
     const [data, setData] = useState({});
 
     useEffect(() => {
-        fetchRequests("responder").then(res => setRequests(res.data));
-    }, []);
+        if (isAuthenticated && !isLoading) {
+            fetchRequests(getAccessToken()).then(res => setRequests(res.data));
+        }
+    }, [isAuthenticated, isLoading]);
+
+    const getAccessToken = async () => {
+        return await getToken({
+            audience: "https://egor-dev.com",
+        });
+    }
 
     const onViewClicked = (requestId) => {
         setData(requests.find(request => request.id === requestId));
@@ -43,7 +51,8 @@ const Responder = () => {
 
     return (
         <>
-            {alert && <Alert sx={{marginBottom: '28px', display: 'flex', alignItems: 'center'}} severity="success" action={
+            {alert &&
+            <Alert sx={{marginBottom: '28px', display: 'flex', alignItems: 'center'}} severity="success" action={
                 <Box>
                     <IconButton
                         color='success'
