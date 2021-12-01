@@ -27,14 +27,6 @@ h1 {
   background-color: rgb(237, 247, 237);
 }
 
-.full-size-img{
-  display: flex;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  object-fit: cover;
-}
-
 .top-banner {
   display: inline;
   width: 100%;
