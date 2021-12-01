@@ -5,6 +5,8 @@ import {fetchRequests, updateStatus} from "../service/service";
 import {Alert, Box, IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DetailModal from "../component/DetailModal";
+import {withAuthenticationRequired} from "@auth0/auth0-react";
+import Loading from "../component/Loading";
 
 const Responder = () => {
 
@@ -41,7 +43,7 @@ const Responder = () => {
 
     return (
         <>
-            {alert && <Alert sx={{marginBottom: '28px'}} severity="success" action={
+            {alert && <Alert sx={{marginBottom: '28px', display: 'flex', alignItems: 'center'}} severity="success" action={
                 <Box>
                     <IconButton
                         color='success'
@@ -71,4 +73,6 @@ const Responder = () => {
     );
 }
 
-export default Responder;
+export default withAuthenticationRequired(Responder, {
+    onRedirecting: () => <Loading/>,
+});

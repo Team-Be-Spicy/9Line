@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import WelcomePage from "./route/WelcomePage";
 import Requester from "./route/Requester";
 import Responder from "./route/Responder";
@@ -14,9 +14,16 @@ import SWFLogo from "./images/swf-log.png"
 
 import MenuIcon from '@mui/icons-material/Menu';
 import {AppBar} from "@mui/material";
+import Button from "@mui/material/Button";
+import {useAuth0} from "@auth0/auth0-react";
 
 const App = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const { user, isAuthenticated, getAccessTokenSilently, loginWithRedirect, logout } = useAuth0();
+
+    useEffect(() => {
+        console.log(window.location.origin);
+    }, []);
 
     const list = () => (
         <Box
@@ -53,6 +60,12 @@ const App = () => {
 
             </List>
             <Divider/>
+            {isAuthenticated ?
+                <Button onClick={() => logout({returnTo: window.location.origin})}>Logout</Button>
+                :
+                <Button onClick={() => loginWithRedirect()}>Login</Button>
+            }
+
         </Box>
     );
 
