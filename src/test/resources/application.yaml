@@ -15,3 +15,11 @@ spring:
         jdbc:
           time_zone: UTC
         dialect: org.hibernate.dialect.MySQL8Dialect
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://dev-h1uk-ini.us.auth0.com/
+
+auth0:
+  audience: https://egor-dev.com
