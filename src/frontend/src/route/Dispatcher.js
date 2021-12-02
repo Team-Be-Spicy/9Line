@@ -6,6 +6,8 @@ import {fetchRequests, updateResponder} from "../service/service";
 import AssignResponderModal from "../component/AssignResponderModal";
 import {Alert, Box, IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import {withAuthenticationRequired} from "@auth0/auth0-react";
+import Loading from "../component/Loading";
 
 const Dispatcher = () => {
 
@@ -103,4 +105,6 @@ const Dispatcher = () => {
 }
 
 
-export default Dispatcher;
+export default withAuthenticationRequired(Dispatcher, {
+    onRedirecting: () => <Loading/>,
+});
