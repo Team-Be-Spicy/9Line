@@ -5,10 +5,10 @@ import {fetchRequests, updateStatus} from "../service/service";
 import {Alert, Box, IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DetailModal from "../component/DetailModal";
-import {withAuthenticationRequired} from "@auth0/auth0-react";
+import {useAuth0, withAuthenticationRequired} from "@auth0/auth0-react";
 import Loading from "../component/Loading";
 
-const Responder = ({getToken, isAuthenticated, isLoading}) => {
+const Responder = () => {
 
     const [requests, setRequests] = useState([]);
     const [alert, setAlert] = useState(false);
@@ -16,17 +16,16 @@ const Responder = ({getToken, isAuthenticated, isLoading}) => {
     const [open, setOpen] = useState(false);
     const [data, setData] = useState({});
 
-    useEffect(() => {
-        if (isAuthenticated && !isLoading) {
-            fetchRequests(getAccessToken()).then(res => setRequests(res.data));
-        }
-    }, [isAuthenticated, isLoading]);
+    const {getAccessTokenSilently, isLoading, isAuthenticated} = useAuth0();
 
-    const getAccessToken = async () => {
-        return await getToken({
-            audience: "https://egor-dev.com",
-        });
-    }
+    useEffect(async () => {
+        console.log("hi hi hi hi hi");
+        const token = await getAccessTokenSilently({audience:"https://dev-h1uk-ini.us.auth0.com/api/v2/", scope:"read:requests"});
+        console.log("can we please make it here?");
+        console.log(token);
+        const response = await fetchRequests(token);
+        console.log(response);
+    }, [getAccessTokenSilently]);
 
     const onViewClicked = (requestId) => {
         setData(requests.find(request => request.id === requestId));

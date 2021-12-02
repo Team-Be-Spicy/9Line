@@ -15,7 +15,7 @@ import NavigationList from "./component/NavigationList";
 
 const App = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const {user, isAuthenticated, getAccessTokenSilently, loginWithRedirect, logout, isLoading} = useAuth0();
+    const {isAuthenticated, loginWithRedirect, logout} = useAuth0();
 
     return (
         <div>
@@ -55,8 +55,7 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<Requester/>}/>
                 <Route path="/responder"
-                       element={<Responder getToken={getAccessTokenSilently} isAuthenticated={isAuthenticated}
-                                           isLoading={isLoading}/>}/>
+                       element={<Responder/>}/>
                 <Route path="/dispatcher" element={<Dispatcher/>}/>
             </Routes>
         </div>

@@ -9,6 +9,7 @@ export const submitForm = async (formData) => {
 }
 
 export const fetchRequests = async (token) => {
+    console.log(token);
     return await axios.get('/api/request', {headers: {Authorization: `Bearer +${token}`}});
 }
 
