@@ -19,7 +19,7 @@ const Popup = ({responder, status}) => {
                 </Box>
                 <Box sx={{display:"flex"}}>
                     <Typography fontSize={"16px"}>
-                        {responder}
+                        {responder || "N/A"}
                     </Typography>
                 </Box>
             </Box>
@@ -40,7 +40,7 @@ const Popup = ({responder, status}) => {
     )
 }
 
-const ReportMap = () => {
+const ReportMap = ({requests}) => {
     const STYLE_URL = "mapbox://styles/egorkra/ckwnsh9qu2f2o15obo0qo2fjc";
 
     const mapContainer = useRef(null);
@@ -53,7 +53,7 @@ const ReportMap = () => {
     const createPoints = () => {
         let points = [];
 
-        data.map(point => {
+        requests.map(point => {
             points.push(
                 {
                     'type': 'Feature',
@@ -146,7 +146,7 @@ const ReportMap = () => {
     return (
         <div
             ref={mapContainer}
-            style={{width: "500px", height: "500px"}}
+            style={{width: "100%", height: "100%", borderRadius: '15px'}}
         />
 
     );

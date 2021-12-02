@@ -1,18 +1,23 @@
 import MonthBarChart from "../component/MonthBarChart";
 import PrecedencePieChart from "../component/PrecedencePieChart";
 import RequestLineChart from "../component/RequestLineChart";
-import {Box} from "@mui/material";
+import {Box, CircularProgress} from "@mui/material";
 import RequestList from "../component/RequestList";
 import {useEffect, useState} from "react";
 import {fetchRequests} from "../service/service";
+import ReportMap from "../component/ReportMap";
 
 
 const Report = () => {
-
     const [requests, setRequests] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchRequests("dispatcher").then(res => setRequests(res.data));
+        fetchRequests("dispatcher").then(res => {
+            setRequests(res.data)
+            setLoading(false);
+        });
+
     }, [])
 
     return (
@@ -43,13 +48,17 @@ const Report = () => {
                         <RequestLineChart/>
                     </Box>
                 </Box>
-                <Box sx={{width: 1 / 2}}>MAP GOES HERE</Box>
+                <Box sx={{width: 1 / 2}}>
+                    {loading ? <CircularProgress/>
+                        :
+                        <ReportMap requests={requests}/>}
+                </Box>
             </Box>
             <Box sx={{display: 'flex', justifyContent: 'center'}}>
-            <div className="requestListContainer">
-                <h1>Completed MEDEVAC Requests</h1>
-                <RequestList user={"responder"} requests={requests}/>
-            </div>
+                <div className="requestListContainer">
+                    <h1>Completed MEDEVAC Requests</h1>
+                    <RequestList user={"responder"} requests={requests}/>
+                </div>
             </Box>
         </Box>
     );
