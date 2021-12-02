@@ -13,8 +13,7 @@ import {useForm, Controller} from "react-hook-form";
 import Button from "@mui/material/Button";
 import {useEffect, useState, useRef} from "react";
 import {submitForm} from "../service/service";
-import {useEffect, useState} from "react";
-import {fetchRequests, submitForm} from "../service/service";
+import {submitForm} from "../service/service";
 import DetailModal from "../component/DetailModal";
 import CloseIcon from "@mui/icons-material/Close";
 import {
@@ -28,7 +27,6 @@ import mgrs from "mgrs";
 import PersonPinIcon from '@mui/icons-material/PersonPin';
 import MapIcon from '@mui/icons-material/Map';
 import MapModal from "../component/MapModal";
-import {useAuth0} from "@auth0/auth0-react";
 
 const Requester = () => {
     const [selectedItems, setSelectedItems] = useState([]);
