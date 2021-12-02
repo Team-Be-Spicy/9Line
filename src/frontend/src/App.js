@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import WelcomePage from "./route/WelcomePage";
 import Requester from "./route/Requester";
 import Responder from "./route/Responder";
+import Report from "./route/Report";
 import {NavLink, Route, Routes} from "react-router-dom";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -11,7 +12,6 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import Dispatcher from "./route/Dispatcher";
 import SWFLogo from "./images/swf-log.png"
-
 import MenuIcon from '@mui/icons-material/Menu';
 import {AppBar} from "@mui/material";
 
@@ -50,6 +50,12 @@ const App = () => {
                         className={({isActive}) => isActive ? "active-link" : "inactive-link"}
                     >Dispatcher Page</NavLink>
                 </ListItem>
+                <ListItem>
+                    <NavLink
+                        to="/report"
+                        className={({isActive}) => isActive ? "active-link" : "inactive-link"}
+                    >Report Page</NavLink>
+                </ListItem>
 
             </List>
             <Divider/>
@@ -78,6 +84,7 @@ const App = () => {
                 <Route path="/requester" element={<Requester />} />
                 <Route path="/responder" element={<Responder />} />
                 <Route path="/dispatcher" element={<Dispatcher />} />
+                <Route path="/report" element={<Report />} />
             </Routes>
         </div>
     );
