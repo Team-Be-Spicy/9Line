@@ -8,9 +8,9 @@ export const submitForm = async (formData) => {
     return axios.post('/api/request', formData);
 }
 
-export const fetchRequests = async (role) => {
-    return await axios.get('/api/request', {headers: {Authorization: role}});
-}
+export const fetchRequests = async (token, responderName) => {
+    return await axios.get(`/api/request/responder/${responderName}`, {headers: {Authorization: `Bearer ${token}`}});
+};
 
 export const updateStatus = async (requestId) => {
     return await axios.patch('/api/request/status/' + requestId);
@@ -19,3 +19,4 @@ export const updateStatus = async (requestId) => {
 export const updateResponder = async (id,respName) => {
     return await axios.patch('/api/request/responder/' + id, {responder: respName});
 }
+

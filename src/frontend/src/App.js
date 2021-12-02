@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Requester from "./route/Requester";
 import Responder from "./route/Responder";
 import {Route, Routes} from "react-router-dom";
@@ -16,7 +16,7 @@ import Report from "./route/Report";
 
 const App = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const {user, isAuthenticated, getAccessTokenSilently, loginWithRedirect, logout} = useAuth0();
+    const {isAuthenticated, loginWithRedirect, logout} = useAuth0();
 
     return (
         <div>
@@ -55,7 +55,8 @@ const App = () => {
             </AppBar>
             <Routes>
                 <Route path="/" element={<Requester/>}/>
-                <Route path="/responder" element={<Responder/>}/>
+                <Route path="/responder"
+                       element={<Responder/>}/>
                 <Route path="/dispatcher" element={<Dispatcher/>}/>
                 <Route path="/report" element={<Report/>}/>
             </Routes>

@@ -32,11 +32,14 @@ const AssignResponderModal = ({open, handleClose, assignResponder, setSelectedRe
                     defaultValue={selectedResponder}
                     onChange={(e) => setSelectedResponder(e.target.value)}
                     sx={{width: '100%'}} >
-                    <MenuItem value='Responder One'>
+                    <MenuItem value='responder1@nineline.com'>
                         Responder One
                     </MenuItem>
-                    <MenuItem value='Responder Two'>
+                    <MenuItem value='responder2@nineline.com'>
                         Responder Two
+                    </MenuItem>
+                    <MenuItem value='responder3@nineline.com'>
+                        Responder Three
                     </MenuItem>
                 </Select>
 

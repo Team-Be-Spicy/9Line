@@ -6,7 +6,7 @@ import {fetchRequests, updateResponder} from "../service/service";
 import AssignResponderModal from "../component/AssignResponderModal";
 import {Alert, Box, IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import {withAuthenticationRequired} from "@auth0/auth0-react";
+import {useAuth0, withAuthenticationRequired} from "@auth0/auth0-react";
 import Loading from "../component/Loading";
 
 const Dispatcher = () => {
@@ -17,14 +17,18 @@ const Dispatcher = () => {
     const [detailOpen, setDetailOpen] = useState(false);
     const [assignOpen, setAssignOpen] = useState(false);
     const [selectedIDs, setSelectedIDs] = useState([]);
-    const [selectedResponder, setSelectedResponder] = useState("Responder One");
+    const [selectedResponder, setSelectedResponder] = useState("responder1@nineline.com");
 
-    useEffect(() => {
-        fetchFromDB();
+    const {user, getAccessTokenSilently} = useAuth0();
+
+    useEffect(async () => {
+        const response = await fetchFromDB();
+        setRequests(response.data);
     }, []);
 
-    const fetchFromDB = () => {
-        fetchRequests("dispatcher").then(res => setRequests(res.data));
+    const fetchFromDB = async () => {
+        const token = await getAccessTokenSilently({audience: "https://egor-dev.com", scope: "read:requests"});
+        return await fetchRequests(token, user.name);
     }
 
     const assignResponderToSingle = async () => {

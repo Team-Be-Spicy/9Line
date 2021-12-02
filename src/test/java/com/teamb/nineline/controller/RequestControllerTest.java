@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -73,6 +74,7 @@ class RequestControllerTest {
     @Test
     @Transactional
     @Rollback
+    @WithMockUser
     public void getRequestsByDispatcher() throws Exception {
         Request request1 = new Request();
         request1.setLocation("38STM1234567890");
@@ -125,8 +127,7 @@ class RequestControllerTest {
 
         this.requestRepository.save(request3);
 
-        MockHttpServletRequestBuilder request = get("/api/request")
-            .header(AUTHORIZATION,DISPATCHER);
+        MockHttpServletRequestBuilder request = get("/api/request/responder/dispatcher@nineline.com");
 
         String expected = objectMapper.writeValueAsString(Arrays.array(request1,request2));
 
@@ -138,10 +139,11 @@ class RequestControllerTest {
     @Test
     @Transactional
     @Rollback
+    @WithMockUser
     public void getRequestsByResponder() throws Exception {
         Request request1 = new Request();
         request1.setLocation("38STM1234567890");
-        request1.setResponder("Responder One");
+        request1.setResponder("responder1@nineline.com");
         request1.setCallSign("raptor1");
         request1.setTotalPatient(3);
         request1.setPrecedence("urgent");
@@ -158,7 +160,7 @@ class RequestControllerTest {
 
         Request request2 = new Request();
         request2.setLocation("22STL2345678901");
-        request2.setResponder("Responder One");
+        request2.setResponder("responder1@nineline.com");
         request2.setCallSign("humvee7");
         request2.setTotalPatient(3);
         request2.setPrecedence("urgent surgical");
@@ -175,7 +177,7 @@ class RequestControllerTest {
 
         Request request3 = new Request();
         request3.setLocation("22STL2345678901");
-        request3.setResponder("Responder Two");
+        request3.setResponder("responder2@nineline.com");
         request3.setCallSign("humvee7");
         request3.setTotalPatient(3);
         request3.setPrecedence("urgent surgical");
@@ -190,8 +192,7 @@ class RequestControllerTest {
 
         this.requestRepository.save(request3);
 
-        MockHttpServletRequestBuilder request = get("/api/request")
-                .header(AUTHORIZATION,RESPONDER);
+        MockHttpServletRequestBuilder request = get("/api/request/responder/responder1@nineline.com");
 
         String expected = objectMapper.writeValueAsString(Arrays.array(request1,request2));
 
