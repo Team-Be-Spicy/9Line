@@ -7,12 +7,10 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Dispatcher from "./route/Dispatcher";
 import SWFLogo from "./images/swf-log.png"
-
 import MenuIcon from '@mui/icons-material/Menu';
 import {AppBar} from "@mui/material";
 import {useAuth0} from "@auth0/auth0-react";
 import NavigationList from "./component/NavigationList";
-import ReportMap from "./component/ReportMap";
 
 const App = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -55,7 +53,6 @@ const App = () => {
             </AppBar>
             <Routes>
                 <Route path="/" element={<Requester/>}/>
-                <Route path="/report-map" element={<ReportMap/>}/>
                 <Route path="/responder" element={<Responder/>}/>
                 <Route path="/dispatcher" element={<Dispatcher/>}/>
             </Routes>
