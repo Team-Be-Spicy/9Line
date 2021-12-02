@@ -2,6 +2,7 @@ package com.teamb.nineline.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -20,13 +21,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.oauth2ResourceServer().jwt();
-
         http.authorizeRequests()
-                .mvcMatchers("/api/").permitAll()
-                .mvcMatchers("/api/request").authenticated()
+                .mvcMatchers(HttpMethod.GET, "/api/request/responder/**").authenticated()
+                .mvcMatchers(HttpMethod.POST, "/api/request").permitAll()
                 .and().cors()
                 .and().oauth2ResourceServer().jwt();
+
+        http.csrf().disable();
     }
 
     @Bean

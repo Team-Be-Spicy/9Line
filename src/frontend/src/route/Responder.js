@@ -1,7 +1,7 @@
 import RequestList from "../component/RequestList";
 import "./Responder.css";
 import {useEffect, useState} from "react";
-import {fetchRequests, updateStatus} from "../service/service";
+import {fetchRequests, fetchResponderRequests, updateStatus} from "../service/service";
 import {Alert, Box, IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DetailModal from "../component/DetailModal";
@@ -16,15 +16,12 @@ const Responder = () => {
     const [open, setOpen] = useState(false);
     const [data, setData] = useState({});
 
-    const {getAccessTokenSilently, isLoading, isAuthenticated} = useAuth0();
+    const {user, getAccessTokenSilently} = useAuth0();
 
     useEffect(async () => {
-        console.log("hi hi hi hi hi");
-        const token = await getAccessTokenSilently({audience:"https://dev-h1uk-ini.us.auth0.com/api/v2/", scope:"read:requests"});
-        console.log("can we please make it here?");
-        console.log(token);
-        const response = await fetchRequests(token);
-        console.log(response);
+        const token = await getAccessTokenSilently({audience: "https://egor-dev.com", scope: "read:requests"});
+        const response = await fetchRequests(token, user.name);
+        setRequests(response.data);
     }, [getAccessTokenSilently]);
 
     const onViewClicked = (requestId) => {

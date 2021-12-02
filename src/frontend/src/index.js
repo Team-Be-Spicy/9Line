@@ -10,7 +10,10 @@ ReactDOM.render(
         <Auth0Provider
             domain="dev-h1uk-ini.us.auth0.com"
             clientId="42OUbI4FtCJU11MOUEgil56j05SfHaxf"
-            redirectUri={window.location.origin}>
+            redirectUri={window.location.origin}
+            cacheLocation="localstorage"
+            audience="https://egor-dev.com"
+        >
             <HashRouter>
                 <App/>
             </HashRouter>

@@ -12,7 +12,7 @@ import {
 import {useForm, Controller} from "react-hook-form";
 import Button from "@mui/material/Button";
 import {useEffect, useState} from "react";
-import {submitForm} from "../service/service";
+import {fetchRequests, submitForm} from "../service/service";
 import DetailModal from "../component/DetailModal";
 import CloseIcon from "@mui/icons-material/Close";
 import {
@@ -22,6 +22,7 @@ import {
     POSSIBLE_ENEMY_TROOPS,
     AMBULATORY_PATIENT_NUMBER, LITTER_PATIENT_NUMBER, PATIENT_NUMBER_NOT_VALID
 } from "../constant/RequestConstants";
+import {useAuth0} from "@auth0/auth0-react";
 
 const Requester = () => {
     const [selectedItems, setSelectedItems] = useState([]);

@@ -12,7 +12,7 @@ public class RequestService {
 
     private static final String REQUEST_NOT_FOUND = "Request not found";
     public static final String COMPLETE = "Complete";
-    public static final String DISPATCHER = "dispatcher";
+    public static final String DISPATCHER = "dispatcher@nineline.com";
 
     private RequestRepository requestRepository;
 
@@ -20,8 +20,8 @@ public class RequestService {
         return requestRepository.save(body);
     }
 
-    public Iterable<Request> getRequestsByRole(String role){
-        return this.requestRepository.findAllByResponder(role.equals(DISPATCHER) ? null : "Responder One");
+    public Iterable<Request> getRequestsByRole(String responderName){
+        return this.requestRepository.findAllByResponder(responderName.equals(DISPATCHER) ? null : responderName);
     }
 
     public Request getRequest(Long id) throws RequestExistsException {

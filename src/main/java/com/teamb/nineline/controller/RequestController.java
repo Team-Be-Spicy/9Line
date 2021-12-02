@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("api/request")
+@RequestMapping("/api/request")
 @AllArgsConstructor
 public class RequestController {
 
@@ -21,9 +21,9 @@ public class RequestController {
        return new ResponseEntity<>(requestService.createRequest(body), HttpStatus.CREATED);
     }
 
-    @GetMapping
-    private Iterable<Request> getRequestsByRole(@RequestHeader String authorization) {
-        return requestService.getRequestsByRole(authorization);
+    @GetMapping("/responder/{responderName}")
+    private Iterable<Request> getRequestsByRole(@PathVariable(required = false) String responderName) {
+        return requestService.getRequestsByRole(responderName);
     }
 
     @GetMapping("/{id}")
