@@ -13,7 +13,6 @@ import {useForm, Controller} from "react-hook-form";
 import Button from "@mui/material/Button";
 import {useEffect, useState, useRef} from "react";
 import {submitForm} from "../service/service";
-import {submitForm} from "../service/service";
 import DetailModal from "../component/DetailModal";
 import CloseIcon from "@mui/icons-material/Close";
 import {
