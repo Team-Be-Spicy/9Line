@@ -12,6 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {AppBar} from "@mui/material";
 import {useAuth0} from "@auth0/auth0-react";
 import NavigationList from "./component/NavigationList";
+import Report from "./route/Report";
 
 const App = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -57,6 +58,7 @@ const App = () => {
                 <Route path="/responder"
                        element={<Responder/>}/>
                 <Route path="/dispatcher" element={<Dispatcher/>}/>
+                <Route path="/report" element={<Report/>}/>
             </Routes>
         </div>
     );
