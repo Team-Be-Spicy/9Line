@@ -3,6 +3,12 @@ h1 {
   font-weight: 200;
 }
 
+h2 {
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+}
+
 .App {
   text-align: center;
 }
