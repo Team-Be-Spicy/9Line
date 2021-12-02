@@ -1,6 +1,6 @@
 import {
     AppBar,
-    Button,
+    Button, CircularProgress,
     Dialog,
     DialogContent,
     IconButton,
@@ -14,9 +14,7 @@ import {forwardRef, useEffect, useRef, useState} from "react";
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mgrs from "mgrs";
 import Box from "@mui/material/Box";
-import {CircleLoader} from "react-spinners";
-
-mapboxgl.accessToken = 'pk.eyJ1IjoiZWdvcmtyYSIsImEiOiJja21uMXk5OHMwdTN4Mm9wbDVpOXllcGY0In0.ZheSrkcBpR9hmpfG0qW5EQ';
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -118,7 +116,7 @@ const MapboxWrapper = ({handleClose, setLocation}) => {
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
-                    <CircleLoader color="#1976D2" loading={!mapLoaded} size={200}/>
+                    {!mapLoaded && <CircularProgress size={150}/>}
                 </Box>
             </DialogContent>
         </>
