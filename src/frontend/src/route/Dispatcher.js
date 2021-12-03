@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import "./Dispatcher.css";
 import RequestList from "../component/RequestList";
 import DetailModal from "../component/DetailModal";
-import {fetchRequests, updateResponder} from "../service/service";
+import {fetchRequests, updateResponder, updateStatus} from "../service/service";
 import AssignResponderModal from "../component/AssignResponderModal";
 import {Alert, Box, IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -22,29 +22,30 @@ const Dispatcher = () => {
     const {user, getAccessTokenSilently} = useAuth0();
 
     useEffect(async () => {
-        const response = await fetchFromDB();
-        setRequests(response.data.filter(d => d.status !== "Complete"));
+        await fetchFromDB();
     }, []);
 
-    const fetchFromDB = async () => {
-        return await fetchRequests(await getAccessTokenSilently(), user.name);
-    }
+    const fetchFromDB = async () => setRequests((await fetchRequests(await getAccessTokenSilently(), user.name)).data.filter(r => r.status !== "Complete"));
 
     const assignResponderToSingle = async () => {
-        await updateResponder(await getAccessTokenSilently(), currentRequest.id, selectedResponder);
+        const token = await getAccessTokenSilently();
+
+        await updateResponder(token, currentRequest.id, selectedResponder);
+        await updateStatus(token, currentRequest.id, "Assigned");
         setAlert(true);
         handleDetailClose();
-        fetchFromDB();
+        await fetchFromDB();
     }
 
     const assignResponderToMultiple = async () => {
         const token = await getAccessTokenSilently();
         for (const id of selectedIDs) {
             await updateResponder(token, id, selectedResponder);
+            await updateStatus(token, id, "Assigned");
         }
         setAlert(true);
         handleAssignClose();
-        fetchFromDB();
+        await fetchFromDB();
     }
 
     const handleDetailClose = () => {
