@@ -21,7 +21,11 @@ public class RequestService {
     }
 
     public Iterable<Request> getRequestsByRole(String responderName){
-        return this.requestRepository.findAllByResponder(responderName.equals(DISPATCHER) ? null : responderName);
+        if (responderName.equals(DISPATCHER)){
+            return this.requestRepository.findAll();
+        }
+
+        return this.requestRepository.findAllByResponder(responderName);
     }
 
     public Iterable<Request> getAllRequests(){
@@ -41,9 +45,9 @@ public class RequestService {
         return requestRepository.save(request);
     }
 
-    public Request updateStatus(Long id) throws RequestExistsException {
+    public Request updateStatus(Long id, String status) throws RequestExistsException {
         Request request = requestRepository.findById(id).orElseThrow(() -> new RequestExistsException(REQUEST_NOT_FOUND));
-        request.setStatus(COMPLETE);
+        request.setStatus(status);
         return requestRepository.save(request);
     }
 }

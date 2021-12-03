@@ -89,7 +89,7 @@ class RequestControllerTest {
         request1.setSecurity("clear");
         request1.setNational("US");
         request1.setLine9("no nbc");
-        request1.setStatus(null);
+        request1.setStatus("Assigned");
 
         this.requestRepository.save(request1);
 
@@ -106,7 +106,7 @@ class RequestControllerTest {
         request2.setSecurity("clear");
         request2.setNational("UK");
         request2.setLine9("no nbc");
-        request2.setStatus(null);
+        request2.setStatus("Pending");
 
         this.requestRepository.save(request2);
 
@@ -123,13 +123,13 @@ class RequestControllerTest {
         request3.setSecurity("clear");
         request3.setNational("UK");
         request3.setLine9("no nbc");
-        request3.setStatus(null);
+        request3.setStatus("Complete");
 
         this.requestRepository.save(request3);
 
         MockHttpServletRequestBuilder request = get("/api/request/responder/dispatcher@nineline.com");
 
-        String expected = objectMapper.writeValueAsString(Arrays.array(request1,request2));
+        String expected = objectMapper.writeValueAsString(Arrays.array(request1,request2,request3));
 
         mvc.perform(request)
                 .andExpect(status().isOk())
@@ -268,7 +268,11 @@ class RequestControllerTest {
         request2.setLine9("no nbc");
         request2.setStatus("Complete");
 
-        MockHttpServletRequestBuilder request = patch("/api/request/status/" + savedRequest.getId());
+
+
+        MockHttpServletRequestBuilder request = patch("/api/request/status/" + savedRequest.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request2));
 
         mvc.perform(request)
                 .andExpect(status().isOk())

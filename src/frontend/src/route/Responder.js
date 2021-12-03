@@ -37,7 +37,7 @@ const Responder = () => {
         const token = await getAccessTokenSilently();
         setAlert(true);
         for (const id of selectedIds) {
-            await updateStatus(token, id);
+            await updateStatus(token, id, "Complete");
         }
         await updateRequests();
         closeModal();
