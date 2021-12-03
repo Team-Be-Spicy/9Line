@@ -47,7 +47,12 @@ const ReportMap = ({requests, mapLocation}) => {
     const mapContainer = useRef(null);
     const map = useRef(null);
     const [mapLoaded, setMapLoaded] = useState(false);
-    const popUpRef = useRef(new mapboxgl.Popup({offset: 15, closeButton: false, closeOnClick: false}))
+    const popUpRef = useRef(new mapboxgl.Popup({
+        offset: 15,
+        closeButton: false,
+        closeOnClick: false,
+        maxWidth: '750px'
+    }));
 
 
     const convertMgrsToLatLng = (mgrsString) => mgrs.toPoint(mgrsString);
@@ -111,8 +116,8 @@ const ReportMap = ({requests, mapLocation}) => {
                         '#FFA500',
                         '#000000'
                     ],
-                    'circle-radius': 6,
-                    'circle-stroke-width': 2,
+                    'circle-radius': 8,
+                    'circle-stroke-width': 3,
                     'circle-stroke-color': '#ffffff'
                 }
             });
@@ -124,7 +129,7 @@ const ReportMap = ({requests, mapLocation}) => {
                 'maxzoom': 14
             });
 
-            map.current.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.75 });
+            map.current.setTerrain({'source': 'mapbox-dem', 'exaggeration': 1.75});
 
             map.current.addLayer({
                 'id': 'sky',

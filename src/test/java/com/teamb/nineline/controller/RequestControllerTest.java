@@ -68,7 +68,7 @@ class RequestControllerTest {
         mvc.perform(request)
                 .andExpect(status().isCreated());
 
-        assertEquals(requestRepository.count(), 1);
+        assertEquals(requestRepository.count(), 4);
     }
 
     @Test
@@ -281,7 +281,7 @@ class RequestControllerTest {
     @WithMockUser
     public void catchRequestExistsException() throws Exception{
 
-        MockHttpServletRequestBuilder request = get("/api/request/" + 1);
+        MockHttpServletRequestBuilder request = get("/api/request/" + 10);
 
         mvc.perform(request)
                 .andExpect(status().isBadRequest());
