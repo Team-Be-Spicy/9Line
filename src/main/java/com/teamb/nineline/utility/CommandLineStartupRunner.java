@@ -4,10 +4,12 @@ import com.teamb.nineline.model.Request;
 import com.teamb.nineline.repository.RequestRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@Profile("!test")
 @Component
 @AllArgsConstructor
 public class CommandLineStartupRunner implements CommandLineRunner {
