@@ -2,10 +2,8 @@ package com.teamb.nineline.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -31,5 +29,8 @@ public class Request {
     private String national;
     private String line9;
     private String status;
+
+    @Temporal(TemporalType.DATE)
+    private Date date;
 
 }

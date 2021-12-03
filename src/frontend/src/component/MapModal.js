@@ -14,6 +14,7 @@ import {forwardRef, useEffect, useRef, useState} from "react";
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mgrs from "mgrs";
 import Box from "@mui/material/Box";
+
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -51,19 +52,38 @@ const MapboxWrapper = ({handleClose, setLocation}) => {
         convertMarkerLocation(mapCenter);
 
         map.current.on('load', () => {
+            map.current.addSource('mapbox-dem', {
+                'type': 'raster-dem',
+                'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+                'tileSize': 512,
+                'maxzoom': 14
+            });
 
-            function onDragEnd() {
-                const lngLat = marker.getLngLat();
-                convertMarkerLocation([lngLat.lng, lngLat.lat]);
-            }
+            map.current.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.75 });
+
+            map.current.addLayer({
+                'id': 'sky',
+                'type': 'sky',
+                'paint': {
+                    'sky-type': 'atmosphere',
+                    'sky-atmosphere-sun': [0.0, 0.0],
+                    'sky-atmosphere-sun-intensity': 15
+                }
+            });
 
             const marker = new mapboxgl.Marker({draggable: true})
                 .setLngLat(mapCenter)
                 .addTo(map.current);
 
 
-            marker.on('dragend', onDragEnd);
             setMapLoaded(true);
+
+            map.current.on('click', (e) => {
+                const lngLat = e.lngLat;
+                marker.setLngLat(lngLat);
+                convertMarkerLocation([lngLat.lng, lngLat.lat]);
+            });
+
         });
     }
 
@@ -108,16 +128,17 @@ const MapboxWrapper = ({handleClose, setLocation}) => {
                 </Toolbar>
             </AppBar>
             <DialogContent
-                sx={{alignContent: "center", padding: 0, margin: 0}}>
-                <Box ref={mapContainer} sx={{
+                sx={{padding: 0, margin: 0}}>
+                <div ref={mapContainer} style={{
                     width: "100%",
                     height: "100%",
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center'
+                    position: 'relative'
                 }}>
-                    {!mapLoaded && <CircularProgress size={150}/>}
-                </Box>
+                    {!mapLoaded &&
+                        <div
+                            style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}}>
+                            <CircularProgress size={150}/></div>}
+                </div>
             </DialogContent>
         </>
     );

@@ -2,24 +2,24 @@ import React from 'react';
 import {PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer} from 'recharts';
 import Box from "@mui/material/Box";
 
-const data = [
-    {
-        precedence: "Urgent",
-        requests: 5
-    },
-    {
-        precedence: "Urgent Surgical",
-        requests: 3
-    },
-    {
-        precedence: "Priority",
-        requests: 2
-    },
-    {
-        precedence: "Routine",
-        requests: 4
-    },
-]
+// const data = [
+//     {
+//         precedence: "Urgent",
+//         requests: 5
+//     },
+//     {
+//         precedence: "Urgent Surgical",
+//         requests: 3
+//     },
+//     {
+//         precedence: "Priority",
+//         requests: 2
+//     },
+//     {
+//         precedence: "Routine",
+//         requests: 4
+//     },
+// ]
 
 const CustomTooltip = ({active, payload, label}) => {
     if (active) {
@@ -49,9 +49,41 @@ const renderCustomizedLabel = ({cx, cy, midAngle, innerRadius, outerRadius, perc
     );
 };
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const COLORS = ['#FF8042', '#FFBB28', '#0088FE', '#00C49F'];
 
-const PrecedencePieChart = () => {
+const PrecedencePieChart = ({requests}) => {
+
+    let urgent = 0;
+    let urgentSurgical = 0;
+    let priority = 0;
+    let routine = 0;
+
+    requests.forEach(request => {
+        if(request.precedence === "Urgent") urgent += request.totalPatient;
+        else if(request.precedence === "Urgent Surgical") urgentSurgical += request.totalPatient;
+        else if(request.precedence === "Priority") priority += request.totalPatient;
+        else if(request.precedence === "Routine") routine += request.totalPatient;
+    });
+
+    const data = [
+        {
+            precedence: "Urgent",
+            requests: urgent
+        },
+        {
+            precedence: "Urgent Surgical",
+            requests: urgentSurgical
+        },
+        {
+          precedence: "Priority",
+          requests: priority
+        },
+        {
+            precedence: "Routine",
+            requests: routine
+        }
+    ];
+
     return (
         <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: 1/2, height: 1}}>
             <h3>Patients by Precedence</h3>
@@ -64,6 +96,7 @@ const PrecedencePieChart = () => {
                         nameKey="precedence"
                         labelLine={false}
                         label={renderCustomizedLabel}
+                        isAnimationActive={false}
                         cx="50%"
                         cy="50%"
                         fill="#8884d8">

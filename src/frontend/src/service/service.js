@@ -1,11 +1,15 @@
 import axios from "axios";
 
-export const testBackend = async () => {
-    return await axios.get('/api/test');
-}
-
 export const submitForm = async (formData) => {
     return axios.post('/api/request', formData);
+}
+
+export const fetchCompleted = async (token) => {
+    return await axios.get('/api/request/complete', {headers: {Authorization: `Bearer ${token}`}});
+}
+
+export const fetchAll = async (token) => {
+    return await axios.get('/api/request/all', {headers: {Authorization: `Bearer ${token}`}});
 }
 
 export const fetchRequests = async (token, responderName) => {
