@@ -7,7 +7,6 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Dispatcher from "./route/Dispatcher";
 import SWFLogo from "./images/swf-log.png"
-
 import MenuIcon from '@mui/icons-material/Menu';
 import {AppBar, Stack} from "@mui/material";
 import {useAuth0} from "@auth0/auth0-react";
