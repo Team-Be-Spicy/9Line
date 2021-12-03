@@ -4,8 +4,9 @@ import {DataGrid} from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import {useState} from "react";
 import {Stack} from "@mui/material";
+import {data} from "../Dummy-data";
 
-const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
+const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLocation}) => {
 
     const [selectedRequestIds, setSelectedRequestIds] = useState([]);
     const [pageSize, setPageSize] = useState(5);
@@ -122,6 +123,11 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
             }
 
             <DataGrid
+                onCellClick={(params, event) => {
+                    if (params.field === 'location') {
+                        setMapLocation(params.formattedValue);
+                    }
+                }}
                 components={{
                     NoRowsOverlay: () => (
                         <Stack height="150px" alignItems="center" justifyContent="center">

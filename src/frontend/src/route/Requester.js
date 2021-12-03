@@ -35,6 +35,7 @@ const Requester = () => {
     const [data, setData] = useState({});
     const [loading, setLoading] = useState(true);
     const [isMapOpen, setIsMapOpen] = useState(false);
+    const [isNavigatorApiAvailable, setIsNavigatorApiAvailable] = useState(false);
     const isSmallScreen = useMediaQuery('(max-width:800px)');
 
     useEffect(() => {
@@ -48,12 +49,14 @@ const Requester = () => {
                 const mgrsLocation = mgrs.forward([position.coords.longitude, position.coords.latitude,], 5);
                 setLocation(mgrsLocation)
                 setLoading(false);
+                setIsNavigatorApiAvailable(true);
             }, () => {
                 console.error("Error getting your location");
                 setLoading(false);
             });
         } else {
             console.error("Geolocation is not supported by this browser.");
+            setIsNavigatorApiAvailable(false);
             setLoading(false);
         }
     }
@@ -145,19 +148,18 @@ const Requester = () => {
     return (
         <>
             {isMapOpen &&
-            <MapModal setLocation={setLocation} open={isMapOpen} handleClose={() => setIsMapOpen(false)}/>}
+                <MapModal setLocation={setLocation} open={isMapOpen} handleClose={() => setIsMapOpen(false)}/>}
             {alert &&
-            <Alert sx={{marginBottom: '28px', display: 'flex', alignItems: 'center'}} severity="success" action={
-                <Box sx={{display: 'flex', flexWrap: 'no-wrap'}}>
-                    <Button color="success" onClick={handleClickOpen}>View Details</Button>
-                    <IconButton
-                        color='success'
-                        onClick={() => setAlert(false)}
-                    >
-                        <CloseIcon/>
-                    </IconButton>
-                </Box>
-            }>Request Submitted. A dispatcher will contact you soon.</Alert>}
+                <Alert sx={{marginBottom: '28px', display: 'flex', alignItems: 'center'}} severity="success" action={
+                    <Box sx={{display: 'flex', flexWrap: 'no-wrap'}}>
+                        <Button color="success" onClick={handleClickOpen}>View Details</Button>
+                        <IconButton
+                            color='success'
+                            onClick={() => setAlert(false)}>
+                            <CloseIcon/>
+                        </IconButton>
+                    </Box>
+                }>Request Submitted. A dispatcher will contact you soon.</Alert>}
 
             <Container maxWidth="sm">
                 <h1>MEDEVAC Request Form</h1>
@@ -180,7 +182,7 @@ const Requester = () => {
                                         label="Location"/>
                                 )}
                             />
-                            <IconButton onClick={() => getCurrentLocation()} sx={{marginLeft: '6px'}} color="warning"
+                            <IconButton disabled={!isNavigatorApiAvailable} onClick={() => getCurrentLocation()} sx={{marginLeft: '6px'}} color="warning"
                                         size="large">
                                 <PersonPinIcon fontSize="large"/>
                             </IconButton>

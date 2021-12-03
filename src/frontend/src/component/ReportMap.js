@@ -3,34 +3,33 @@ import {Box, Typography} from "@mui/material";
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mgrs from "mgrs";
-import {data} from '../Dummy-data.js';
 import ReactDOM from "react-dom"
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 const Popup = ({responder, status}) => {
-    return(
+    return (
         <Box>
-            <Box sx={{display: 'flex', alignItems:"baseline"}}  marginBottom='6px' >
-                <Box sx={{display:"flex", justifyContent:"end"}}>
-                    <Typography fontWeight={'bolder'} fontSize={"14px"} >
+            <Box sx={{display: 'flex', alignItems: "baseline"}} marginBottom='6px'>
+                <Box sx={{display: "flex", justifyContent: "end"}}>
+                    <Typography fontWeight={'bolder'} fontSize={"14px"}>
                         Responder: &nbsp;
                     </Typography>
                 </Box>
-                <Box sx={{display:"flex"}}>
+                <Box sx={{display: "flex"}}>
                     <Typography fontSize={"16px"}>
                         {responder || "N/A"}
                     </Typography>
                 </Box>
             </Box>
 
-            <Box sx={{display: 'flex', alignItems:"baseline"}}  marginBottom='6px' >
-                <Box sx={{display:"flex", justifyContent:"end"}}>
-                    <Typography fontWeight={'bolder'} fontSize={"14px"} >
+            <Box sx={{display: 'flex', alignItems: "baseline"}} marginBottom='6px'>
+                <Box sx={{display: "flex", justifyContent: "end"}}>
+                    <Typography fontWeight={'bolder'} fontSize={"14px"}>
                         Status: &nbsp;
                     </Typography>
                 </Box>
-                <Box sx={{display:"flex"}}>
+                <Box sx={{display: "flex"}}>
                     <Typography fontSize={"16px"}>
                         {status}
                     </Typography>
@@ -40,19 +39,22 @@ const Popup = ({responder, status}) => {
     )
 }
 
-const ReportMap = ({requests}) => {
+const ReportMap = ({requests, mapLocation}) => {
+
+
     const STYLE_URL = "mapbox://styles/egorkra/ckwnsh9qu2f2o15obo0qo2fjc";
 
     const mapContainer = useRef(null);
     const map = useRef(null);
     const [mapLoaded, setMapLoaded] = useState(false);
-    const popUpRef = useRef(new mapboxgl.Popup({ offset: 15, closeButton: false, closeOnClick: false }))
+    const popUpRef = useRef(new mapboxgl.Popup({offset: 15, closeButton: false, closeOnClick: false}))
+
 
     const convertMgrsToLatLng = (mgrsString) => mgrs.toPoint(mgrsString);
 
     const createPoints = () => {
         let points = [];
-
+        console.log(requests);
         requests.map(point => {
             points.push(
                 {
@@ -77,8 +79,10 @@ const ReportMap = ({requests}) => {
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
             style: STYLE_URL,
-            center: convertMgrsToLatLng("43SBR1899486017"),
-            zoom: 15,
+            center: convertMgrsToLatLng("43SBR2899486117"),
+            zoom: 12,
+            pitch: 60,
+            bearing: -17.6,
         });
 
 
@@ -113,6 +117,24 @@ const ReportMap = ({requests}) => {
                 }
             });
 
+            map.current.addSource('mapbox-dem', {
+                'type': 'raster-dem',
+                'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+                'tileSize': 512,
+                'maxzoom': 14
+            });
+// add the DEM source as a terrain layer with exaggerated height
+            map.current.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.75 });
+
+            map.current.addLayer({
+                'id': 'sky',
+                'type': 'sky',
+                'paint': {
+                    'sky-type': 'atmosphere',
+                    'sky-atmosphere-sun': [0.0, 0.0],
+                    'sky-atmosphere-sun-intensity': 15
+                }
+            });
 
 
             map.current.on('mouseenter', 'places', (e) => {
@@ -139,9 +161,21 @@ const ReportMap = ({requests}) => {
                 map.current.getCanvas().style.cursor = '';
                 popUpRef.current.remove();
             });
+
+
         });
 
     }, []);
+
+    useEffect(() => {
+        if (mapLocation.length > 1) {
+            map.current.flyTo({
+                center: convertMgrsToLatLng(mapLocation),
+                zoom: 18,
+            });
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    }, [mapLocation]);
 
     return (
         <div
