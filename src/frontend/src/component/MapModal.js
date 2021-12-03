@@ -52,6 +52,24 @@ const MapboxWrapper = ({handleClose, setLocation}) => {
         convertMarkerLocation(mapCenter);
 
         map.current.on('load', () => {
+            map.current.addSource('mapbox-dem', {
+                'type': 'raster-dem',
+                'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+                'tileSize': 512,
+                'maxzoom': 14
+            });
+
+            map.current.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.75 });
+
+            map.current.addLayer({
+                'id': 'sky',
+                'type': 'sky',
+                'paint': {
+                    'sky-type': 'atmosphere',
+                    'sky-atmosphere-sun': [0.0, 0.0],
+                    'sky-atmosphere-sun-intensity': 15
+                }
+            });
 
             const marker = new mapboxgl.Marker({draggable: true})
                 .setLngLat(mapCenter)

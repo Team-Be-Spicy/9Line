@@ -123,7 +123,7 @@ const ReportMap = ({requests, mapLocation}) => {
                 'tileSize': 512,
                 'maxzoom': 14
             });
-// add the DEM source as a terrain layer with exaggerated height
+
             map.current.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.75 });
 
             map.current.addLayer({
