@@ -7,18 +7,24 @@ import {useEffect, useState} from "react";
 import {fetchCompleted} from "../service/service";
 import ReportMap from "../component/ReportMap";
 import {data} from "../Dummy-data";
+import {useAuth0} from "@auth0/auth0-react";
 
 
 const Report = () => {
-    const [requests, setRequests] = useState(data); // [] default
+    const {user, getAccessTokenSilently} = useAuth0();
+    const [requests, setRequests] = useState([]); // [] default
     const [loading, setLoading] = useState(true);
     const [mapLocation, setMapLocation] = useState('');
 
-    useEffect(() => {
-        fetchCompleted().then(res => {
-            setRequests(res.data)
-            setLoading(false);
-        });
+    useEffect(async () => {
+        try {
+            const result = await fetchCompleted(await getAccessTokenSilently());
+            setRequests(result.data);
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setLoading(false)
+        }
 
     }, [])
 
@@ -47,7 +53,7 @@ const Report = () => {
                     </Box>
                     <Box sx={{display: 'flex', flexDirection: "row"}}>
                         <MonthBarChart/>
-                        <RequestLineChart/>
+                        <RequestLineChart requests={requests}/>
                     </Box>
                 </Box>
                 <Box sx={{width: 1 / 2}}>
