@@ -23,24 +23,24 @@ const Dispatcher = () => {
 
     useEffect(async () => {
         const response = await fetchFromDB();
-        setRequests(response.data);
+        setRequests(response.data.filter(d => d.status !== "Complete"));
     }, []);
 
     const fetchFromDB = async () => {
-        const token = await getAccessTokenSilently({audience: "https://egor-dev.com", scope: "read:requests"});
-        return await fetchRequests(token, user.name);
+        return await fetchRequests(await getAccessTokenSilently(), user.name);
     }
 
     const assignResponderToSingle = async () => {
-        await updateResponder(currentRequest.id, selectedResponder);
+        await updateResponder(await getAccessTokenSilently(), currentRequest.id, selectedResponder);
         setAlert(true);
         handleDetailClose();
         fetchFromDB();
     }
 
     const assignResponderToMultiple = async () => {
+        const token = await getAccessTokenSilently();
         for (const id of selectedIDs) {
-            await updateResponder(id, selectedResponder);
+            await updateResponder(token, id, selectedResponder);
         }
         setAlert(true);
         handleAssignClose();
