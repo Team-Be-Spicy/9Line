@@ -204,6 +204,7 @@ class RequestControllerTest {
     @Test
     @Transactional
     @Rollback
+    @WithMockUser
     public void getRequestById() throws Exception {
         Request request1 = new Request();
         request1.setLocation("38STM1234567890");
@@ -232,6 +233,7 @@ class RequestControllerTest {
     @Test
     @Transactional
     @Rollback
+    @WithMockUser
     public void updateRequestStatusById() throws Exception {
         Request request1 = new Request();
         request1.setLocation("38STM1234567890");
@@ -276,6 +278,7 @@ class RequestControllerTest {
     @Test
     @Transactional
     @Rollback
+    @WithMockUser
     public void catchRequestExistsException() throws Exception{
 
         MockHttpServletRequestBuilder request = get("/api/request/" + 1);
@@ -287,6 +290,7 @@ class RequestControllerTest {
     @Test
     @Transactional
     @Rollback
+    @WithMockUser
     public void updateRequestResponder() throws Exception{
         Request request1 = new Request();
         request1.setLocation("38STM1234567890");
@@ -305,7 +309,7 @@ class RequestControllerTest {
 
         this.requestRepository.save(request1);
 
-        MockHttpServletRequestBuilder request = patch("/api/request/responder/" + request1.getId())
+        MockHttpServletRequestBuilder request = patch("/api/request/responder/update/" + request1.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
                         "\"responder\":\"Responder One\"\n" +
