@@ -59,7 +59,6 @@ const ReportMap = ({requests, mapLocation}) => {
 
     const createPoints = () => {
         let points = [];
-        console.log(requests);
         requests.map(point => {
             points.push(
                 {
