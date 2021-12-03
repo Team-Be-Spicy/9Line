@@ -21,6 +21,16 @@ public class RequestController {
        return new ResponseEntity<>(requestService.createRequest(body), HttpStatus.CREATED);
     }
 
+    @GetMapping("/all")
+    private Iterable<Request> getAllRequests(){
+        return this.requestService.getAllRequests();
+    }
+
+    @GetMapping("/complete")
+    private Iterable<Request> getCompleteRequessts(){
+        return this.requestService.getCompleteRequests();
+    }
+
     @GetMapping("/responder/{responderName}")
     private Iterable<Request> getRequestsByRole(@PathVariable(required = false) String responderName) {
         return requestService.getRequestsByRole(responderName);

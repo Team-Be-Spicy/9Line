@@ -24,6 +24,14 @@ public class RequestService {
         return this.requestRepository.findAllByResponder(responderName.equals(DISPATCHER) ? null : responderName);
     }
 
+    public Iterable<Request> getAllRequests(){
+        return this.requestRepository.findAll();
+    }
+
+    public Iterable<Request> getCompleteRequests(){
+        return this.requestRepository.findAllByStatus(COMPLETE);
+    }
+
     public Request getRequest(Long id) throws RequestExistsException {
         return requestRepository.findById(id).orElseThrow(() -> new RequestExistsException(REQUEST_NOT_FOUND));
     }

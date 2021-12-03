@@ -69,7 +69,8 @@ const Requester = () => {
         const newData = {
             ...data,
             equipment: ((data.equipment.length === 0) ? 'None' : data.equipment.join(', ')),
-            status: 'Pending'
+            status: 'Pending',
+            date: new Date()
         };
         console.log(newData);
         try {
