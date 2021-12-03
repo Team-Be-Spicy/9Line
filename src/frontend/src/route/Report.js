@@ -4,7 +4,7 @@ import RequestLineChart from "../component/RequestLineChart";
 import {Box, CircularProgress} from "@mui/material";
 import RequestList from "../component/RequestList";
 import {useEffect, useState} from "react";
-import {fetchRequests} from "../service/service";
+import {fetchCompleted} from "../service/service";
 import ReportMap from "../component/ReportMap";
 import {data} from "../Dummy-data";
 
@@ -15,10 +15,10 @@ const Report = () => {
     const [mapLocation, setMapLocation] = useState('');
 
     useEffect(() => {
-        // fetchRequests("dispatcher").then(res => {
-        //     setRequests(res.data)
-        // }).finally(() => setLoading(false));
-        setLoading(false)
+        fetchCompleted().then(res => {
+            setRequests(res.data)
+            setLoading(false);
+        });
 
     }, [])
 
@@ -37,13 +37,13 @@ const Report = () => {
                                 width: 1
                             }}>
                                 <h2>
-                                    25 {/*placeholder*/}
+                                    {requests.length}
                                     <br/>
                                     Completed Missions
                                 </h2>
                             </Box>
                         </Box>
-                        <PrecedencePieChart/>
+                        <PrecedencePieChart requests={requests}/>
                     </Box>
                     <Box sx={{display: 'flex', flexDirection: "row"}}>
                         <MonthBarChart/>
