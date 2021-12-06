@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
+@ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
 class RequestControllerTest {
@@ -285,7 +286,7 @@ class RequestControllerTest {
     @WithMockUser
     public void catchRequestExistsException() throws Exception{
 
-        MockHttpServletRequestBuilder request = get("/api/request/" + 1);
+        MockHttpServletRequestBuilder request = get("/api/request/" + 10);
 
         mvc.perform(request)
                 .andExpect(status().isBadRequest());
