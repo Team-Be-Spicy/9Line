@@ -55,7 +55,7 @@ const Report = () => {
                         <PrecedencePieChart requests={requests}/>
                     </Box>
                     <Box sx={{display: 'flex', flexDirection: "row"}}>
-                        <MonthBarChart/>
+                        <MonthBarChart requests={requests}/>
                         <RequestLineChart requests={requests}/>
                     </Box>
                 </Box>
@@ -65,7 +65,7 @@ const Report = () => {
             </Box>
             <Box sx={{display: 'flex', justifyContent: 'center'}}>
                 <div className="requestListContainer">
-                    <h1>Completed MEDEVAC Requests</h1>
+                    <h1>MEDEVAC Requests</h1>
                     <RequestList user="responder" requests={allRequests} setMapLocation={setMapLocation}/>
                 </div>
             </Box>
