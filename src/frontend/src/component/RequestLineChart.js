@@ -4,57 +4,6 @@ import Box from "@mui/material/Box";
 
 const RequestLineChart = ({requests}) => {
 
-    // const months = [
-    //     {
-    //         name: "Jan",
-    //         requests: 7
-    //     },
-    //     {
-    //         name: "Feb",
-    //         requests: 5
-    //     },
-    //     {
-    //         name: "Mar",
-    //         requests: 7
-    //     },
-    //     {
-    //         name: "Apr",
-    //         requests: 6
-    //     },
-    //     {
-    //         name: "May",
-    //         requests: 7
-    //     },
-    //     {
-    //         name: "Jun",
-    //         requests: 6
-    //     },
-    //     {
-    //         name: "Jul",
-    //         requests: 11
-    //     },
-    //     {
-    //         name: "Aug",
-    //         requests: 10
-    //     },
-    //     {
-    //         name: "Sep",
-    //         requests: 5
-    //     },
-    //     {
-    //         name: "Oct",
-    //         requests: 7
-    //     },
-    //     {
-    //         name: "Nov",
-    //         requests: 3
-    //     },
-    //     {
-    //         name: "Dec",
-    //         requests: 3
-    //     },
-    // ]
-
     let monthArray = new Array(12).fill(0);
 
     requests.forEach((request) => {
