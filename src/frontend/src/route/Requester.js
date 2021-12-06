@@ -83,8 +83,10 @@ const Requester = () => {
             reset({
                 location: '',
                 callSign: '',
-                totalPatient: '0',
-                precedence: 'Urgent',
+                urgent: 0,
+                urgentSurgical: 0,
+                priority: 0,
+                routine: 0,
                 equipment: [],
                 litter: '',
                 ambulatory: '',
@@ -98,6 +100,7 @@ const Requester = () => {
             console.log(e);
         }
     };
+
 
     const handleSelect = (value) => {
         const isPresent = selectedItems.indexOf(value);
@@ -146,6 +149,7 @@ const Requester = () => {
         },
     ];
 
+
     return (
         <>
             {isMapOpen &&
@@ -183,7 +187,8 @@ const Requester = () => {
                                         label="Location"/>
                                 )}
                             />
-                            <IconButton disabled={!isNavigatorApiAvailable} onClick={() => getCurrentLocation()} sx={{marginLeft: '6px'}} color="warning"
+                            <IconButton disabled={!isNavigatorApiAvailable} onClick={() => getCurrentLocation()}
+                                        sx={{marginLeft: '6px'}} color="warning"
                                         size="large">
                                 <PersonPinIcon fontSize="large"/>
                             </IconButton>
@@ -210,46 +215,88 @@ const Requester = () => {
                         />
                     </Box>
 
-                    <Box sx={{display: 'flex', alignItems: 'flex-start', marginTop: '16px'}}>
+                    <Box sx={{display: 'flex', marginTop: '16px'}}>
                         <Controller
                             defaultValue='0'
-                            name='totalPatient'
+                            name='urgent'
                             control={control}
                             rules={{
-                                pattern: /^[1-9]\d*$/i,
+                                pattern: /^[0-9]\d*$/i,
                             }}
-                            render={({field: {onChange, value}, fieldState: {error}}) => (
+                            render={({field: {onChange, value}, fieldState: {error}}) =>
                                 <TextField
                                     error={!!error}
-                                    helperText={error ? PATIENT_NUMBER_NOT_VALID : null}
+                                    helperText={error ? error.message : null}
                                     sx={{marginRight: '16px'}}
+                                    label="Urgent"
+                                    type="number"
                                     onChange={onChange}
                                     value={value}
-                                    label="Patient Number"/>
-                            )}
+
+                                />}
                         />
                         <Controller
-                            defaultValue="Urgent"
+                            defaultValue='0'
+                            name='urgentSurgical'
                             control={control}
-                            name='precedence'
-                            render={({field: {onChange, value}}) => (
-                                <Select sx={{width: '100%'}} onChange={onChange} value={value}>
-                                    <MenuItem value='Urgent'>
-                                        Urgent
-                                    </MenuItem>
-                                    <MenuItem value='Urgent Surgical'>
-                                        Urgent Surgical
-                                    </MenuItem>
-                                    <MenuItem value='Priority'>
-                                        Priority
-                                    </MenuItem>
-                                    <MenuItem value='Routine'>
-                                        Routine
-                                    </MenuItem>
-                                </Select>
-                            )}
+                            rules={{
+                                pattern: /^[0-9]\d*$/i,
+
+                            }}
+                            render={({field: {onChange, value}, fieldState: {error}}) =>
+                                <TextField
+                                    error={!!error}
+                                    helperText={error ? error.message : null}
+                                    sx={{marginRight: '16px'}}
+                                    label="Urgent Surgical"
+                                    type="number"
+                                    onChange={onChange}
+                                    value={value}
+
+                                />}
                         />
+                        <Controller
+                            defaultValue='0'
+                            name='priority'
+                            control={control}
+                            rules={{
+                                pattern: /^[0-9]\d*$/i,
+
+                            }}
+                            render={({field: {onChange, value}, fieldState: {error}}) =>
+                                <TextField
+                                    error={!!error}
+                                    helperText={error ? error.message : null}
+                                    sx={{marginRight: '16px'}}
+                                    label="Priority"
+                                    type="number"
+                                    onChange={onChange}
+                                    value={value}
+
+                                />}
+                        />
+                        <Controller
+                            defaultValue='0'
+                            name='routine'
+                            control={control}
+                            rules={{
+                                pattern: /^[0-9]\d*$/i,
+
+                            }}
+                            render={({field: {onChange, value}, fieldState: {error}}) =>
+                                <TextField
+                                    error={!!error}
+                                    helperText={error ? error.message : null}
+                                    label="Routine"
+                                    type="number"
+                                    onChange={onChange}
+                                    value={value}
+
+                                />}
+                        />
+
                     </Box>
+
 
                     <Box sx={{marginTop: '16px'}}>
                         <FormControl>

@@ -26,19 +26,25 @@ public class Request {
     @NotBlank
     private String callSign;
 
-    @Min(value = 1)
-    private int totalPatient;
+    @Min(0)
+    private int urgent;
 
-    @NotBlank
-    private String precedence;
+    @Min(0)
+    private int urgentSurgical;
+
+    @Min(0)
+    private int priority;
+
+    @Min(0)
+    private int routine;
 
     @NotBlank
     private String equipment;
 
-    @Min(value = 0)
+    @Min(0)
     private int litter;
 
-    @Min(value = 0)
+    @Min(0)
     private int ambulatory;
 
     @NotBlank
@@ -56,7 +62,6 @@ public class Request {
     @NotBlank
     private String status;
 
-    @NotBlank
     @Temporal(TemporalType.DATE)
     private Date date;
 
