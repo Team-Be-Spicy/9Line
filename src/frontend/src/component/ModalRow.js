@@ -3,7 +3,7 @@ import {Box, Typography} from "@mui/material";
 const ModalRow = ({label, value}) =>
     <Box sx={{display: 'flex', alignItems:"baseline"}}  marginBottom='6px' >
         <Box sx={{display:"flex", justifyContent:"end", width:'40%', marginRight:'10px'}}>
-            <Typography fontWeight={'bolder'} fontSize={"14px"} >
+            <Typography sx={{textAlign: "right"}} fontWeight={'bolder'} fontSize={"14px"} >
                 {label}
             </Typography>
         </Box>
