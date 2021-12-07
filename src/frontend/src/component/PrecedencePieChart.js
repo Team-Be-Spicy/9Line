@@ -59,10 +59,10 @@ const PrecedencePieChart = ({requests}) => {
     let routine = 0;
 
     requests.forEach(request => {
-        if(request.precedence === "Urgent") urgent += request.totalPatient;
-        else if(request.precedence === "Urgent Surgical") urgentSurgical += request.totalPatient;
-        else if(request.precedence === "Priority") priority += request.totalPatient;
-        else if(request.precedence === "Routine") routine += request.totalPatient;
+        urgent += request.urgent;
+        urgentSurgical += request.urgentSurgical;
+        priority += request.priority;
+        routine += request.routine;
     });
 
     const data = [
