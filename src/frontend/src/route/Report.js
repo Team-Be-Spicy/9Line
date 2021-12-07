@@ -1,7 +1,7 @@
 import MonthBarChart from "../component/MonthBarChart";
 import PrecedencePieChart from "../component/PrecedencePieChart";
 import RequestLineChart from "../component/RequestLineChart";
-import {Box, CircularProgress, Grid, useMediaQuery} from "@mui/material";
+import {Box, CircularProgress, Grid, Typography, useMediaQuery} from "@mui/material";
 import RequestList from "../component/RequestList";
 import {useEffect, useState} from "react";
 import {fetchAll, fetchCompleted} from "../service/service";
@@ -33,13 +33,26 @@ const Report = () => {
     }, [])
 
     return !loading && (
-        <Box sx={{width: '100%'}}>
+        <Box sx={{width: '100%', height: '60vh', padding: 0, margin: '16px'}}>
+            <Typography align={'center'} variant={"h5"}>
+                {requests.length}
+                <br/>
+                Completed Missions
+            </Typography>
             <ReportMap mapLocation={mapLocation} requests={allRequests}/>
             <Grid container spacing={2}>
-                <PrecedencePieChart requests={requests}/>
-                <MonthBarChart requests={requests}/>
-                <RequestLineChart requests={requests}/>
+                    <PrecedencePieChart xs={6} requests={requests}/>
+                    <MonthBarChart xs={6} requests={requests}/>
             </Grid>
+            <RequestLineChart requests={requests}/>
+            <Box>
+                <Box sx={{display: 'flex', justifyContent: 'center'}}>
+                    <div className="requestListContainer">
+                        <h1>MEDEVAC Requests</h1>
+                        <RequestList user="responder" requests={allRequests} setMapLocation={setMapLocation}/>
+                    </div>
+                </Box>
+            </Box>
         </Box>
 
     )
@@ -48,12 +61,3 @@ const Report = () => {
 export default Report;
 
 
-//     <Box>
-//         <Box sx={{display: 'flex', justifyContent: 'center'}}>
-//             <div className="requestListContainer">
-//                 <h1>MEDEVAC Requests</h1>
-//                 <RequestList user="responder" requests={allRequests} setMapLocation={setMapLocation}/>
-//             </div>
-//         </Box>
-//     </Box>
-// )
