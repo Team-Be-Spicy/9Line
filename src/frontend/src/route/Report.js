@@ -41,8 +41,8 @@ const Report = () => {
                 <ReportMap  mapLocation={mapLocation} requests={allRequests}/>
             </div>
             <Grid container>
-                <PrecedencePieChart xs={6} requests={requests}/>
-                <MonthBarChart xs={6} requests={requests}/>
+                <Grid xs={12} md={6}> <PrecedencePieChart requests={requests}/></Grid>
+                <Grid xs={12} md={6}> <MonthBarChart requests={requests}/></Grid>
             </Grid>
             <RequestLineChart requests={requests}/>
             <Box>
