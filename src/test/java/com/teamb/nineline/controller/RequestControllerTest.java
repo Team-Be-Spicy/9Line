@@ -51,8 +51,10 @@ class RequestControllerTest {
         request1.setLocation("38STM1234567890");
         request1.setResponder(null);
         request1.setCallSign("raptor1");
-        request1.setTotalPatient(3);
-        request1.setPrecedence("urgent");
+        request1.setUrgent(1);
+        request1.setUrgentSurgical(2);
+        request1.setPriority(3);
+        request1.setRoutine(4);
         request1.setEquipment("hoist");
         request1.setAmbulatory(3);
         request1.setLitter(0);
@@ -60,7 +62,7 @@ class RequestControllerTest {
         request1.setSecurity("clear");
         request1.setNational("US");
         request1.setLine9("no nbc");
-        request1.setStatus(null);
+        request1.setStatus("Pending");
 
         MockHttpServletRequestBuilder request = post("/api/request")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -81,8 +83,10 @@ class RequestControllerTest {
         request1.setLocation("38STM1234567890");
         request1.setResponder(null);
         request1.setCallSign("raptor1");
-        request1.setTotalPatient(3);
-        request1.setPrecedence("urgent");
+        request1.setUrgent(1);
+        request1.setUrgentSurgical(2);
+        request1.setPriority(3);
+        request1.setRoutine(4);
         request1.setEquipment("hoist");
         request1.setAmbulatory(3);
         request1.setLitter(0);
@@ -98,8 +102,10 @@ class RequestControllerTest {
         request2.setLocation("22STL2345678901");
         request2.setResponder(null);
         request2.setCallSign("humvee7");
-        request2.setTotalPatient(3);
-        request2.setPrecedence("urgent surgical");
+        request1.setUrgent(1);
+        request1.setUrgentSurgical(2);
+        request1.setPriority(3);
+        request1.setRoutine(4);
         request2.setEquipment("hoist");
         request2.setAmbulatory(2);
         request2.setLitter(0);
@@ -115,8 +121,10 @@ class RequestControllerTest {
         request3.setLocation("22STL2345678901");
         request3.setResponder("Responder Two");
         request3.setCallSign("humvee7");
-        request3.setTotalPatient(3);
-        request3.setPrecedence("urgent surgical");
+        request1.setUrgent(1);
+        request1.setUrgentSurgical(2);
+        request1.setPriority(3);
+        request1.setRoutine(4);
         request3.setEquipment("hoist");
         request3.setAmbulatory(2);
         request3.setLitter(0);
@@ -146,8 +154,10 @@ class RequestControllerTest {
         request1.setLocation("38STM1234567890");
         request1.setResponder("responder1@nineline.com");
         request1.setCallSign("raptor1");
-        request1.setTotalPatient(3);
-        request1.setPrecedence("urgent");
+        request1.setUrgent(1);
+        request1.setUrgentSurgical(2);
+        request1.setPriority(3);
+        request1.setRoutine(4);
         request1.setEquipment("hoist");
         request1.setAmbulatory(3);
         request1.setLitter(0);
@@ -155,7 +165,7 @@ class RequestControllerTest {
         request1.setSecurity("clear");
         request1.setNational("US");
         request1.setLine9("no nbc");
-        request1.setStatus(null);
+        request1.setStatus("Pending");
 
         this.requestRepository.save(request1);
 
@@ -163,8 +173,10 @@ class RequestControllerTest {
         request2.setLocation("22STL2345678901");
         request2.setResponder("responder1@nineline.com");
         request2.setCallSign("humvee7");
-        request2.setTotalPatient(3);
-        request2.setPrecedence("urgent surgical");
+        request1.setUrgent(1);
+        request1.setUrgentSurgical(2);
+        request1.setPriority(3);
+        request1.setRoutine(4);
         request2.setEquipment("hoist");
         request2.setAmbulatory(2);
         request2.setLitter(0);
@@ -172,7 +184,7 @@ class RequestControllerTest {
         request2.setSecurity("clear");
         request2.setNational("UK");
         request2.setLine9("no nbc");
-        request2.setStatus(null);
+        request2.setStatus("Pending");
 
         this.requestRepository.save(request2);
 
@@ -180,8 +192,10 @@ class RequestControllerTest {
         request3.setLocation("22STL2345678901");
         request3.setResponder("responder2@nineline.com");
         request3.setCallSign("humvee7");
-        request3.setTotalPatient(3);
-        request3.setPrecedence("urgent surgical");
+        request1.setUrgent(1);
+        request1.setUrgentSurgical(2);
+        request1.setPriority(3);
+        request1.setRoutine(4);
         request3.setEquipment("hoist");
         request3.setAmbulatory(2);
         request3.setLitter(0);
@@ -189,7 +203,7 @@ class RequestControllerTest {
         request3.setSecurity("clear");
         request3.setNational("UK");
         request3.setLine9("no nbc");
-        request3.setStatus(null);
+        request3.setStatus("Pending");
 
         this.requestRepository.save(request3);
 
@@ -211,8 +225,10 @@ class RequestControllerTest {
         request1.setLocation("38STM1234567890");
         request1.setResponder(null);
         request1.setCallSign("raptor1");
-        request1.setTotalPatient(3);
-        request1.setPrecedence("urgent");
+        request1.setUrgent(1);
+        request1.setUrgentSurgical(2);
+        request1.setPriority(3);
+        request1.setRoutine(4);
         request1.setEquipment("hoist");
         request1.setAmbulatory(3);
         request1.setLitter(0);
@@ -220,7 +236,7 @@ class RequestControllerTest {
         request1.setSecurity("clear");
         request1.setNational("US");
         request1.setLine9("no nbc");
-        request1.setStatus(null);
+        request1.setStatus("Pending");
 
         this.requestRepository.save(request1);
 
@@ -240,8 +256,10 @@ class RequestControllerTest {
         request1.setLocation("38STM1234567890");
         request1.setResponder(null);
         request1.setCallSign("raptor1");
-        request1.setTotalPatient(3);
-        request1.setPrecedence("urgent");
+        request1.setUrgent(1);
+        request1.setUrgentSurgical(2);
+        request1.setPriority(3);
+        request1.setRoutine(4);
         request1.setEquipment("hoist");
         request1.setAmbulatory(3);
         request1.setLitter(0);
@@ -258,8 +276,10 @@ class RequestControllerTest {
         request2.setLocation("38STM1234567890");
         request2.setResponder(null);
         request2.setCallSign("raptor1");
-        request2.setTotalPatient(3);
-        request2.setPrecedence("urgent");
+        request2.setUrgent(1);
+        request2.setUrgentSurgical(2);
+        request2.setPriority(3);
+        request2.setRoutine(4);
         request2.setEquipment("hoist");
         request2.setAmbulatory(3);
         request2.setLitter(0);
@@ -301,8 +321,10 @@ class RequestControllerTest {
         request1.setLocation("38STM1234567890");
         request1.setResponder(null);
         request1.setCallSign("raptor1");
-        request1.setTotalPatient(3);
-        request1.setPrecedence("urgent");
+        request1.setUrgent(1);
+        request1.setUrgentSurgical(2);
+        request1.setPriority(3);
+        request1.setRoutine(4);
         request1.setEquipment("hoist");
         request1.setAmbulatory(3);
         request1.setLitter(0);
@@ -310,7 +332,7 @@ class RequestControllerTest {
         request1.setSecurity("clear");
         request1.setNational("US");
         request1.setLine9("no nbc");
-        request1.setStatus(null);
+        request1.setStatus("Pending");
 
         this.requestRepository.save(request1);
 
