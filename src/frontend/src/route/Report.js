@@ -33,16 +33,16 @@ const Report = () => {
     }, [])
 
     return !loading && (
-        <Box sx={{width: '100%', height: '60vh', padding: 0, margin: '16px'}}>
+        <Box sx={{width: '100vw'}}>
             <Typography align={'center'} variant={"h5"}>
-                {requests.length}
-                <br/>
-                Completed Missions
+                {requests.length} Completed Missions
             </Typography>
-            <ReportMap mapLocation={mapLocation} requests={allRequests}/>
-            <Grid container spacing={2}>
-                    <PrecedencePieChart xs={6} requests={requests}/>
-                    <MonthBarChart xs={6} requests={requests}/>
+            <div style={{width:"100%", height:'60vh'}}>
+                <ReportMap  mapLocation={mapLocation} requests={allRequests}/>
+            </div>
+            <Grid container>
+                <PrecedencePieChart xs={6} requests={requests}/>
+                <MonthBarChart xs={6} requests={requests}/>
             </Grid>
             <RequestLineChart requests={requests}/>
             <Box>
