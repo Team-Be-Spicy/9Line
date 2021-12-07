@@ -171,6 +171,7 @@ const Requester = () => {
                                 rules={{required: "Location is required"}}
                                 render={({field: {onChange, value}, fieldState: {error}}) => (
                                     <TextField
+                                        data-cy="location"
                                         sx={{width: '100%'}}
                                         error={!!error}
                                         helperText={error ? error.message : loading ? 'Getting location...' : null}
@@ -197,6 +198,7 @@ const Requester = () => {
                             rules={{required: "Radio Freq/ Call Sign/ Suffix is required"}}
                             render={({field: {onChange, value}, fieldState: {error}}) => (
                                 <TextField
+                                    data-cy="radio"
                                     error={!!error}
                                     helperText={error ? error.message : null}
                                     margin="dense"
@@ -217,6 +219,7 @@ const Requester = () => {
                             }}
                             render={({field: {onChange, value}, fieldState: {error}}) => (
                                 <TextField
+                                    data-cy="totalPatient"
                                     error={!!error}
                                     helperText={error ? PATIENT_NUMBER_NOT_VALID : null}
                                     sx={{marginRight: '16px'}}

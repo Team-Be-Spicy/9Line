@@ -36,7 +36,7 @@ const NavigationList = ({links, isAuthenticated, loginWithRedirect, logout, hide
                     alignItems="center"
                     justifyContent="space-evenly"
                     onClick={hideDrawer}>
-                    <Button onClick={() => loginWithRedirect()}>Login</Button>
+                    <Button className="login-btn" onClick={() => loginWithRedirect()}>Login</Button>
                     <Button onClick={() => loginWithRedirect({screen_hint: 'signup'})}>Register</Button>
                 </Stack>
             </Stack>}

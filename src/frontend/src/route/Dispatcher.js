@@ -109,7 +109,6 @@ const Dispatcher = () => {
     );
 }
 
-
 export default withAuthenticationRequired(Dispatcher, {
     onRedirecting: () => <Loading/>,
 });
