@@ -160,7 +160,7 @@ const Requester = () => {
 
 
     return (
-        <>
+        <div>
             {isMapOpen &&
                 <MapModal setLocation={setLocation} open={isMapOpen} handleClose={() => setIsMapOpen(false)}/>}
             {alert &&
@@ -226,7 +226,11 @@ const Requester = () => {
                         />
                     </Box>
 
-                    <Box sx={{display: 'flex', marginTop: '16px'}}>
+                    <Box sx={{display: 'flex',
+                        marginTop: '16px',
+                        flexDirection: (isSmallScreen ? 'column' : 'row'),
+                        gap: '16px'}
+                    }>
                         <Controller
                             defaultValue='0'
                             name='urgent'
@@ -239,7 +243,6 @@ const Requester = () => {
                                     data-cy="urgentPatient"
                                     error={!!error}
                                     helperText={error ? error.message : null}
-                                    sx={{marginRight: '16px'}}
                                     label="Urgent"
                                     type="number"
                                     onChange={onChange}
@@ -260,7 +263,6 @@ const Requester = () => {
                                     data-cy="urgentSurgPatient"
                                     error={!!error}
                                     helperText={error ? error.message : null}
-                                    sx={{marginRight: '16px'}}
                                     label="Urgent Surgical"
                                     type="number"
                                     onChange={onChange}
@@ -281,7 +283,6 @@ const Requester = () => {
                                     data-cy="priorityPatient"
                                     error={!!error}
                                     helperText={error ? error.message : null}
-                                    sx={{marginRight: '16px'}}
                                     label="Priority"
                                     type="number"
                                     onChange={onChange}
@@ -518,7 +519,7 @@ const Requester = () => {
                 open={open}
                 data={data}
                 handleClose={handleClose}/>
-        </>
+        </div>
     )
 }
 

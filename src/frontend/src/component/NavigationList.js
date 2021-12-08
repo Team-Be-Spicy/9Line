@@ -4,6 +4,8 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import {NavLink} from "react-router-dom";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import SWFLogo from "../images/swf-log.png";
 
 const NavigationList = ({links, isAuthenticated, loginWithRedirect, logout, hideDrawer}) =>
     <Stack
@@ -11,7 +13,11 @@ const NavigationList = ({links, isAuthenticated, loginWithRedirect, logout, hide
         justifyContent="space-between"
         role="presentation"
     >
+
         <List onClick={hideDrawer}>
+            <NavLink id="navMenuLogo" to="/" style={{marginLeft: "20px"}}>
+                <img src={SWFLogo} alt={"swf logo"}/>
+            </NavLink>
             {links.map(link =>
                 <ListItem key={link.id}>
                     <NavLink
