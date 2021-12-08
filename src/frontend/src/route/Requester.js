@@ -93,7 +93,7 @@ const Requester = () => {
                 security: NO_ENEMY_TROOPS_IN_AREA,
                 marking: false,
                 national: 'US Military',
-                line9: 'Nuclear'
+                line9: 'None'
             });
             setSelectedItems([]);
         } catch (e) {
@@ -244,7 +244,8 @@ const Requester = () => {
                                     type="number"
                                     onChange={onChange}
                                     value={value}
-
+                                    InputProps={{ inputProps: { min: 0, max: 10 } }}
+                                    fullWidth
                                 />}
                         />
                         <Controller
@@ -265,7 +266,8 @@ const Requester = () => {
                                     type="number"
                                     onChange={onChange}
                                     value={value}
-
+                                    InputProps={{ inputProps: { min: 0, max: 10 } }}
+                                    fullWidth
                                 />}
                         />
                         <Controller
@@ -286,7 +288,8 @@ const Requester = () => {
                                     type="number"
                                     onChange={onChange}
                                     value={value}
-
+                                    InputProps={{ inputProps: { min: 0, max: 10 } }}
+                                    fullWidth
                                 />}
                         />
                         <Controller
@@ -306,7 +309,8 @@ const Requester = () => {
                                     type="number"
                                     onChange={onChange}
                                     value={value}
-
+                                    InputProps={{ inputProps: { min: 0, max: 10 } }}
+                                    fullWidth
                                 />}
                         />
 
@@ -482,13 +486,16 @@ const Requester = () => {
                     </Box>
                     <Box sx={{marginTop: '16px'}}>
                         <Controller
-                            defaultValue="Nuclear"
+                            defaultValue="None"
                             control={control}
                             name='line9'
                             render={({field: {onChange, value}}) => (
                                 <Select
                                     data-cy="selNBC"
                                     sx={{width: '100%'}} onChange={onChange} value={value}>
+                                    <MenuItem value='None'>
+                                        None
+                                    </MenuItem>
                                     <MenuItem value='Nuclear'>
                                         Nuclear
                                     </MenuItem>
@@ -499,9 +506,6 @@ const Requester = () => {
                                     </MenuItem>
                                     <MenuItem value='Chemical'>
                                         Chemical
-                                    </MenuItem>
-                                    <MenuItem value='None'>
-                                        None
                                     </MenuItem>
                                 </Select>
                             )}
