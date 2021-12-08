@@ -59,10 +59,10 @@ const PrecedencePieChart = ({requests}) => {
     let routine = 0;
 
     requests.forEach(request => {
-        if(request.precedence === "Urgent") urgent += request.totalPatient;
-        else if(request.precedence === "Urgent Surgical") urgentSurgical += request.totalPatient;
-        else if(request.precedence === "Priority") priority += request.totalPatient;
-        else if(request.precedence === "Routine") routine += request.totalPatient;
+        urgent += request.urgent;
+        urgentSurgical += request.urgentSurgical;
+        priority += request.priority;
+        routine += request.routine;
     });
 
     const data = [
@@ -85,7 +85,7 @@ const PrecedencePieChart = ({requests}) => {
     ];
 
     return (
-        <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: 1/2, height: 1}}>
+        <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: 1}}>
             <h3>Patients by Precedence</h3>
             <ResponsiveContainer height={350} width="100%">
                 <PieChart height={300} width={300}>

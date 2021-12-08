@@ -72,7 +72,6 @@ const RequestLineChart = ({requests}) => {
             alignItems: "center",
             justifyContent: "center",
             height: 1,
-            width: 1 / 2
         }}>
             <h3>Request Trends</h3>
             <ResponsiveContainer height={350} width="100%">

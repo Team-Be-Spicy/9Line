@@ -57,7 +57,7 @@ const MonthBarChart = ({requests}) => {
     })
 
     return (
-        <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: 1, width: 1/2}}>
+        <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: 1}}>
             <h3>Responder Activity</h3>
             <ResponsiveContainer height={350} width="100%">
             <BarChart data={months}>

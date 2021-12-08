@@ -10,13 +10,24 @@ import CloseIcon from '@mui/icons-material/Close';
 import ModalRow from "./ModalRow";
 
 
-const DetailModal = ({button1Label, button2Label, button1Action, button2Action, open, handleClose, data, isDispatcher, setSelectedResponder, selectedResponder}) => {
+const DetailModal = ({
+                         button1Label,
+                         button2Label,
+                         button1Action,
+                         button2Action,
+                         open,
+                         handleClose,
+                         data,
+                         isDispatcher,
+                         setSelectedResponder,
+                         selectedResponder
+                     }) => {
 
 
     return (
         <Dialog fullWidth onClose={() => {
         }} open={open}>
-            <DialogTitle sx={{ m: 0, p: 2 }}>MEDEVAC Request
+            <DialogTitle sx={{m: 0, p: 2}}>MEDEVAC Request
             <IconButton
                 data-cy="btnClose"
                 onClick={handleClose}
@@ -34,19 +45,21 @@ const DetailModal = ({button1Label, button2Label, button1Action, button2Action, 
                 <ModalRow data_cy="detailStatus" label="Status" value={data.status || 'Pending'}/>
                 <ModalRow label='Location' value={data.location}/>
                 <ModalRow label="Call Sign" value={data.callSign}/>
-                <ModalRow label="Number of Patients" value={data.totalPatient}/>
-                <ModalRow label="Precedence" value={data.precedence}/>
+                <ModalRow label="Urgent" value={data.urgent}/>
+                <ModalRow label="Urgent Surgical" value={data.urgentSurgical}/>
+                <ModalRow label="Priority" value={data.priority}/>
+                <ModalRow label="Routine" value={data.routine}/>
                 <ModalRow label="Special Equipment" value={data.equipment}/>
-                <ModalRow label="Litter Patients" value={data.litter}/>
-                <ModalRow label="Ambulatory Patients" value={data.ambulatory}/>
+                <ModalRow label="Litter" value={data.litter}/>
+                <ModalRow label="Ambulatory" value={data.ambulatory}/>
                 <ModalRow label="Security at Pick-up site" value={data.security}/>
                 <ModalRow label="Method of Marking" value={data.marking}/>
-                <ModalRow label="Patient Nationality and status" value={data.national}/>
+                <ModalRow label="Nationality and Status" value={data.national}/>
                 <ModalRow label="NBC Contamination" value={data.line9}/>
-                {isDispatcher &&  <Select
+                {isDispatcher && <Select
                     defaultValue={selectedResponder}
                     onChange={(e) => setSelectedResponder(e.target.value)}
-                    sx={{width: '100%'}} >
+                    sx={{width: '100%'}}>
                     <MenuItem value='responder1@nineline.com'>
                         Responder One
                     </MenuItem>
