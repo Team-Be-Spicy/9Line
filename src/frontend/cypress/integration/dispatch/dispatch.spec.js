@@ -3,9 +3,9 @@ describe('authenticated dispatcher flow', () => {
         cy.visit('http://localhost:3000/')
         cy.get('.menu-btn').click()
         cy.contains('Login').click()
-        // cy.get("#username").type("dispatcher@nineline.com")
-        // cy.get("#password").type("nineline!2021")
-        // cy.contains("Continue").click()
+        cy.get("#username").type("dispatcher@nineline.com")
+        cy.get("#password").type("nineline!2021")
+        cy.contains("Continue").click()
     })
 
     it('create request, view dispatcher page, assign request, confirm assigned status', () => {
@@ -23,10 +23,10 @@ describe('authenticated dispatcher flow', () => {
         cy.get('.MuiDataGrid-row:last-child > .MuiDataGrid-cell').first().next().next().should('have.text', 'Assigned')
     })
 
-    // afterEach(() => {
-    //     cy.get('.menu-btn').click()
-    //     cy.contains('Logout').click()
-    // })
+    afterEach(() => {
+        cy.get('.menu-btn').click()
+        cy.contains('Logout').click()
+    })
 
 
 })
