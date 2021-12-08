@@ -1,6 +1,6 @@
 import React from 'react';
 import {Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
-import {Box} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 
 
 const MonthBarChart = ({requests}) => {
@@ -58,7 +58,7 @@ const MonthBarChart = ({requests}) => {
 
     return (
         <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: 1}}>
-            <h3>Responder Activity</h3>
+            <Typography fontSize="20px" fontWeight="800" color="text.primary">Responder Activity</Typography>
             <ResponsiveContainer height={350} width="100%">
             <BarChart data={months}>
                 <CartesianGrid strokeDasharray="3 3" />

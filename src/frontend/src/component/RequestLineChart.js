@@ -1,6 +1,7 @@
 import React from 'react';
 import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 import Box from "@mui/material/Box";
+import {Typography} from "@mui/material";
 
 const RequestLineChart = ({requests}) => {
 
@@ -73,7 +74,7 @@ const RequestLineChart = ({requests}) => {
             justifyContent: "center",
             height: 1,
         }}>
-            <h3>Request Trends</h3>
+            <Typography fontSize="20px" fontWeight="800" color="text.primary">Request Trends</Typography>
             <ResponsiveContainer height={350} width="100%">
                 <AreaChart
                     data={months}

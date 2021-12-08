@@ -1,6 +1,7 @@
 import React from 'react';
 import {PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer} from 'recharts';
 import Box from "@mui/material/Box";
+import {Typography} from "@mui/material";
 
 // const data = [
 //     {
@@ -86,7 +87,7 @@ const PrecedencePieChart = ({requests}) => {
 
     return (
         <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: 1}}>
-            <h3>Patients by Precedence</h3>
+            <Typography fontSize="20px" fontWeight="800" color="text.primary">Patients by Precedence</Typography>
             <ResponsiveContainer height={350} width="100%">
                 <PieChart height={300} width={300}>
                     <Pie
