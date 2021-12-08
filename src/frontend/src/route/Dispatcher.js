@@ -4,7 +4,7 @@ import RequestList from "../component/RequestList";
 import DetailModal from "../component/DetailModal";
 import {fetchRequests, updateResponder, updateStatus} from "../service/service";
 import AssignResponderModal from "../component/AssignResponderModal";
-import {Alert, Box, IconButton} from "@mui/material";
+import {Alert, Box, IconButton, Typography} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import {useAuth0, withAuthenticationRequired} from "@auth0/auth0-react";
 import Loading from "../component/Loading";
@@ -70,7 +70,7 @@ const Dispatcher = () => {
 
     return (
         <>
-            {alert && <Alert sx={{marginBottom: '28px'}} severity="success" action={
+            {alert && <Alert sx={{marginBottom: '28px', display: 'flex', alignItems: 'center',backgroundColor: 'rgba(38,255,0,0.1)'}} severity="success" action={
                 <Box>
                     <IconButton
                         color='success'
@@ -98,7 +98,7 @@ const Dispatcher = () => {
             />
             <div className="Dispatcher">
                 <div className="requestListContainer">
-                    <h1>Outstanding MEDEVAC Requests</h1>
+                    <Typography fontSize="40px" fontWeight="200" paddingBottom="20px" color="text.primary">Outstanding MEDEVAC Requests</Typography>
                     <RequestList user={"dispatcher"}
                                  requests={requests}
                                  onActionClicked={onActionClicked}

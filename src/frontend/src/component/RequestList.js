@@ -3,8 +3,9 @@ import "./RequestList.css";
 import {DataGrid} from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import {useState} from "react";
-import {Stack} from "@mui/material";
+import {Stack, Typography} from "@mui/material";
 import {data} from "../Dummy-data";
+import Box from "@mui/material/Box";
 
 const RequestList = ({user, requests, onActionClicked, onViewSelected, haveCheckbox, setMapLocation = null}) => {
     const [selectedRequestIds, setSelectedRequestIds] = useState([]);
@@ -120,18 +121,18 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected, haveCheck
     return (
         <div className="RequestList">
             {selectedRequestIds.length > 0 ?
-                <div className="actionButtonContainer">
-                    <p>{selectedRequestIds.length} selected</p>
+                <Box sx={{backgroundColor: 'rgba(38,255,0,0.1)'}} padding="10px" borderRadius="10px" className="actionButtonContainer">
+                    <Typography color="text.primary">{selectedRequestIds.length} selected</Typography>
                     <Button data-cy="btnAction" color="success" variant="outlined" onClick={() => {
                         onActionClicked(selectedRequestIds);
                         setSelectedRequestIds([]);
                     }}>
                         {buttonText}
                     </Button>
-                </div>
+                </Box>
 
                 :
-                <h3>Requests</h3>
+                <Typography color="text.secondary" fontSize="20px" fontWeight="800">Requests</Typography>
             }
 
             <DataGrid
@@ -142,12 +143,12 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected, haveCheck
                 }}
                 components={{
                     NoRowsOverlay: () => (
-                        <Stack height="150px" alignItems="center" justifyContent="center">
+                        <Stack color="text.secondary" height="150px" alignItems="center" justifyContent="center">
                             No active requests.
                         </Stack>
                     ),
                     NoResultsOverlay: () => (
-                        <Stack height="`150px`" alignItems="center" justifyContent="center">
+                        <Stack color="text.secondary" height="`150px`" alignItems="center" justifyContent="center">
                             Local filter returns no result
                         </Stack>
                     )
