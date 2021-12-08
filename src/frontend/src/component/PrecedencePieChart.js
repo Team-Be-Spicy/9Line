@@ -85,7 +85,7 @@ const PrecedencePieChart = ({requests}) => {
     ];
 
     return (
-        <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: 1/2, height: 1}}>
+        <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: 1}}>
             <h3>Patients by Precedence</h3>
             <ResponsiveContainer height={350} width="100%">
                 <PieChart height={300} width={300}>
