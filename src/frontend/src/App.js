@@ -9,7 +9,7 @@ import Dispatcher from "./route/Dispatcher";
 import SWFLogo from "./images/swf-log.png"
 
 import MenuIcon from '@mui/icons-material/Menu';
-import {AppBar} from "@mui/material";
+import {AppBar, createTheme, ThemeProvider} from "@mui/material";
 import {useAuth0} from "@auth0/auth0-react";
 import NavigationList from "./component/NavigationList";
 import Report from "./route/Report";
@@ -18,7 +18,28 @@ const App = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const {isAuthenticated, loginWithRedirect, logout} = useAuth0();
 
+    const [mode, setMode] = React.useState('dark');
+    const colorMode = React.useMemo(
+        () => ({
+            toggleColorMode: () => {
+                setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+            },
+        }),
+        [],
+    );
+
+    const theme = React.useMemo(
+        () =>
+            createTheme({
+                palette: {
+                    mode,
+                },
+            }),
+        [mode],
+    );
+
     return (
+        <ThemeProvider theme={theme}>
         <div>
             <AppBar sx={{
                 display: "flex",
@@ -61,6 +82,7 @@ const App = () => {
                 <Route path="/report" element={<Report/>}/>
             </Routes>
         </div>
+        </ThemeProvider>
     );
 }
 
