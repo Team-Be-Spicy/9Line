@@ -6,7 +6,7 @@ import {useState} from "react";
 import {Stack} from "@mui/material";
 import {data} from "../Dummy-data";
 
-const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLocation = null}) => {
+const RequestList = ({user, requests, onActionClicked, onViewSelected, haveCheckbox, setMapLocation = null}) => {
     const [selectedRequestIds, setSelectedRequestIds] = useState([]);
     const [pageSize, setPageSize] = useState(5);
 
