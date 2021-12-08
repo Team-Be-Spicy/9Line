@@ -45,7 +45,7 @@ const AssignResponderModal = ({open, handleClose, assignResponder, setSelectedRe
 
             </DialogContent>
             {<DialogActions>
-                <Button color={"success"} onClick={assignResponder}> <Typography
+                <Button data-cy="btnAssign" color={"success"} onClick={assignResponder}> <Typography
                     fontWeight={"bold"}> ASSIGN </Typography> </Button>
                 <Button color={"success"} onClick={handleClose}> <Typography
                     fontWeight={"bold"}> CANCEL </Typography> </Button>

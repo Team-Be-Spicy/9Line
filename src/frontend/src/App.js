@@ -57,6 +57,7 @@ const App = () => {
                 <Stack direction="row">
 
                     <MenuIcon sx={{cursor: 'pointer', margin: '12px', color: "#737373"}}
+                              className="menu-btn"
                               onClick={() => setIsDrawerOpen(true)}>Test</MenuIcon>
                     <Drawer
                         anchor='left'

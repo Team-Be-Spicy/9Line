@@ -119,33 +119,42 @@ const Requester = () => {
     const equipmentOptions = [
         {
             label: "None",
+            "data-cy": "eqNone",
         },
         {
             label: "Hoist",
+            "data-cy": "eqHoist",
         },
         {
             label: "Extraction Equipment",
+            "data-cy": "eqExtraction",
         },
         {
             label: "Ventilator",
+            "data-cy": "eqVentilator",
         },
     ];
 
     const markingOptions = [
         {
             label: "Panels",
+            "data-cy":"mkPanels",
         },
         {
             label: "Pyrotechnic signal",
+            "data-cy":"mkPyro",
         },
         {
             label: "Smoke signal",
+            "data-cy":"mkSmoke",
         },
         {
             label: "None",
+            "data-cy":"mkNone",
         },
         {
             label: "Other",
+            "data-cy":"mkOther",
         },
     ];
 
@@ -157,14 +166,14 @@ const Requester = () => {
             {alert &&
                 <Alert sx={{marginBottom: '28px', display: 'flex', alignItems: 'center'}} severity="success" action={
                     <Box sx={{display: 'flex', flexWrap: 'no-wrap'}}>
-                        <Button color="success" onClick={handleClickOpen}>View Details</Button>
+                        <Button data-cy="btnViewDetails" color="success" onClick={handleClickOpen}>View Details</Button>
                         <IconButton
                             color='success'
                             onClick={() => setAlert(false)}>
                             <CloseIcon/>
                         </IconButton>
                     </Box>
-                }>Request Submitted. A dispatcher will contact you soon.</Alert>}
+                }><p data-cy="alertSuccess">Request Submitted. A dispatcher will contact you soon.</p></Alert>}
 
             <Container maxWidth="sm">
                 <h1>MEDEVAC Request Form</h1>
@@ -178,6 +187,7 @@ const Requester = () => {
                                 rules={{required: "Location is required"}}
                                 render={({field: {onChange, value}, fieldState: {error}}) => (
                                     <TextField
+                                        data-cy="location"
                                         sx={{width: '100%'}}
                                         error={!!error}
                                         helperText={error ? error.message : loading ? 'Getting location...' : null}
@@ -205,6 +215,7 @@ const Requester = () => {
                             rules={{required: "Radio Freq/ Call Sign/ Suffix is required"}}
                             render={({field: {onChange, value}, fieldState: {error}}) => (
                                 <TextField
+                                    data-cy="radio"
                                     error={!!error}
                                     helperText={error ? error.message : null}
                                     margin="dense"
@@ -225,6 +236,7 @@ const Requester = () => {
                             }}
                             render={({field: {onChange, value}, fieldState: {error}}) =>
                                 <TextField
+                                    data-cy="urgentPatient"
                                     error={!!error}
                                     helperText={error ? error.message : null}
                                     sx={{marginRight: '16px'}}
@@ -245,6 +257,7 @@ const Requester = () => {
                             }}
                             render={({field: {onChange, value}, fieldState: {error}}) =>
                                 <TextField
+                                    data-cy="urgentSurgPatient"
                                     error={!!error}
                                     helperText={error ? error.message : null}
                                     sx={{marginRight: '16px'}}
@@ -265,6 +278,7 @@ const Requester = () => {
                             }}
                             render={({field: {onChange, value}, fieldState: {error}}) =>
                                 <TextField
+                                    data-cy="priorityPatient"
                                     error={!!error}
                                     helperText={error ? error.message : null}
                                     sx={{marginRight: '16px'}}
@@ -285,6 +299,7 @@ const Requester = () => {
                             }}
                             render={({field: {onChange, value}, fieldState: {error}}) =>
                                 <TextField
+                                    data-cy="routinePatient"
                                     error={!!error}
                                     helperText={error ? error.message : null}
                                     label="Routine"
@@ -311,6 +326,7 @@ const Requester = () => {
                                                     name="equipment"
                                                     render={() =>
                                                         <Checkbox
+                                                            data-cy={option["data-cy"]}
                                                             checked={selectedItems.includes(option.label)}
                                                             onChange={() => handleSelect(option.label)}
                                                         />
@@ -342,6 +358,7 @@ const Requester = () => {
                             }}
                             render={({field: {onChange, value}, fieldState: {error}}) => (
                                 <TextField
+                                    data-cy="litterPatient"
                                     error={!!error}
                                     helperText={error ? PATIENT_NUMBER_NOT_VALID : null}
                                     sx={{width: '100%'}}
@@ -360,6 +377,7 @@ const Requester = () => {
                             }}
                             render={({field: {onChange, value}, fieldState: {error}}) => (
                                 <TextField
+                                    data-cy="ambulatoryPatient"
                                     error={!!error}
                                     helperText={error ? PATIENT_NUMBER_NOT_VALID : null}
                                     sx={{width: '100%'}}
@@ -376,17 +394,23 @@ const Requester = () => {
                             control={control}
                             name='security'
                             render={({field: {onChange, value}}) => (
-                                <Select sx={{width: '100%'}} onChange={onChange} value={value}>
+                                <Select data-cy="securitySelect" sx={{width: '100%'}} onChange={onChange} value={value}>
                                     <MenuItem value={NO_ENEMY_TROOPS_IN_AREA}>
                                         {NO_ENEMY_TROOPS_IN_AREA}
                                     </MenuItem>
-                                    <MenuItem value={POSSIBLE_ENEMY_TROOPS}>
+                                    <MenuItem
+                                        data-cy="securityPossible"
+                                        value={POSSIBLE_ENEMY_TROOPS}>
                                         {POSSIBLE_ENEMY_TROOPS}
                                     </MenuItem>
-                                    <MenuItem value={ENEMY_IN_AREA_PROCEED_WITH_CAUTION}>
+                                    <MenuItem
+                                        data-cy="securityCaution"
+                                        value={ENEMY_IN_AREA_PROCEED_WITH_CAUTION}>
                                         {ENEMY_IN_AREA_PROCEED_WITH_CAUTION}
                                     </MenuItem>
-                                    <MenuItem value={ENEMY_IN_AREA_ESCORT_REQUIRED}>
+                                    <MenuItem
+                                        data-cy="securityEscort"
+                                        value={ENEMY_IN_AREA_ESCORT_REQUIRED}>
                                         {ENEMY_IN_AREA_ESCORT_REQUIRED}
                                     </MenuItem>
                                 </Select>
@@ -409,6 +433,7 @@ const Requester = () => {
                                         <FormLabel>Marking Equipment</FormLabel>
                                         {markingOptions.map(singleOption =>
                                             <FormControlLabel
+                                                data-cy={singleOption["data-cy"]}
                                                 key={singleOption.label}
                                                 value={singleOption.label}
                                                 label={singleOption.label}
@@ -427,11 +452,17 @@ const Requester = () => {
                             control={control}
                             name='national'
                             render={({field: {onChange, value}}) => (
-                                <Select sx={{width: '100%'}} onChange={onChange} value={value}>
-                                    <MenuItem value='US Military'>
+                                <Select
+                                    data-cy="selNationality"
+                                    sx={{width: '100%'}} onChange={onChange} value={value}>
+                                    <MenuItem
+
+                                        value='US Military'>
                                         US Military
                                     </MenuItem>
-                                    <MenuItem value='US Civilian'>
+                                    <MenuItem
+                                        data-cy="natCivilian"
+                                        value='US Civilian'>
                                         US Civilian
                                     </MenuItem>
                                     <MenuItem value='Non-US Military'>
@@ -453,17 +484,21 @@ const Requester = () => {
                             control={control}
                             name='line9'
                             render={({field: {onChange, value}}) => (
-                                <Select sx={{width: '100%'}} onChange={onChange} value={value}>
+                                <Select
+                                    data-cy="selNBC"
+                                    sx={{width: '100%'}} onChange={onChange} value={value}>
                                     <MenuItem value='Nuclear'>
                                         Nuclear
                                     </MenuItem>
-                                    <MenuItem value='Biological'>
+                                    <MenuItem
+                                        data-cy="nbcBio"
+                                        value='Biological'>
                                         Biological
                                     </MenuItem>
                                     <MenuItem value='Chemical'>
                                         Chemical
                                     </MenuItem>
-                                    <MenuItem value='Chemical'>
+                                    <MenuItem value='None'>
                                         None
                                     </MenuItem>
                                 </Select>
@@ -473,7 +508,7 @@ const Requester = () => {
                     <Box onClick={() => {
                         window.scrollTo({top: 0, behavior: 'smooth'});
                     }} sx={{display: 'flex', justifyContent: 'end', marginY: '28px'}}>
-                        <Button variant='contained' color="success" onClick={handleSubmit(onSubmit)}>Submit</Button>
+                        <Button data-cy="btnSubmit" variant='contained' color="success" onClick={handleSubmit(onSubmit)}>Submit</Button>
                     </Box>
                 </form>
             </Container>

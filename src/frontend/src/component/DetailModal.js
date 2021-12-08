@@ -28,20 +28,21 @@ const DetailModal = ({
         <Dialog fullWidth onClose={() => {
         }} open={open}>
             <DialogTitle sx={{m: 0, p: 2}}>MEDEVAC Request
-                <IconButton
-                    onClick={handleClose}
-                    sx={{
-                        position: 'absolute',
-                        right: 8,
-                        top: 8,
-                        color: (theme) => theme.palette.grey[500],
-                    }}
-                >
-                    <CloseIcon/>
-                </IconButton>
-            </DialogTitle>
-            <DialogContent dividers sx={{alignContent: "center"}}>
-                <ModalRow label="Status" value={data.status || 'Pending'}/>
+            <IconButton
+                data-cy="btnClose"
+                onClick={handleClose}
+                sx={{
+                    position: 'absolute',
+                    right: 8,
+                    top: 8,
+                    color: (theme) => theme.palette.grey[500],
+                }}
+            >
+                <CloseIcon/>
+            </IconButton>
+        </DialogTitle>
+            <DialogContent dividers sx={{alignContent:"center"}}>
+                <ModalRow data_cy="detailStatus" label="Status" value={data.status || 'Pending'}/>
                 <ModalRow label='Location' value={data.location}/>
                 <ModalRow label="Call Sign" value={data.callSign}/>
                 <ModalRow label="Urgent" value={data.urgent}/>
