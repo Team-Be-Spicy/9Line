@@ -6,7 +6,7 @@ import {useState} from "react";
 import {Stack} from "@mui/material";
 import {data} from "../Dummy-data";
 
-const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLocation}) => {
+const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLocation, haveCheckbox}) => {
 
     const [selectedRequestIds, setSelectedRequestIds] = useState([]);
     const [pageSize, setPageSize] = useState(5);
@@ -154,7 +154,7 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLoc
                 }}
                 style={{border: 0}}
                 columns={getColumns()}
-                checkboxSelection
+                checkboxSelection={haveCheckbox}
                 selectionModel={selectedRequestIds}
                 onSelectionModelChange={params => setSelectedRequestIds(params)}
                 disableSelectionOnClick
