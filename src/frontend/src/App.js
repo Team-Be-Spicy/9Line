@@ -2,7 +2,7 @@ import './App.css';
 import React, {useEffect, useState} from 'react';
 import Requester from "./route/Requester";
 import Responder from "./route/Responder";
-import {Route, Routes} from "react-router-dom";
+import {NavLink, Route, Routes} from "react-router-dom";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Dispatcher from "./route/Dispatcher";
@@ -35,7 +35,7 @@ const App = () => {
     const {user, isAuthenticated, loginWithRedirect, logout} = useAuth0();
     const [userName, setUserName] = useState("");
     const [links, setLinks] = useState(default_links);
-    const [mode, setMode] = React.useState('dark');
+    const [mode, setMode] = React.useState('light');
 
     useEffect(() => {
         setUserName(isAuthenticated ? user.name : "");
@@ -65,48 +65,44 @@ const App = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box bgcolor="background.default" height="100%" minHeight="100vh">
+            <Box bgcolor="background.default" height="100%" minHeight="100vh" paddingBottom="5px">
                 <AppBar sx={{
                     display: "flex",
                     flexDirection: "row",
                     height: '60px',
-                    backgroundColor: 'action.hover',
-                    position: 'relative',
+                    backgroundColor: 'background.default',
+                    position: 'sticky',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     marginBottom: '20px'
                 }}>
+                        <Stack direction="row">
+                            <MenuIcon sx={{cursor: 'pointer', margin: '12px', color: "#737373"}}
+                                      onClick={() => setIsDrawerOpen(true)}>Test</MenuIcon>
+                            <Drawer
+                                anchor='left'
+                                open={isDrawerOpen}
+                                onClose={() => setIsDrawerOpen(false)}>
+                                <NavigationList
+                                    links={links}
+                                    user={user}
+                                    isAuthenticated={isAuthenticated}
+                                    loginWithRedirect={loginWithRedirect}
+                                    logout={logout}
+                                    hideDrawer={() => setIsDrawerOpen(false)}/>
+                            </Drawer>
+                            <NavLink id="appBarLogo" to="/" style={{marginLeft: "20px"}}>
+                                <img src={SWFLogo} alt={"swf logo"}/>
+                            </NavLink>
+                        </Stack>
 
-                    <Stack direction="row" sx={{backgroundColor: 'palette.background.default'}}>
-
-                        <MenuIcon sx={{cursor: 'pointer', margin: '12px', color: "#737373"}}
-                                  onClick={() => setIsDrawerOpen(true)}>Test</MenuIcon>
-                        <Drawer
-                            anchor='left'
-                            open={isDrawerOpen}
-                            onClose={() => setIsDrawerOpen(false)}>
-                            <NavigationList
-                                links={links}
-                                user={user}
-                                isAuthenticated={isAuthenticated}
-                                loginWithRedirect={loginWithRedirect}
-                                logout={logout}
-                                hideDrawer={() => setIsDrawerOpen(false)}/>
-                        </Drawer>
-
-
-                        <Box sx={{marginLeft: '20px'}}>
-                            <img src={SWFLogo} alt={"swf logo"}/>
-                        </Box>
-                    </Stack>
-
-                    <Stack direction="row" alignItems="center" paddingRight="20px">
-                    <Typography color="text.primary" style={{paddingRight: '12px'}}>{userName}</Typography>
-                        <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
-                            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon sx={{color: 'black'}}/>}
-                        </IconButton>
-                    </Stack>
-
+                        <Stack direction="row" alignItems="center" paddingRight="20px">
+                            <Typography color="text.primary" style={{paddingRight: '12px'}}>{userName}</Typography>
+                            <IconButton sx={{ml: 1}} onClick={colorMode.toggleColorMode} color="inherit">
+                                {theme.palette.mode === 'dark' ? <Brightness7Icon/> :
+                                    <Brightness4Icon sx={{color: 'black'}}/>}
+                            </IconButton>
+                        </Stack>
                 </AppBar>
                 <Routes>
                     <Route path="/" element={<Requester/>}/>
