@@ -6,10 +6,10 @@ import {useState} from "react";
 import {Stack} from "@mui/material";
 import {data} from "../Dummy-data";
 
-const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLocation, haveCheckbox}) => {
-
+const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLocation = null}) => {
     const [selectedRequestIds, setSelectedRequestIds] = useState([]);
     const [pageSize, setPageSize] = useState(5);
+
 
     const response_column = {
         field: "responder",
@@ -136,7 +136,7 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLoc
 
             <DataGrid
                 onCellClick={(params, event) => {
-                    if (params.field === 'location') {
+                    if (setMapLocation !== null  && params.field === 'location') {
                         setMapLocation(params.formattedValue);
                     }
                 }}
