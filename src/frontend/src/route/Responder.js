@@ -64,7 +64,7 @@ const Responder = () => {
                 <div className="requestListContainer">
                     <h1>MEDEVAC Assignment</h1>
                     <RequestList user="responder" requests={requests} onActionClicked={handleMarkComplete}
-                                 onViewSelected={onViewClicked} haveCheckbox={true}/>
+                                 onViewSelected={onViewClicked}/>
                 </div>
             </div>
             <DetailModal
