@@ -1,5 +1,5 @@
 import React from 'react';
-import {Stack} from "@mui/material";
+import {Stack, Typography} from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import {NavLink} from "react-router-dom";
@@ -17,7 +17,7 @@ const NavigationList = ({links, isAuthenticated, loginWithRedirect, logout, hide
                     <NavLink
                         to={link.path}
                         className={({isActive}) => isActive ? "active-link" : "inactive-link"}
-                    >{link.title}
+                    ><Typography color={'text.primary'}>{link.title}</Typography>
                     </NavLink>
                 </ListItem>)}
         </List>

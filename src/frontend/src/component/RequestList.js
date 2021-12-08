@@ -3,7 +3,7 @@ import "./RequestList.css";
 import {DataGrid} from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import {useState} from "react";
-import {Stack} from "@mui/material";
+import {Stack, Typography} from "@mui/material";
 import {data} from "../Dummy-data";
 
 const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLocation}) => {
@@ -131,7 +131,7 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLoc
                 </div>
 
                 :
-                <h3>Requests</h3>
+                <Typography color="text.secondary" fontSize="20px" fontWeight="800">Requests</Typography>
             }
 
             <DataGrid
@@ -142,12 +142,12 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLoc
                 }}
                 components={{
                     NoRowsOverlay: () => (
-                        <Stack height="150px" alignItems="center" justifyContent="center">
+                        <Stack color="text.secondary" height="150px" alignItems="center" justifyContent="center">
                             No active requests.
                         </Stack>
                     ),
                     NoResultsOverlay: () => (
-                        <Stack height="`150px`" alignItems="center" justifyContent="center">
+                        <Stack color="text.secondary" height="`150px`" alignItems="center" justifyContent="center">
                             Local filter returns no result
                         </Stack>
                     )

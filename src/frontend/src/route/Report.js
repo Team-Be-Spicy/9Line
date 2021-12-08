@@ -1,7 +1,7 @@
 import MonthBarChart from "../component/MonthBarChart";
 import PrecedencePieChart from "../component/PrecedencePieChart";
 import RequestLineChart from "../component/RequestLineChart";
-import {Box, CircularProgress} from "@mui/material";
+import {Box, CircularProgress, Typography} from "@mui/material";
 import RequestList from "../component/RequestList";
 import {useEffect, useState} from "react";
 import {fetchAll, fetchCompleted} from "../service/service";
@@ -45,11 +45,11 @@ const Report = () => {
                                 height: 1,
                                 width: 1
                             }}>
-                                <h2>
+                                <Typography fontSize="30px" fontWeight="200" paddingBottom="20px" color="text.primary">
                                     {requests.length}
                                     <br/>
                                     Completed Missions
-                                </h2>
+                                </Typography>
                             </Box>
                         </Box>
                         <PrecedencePieChart requests={requests}/>
@@ -65,7 +65,7 @@ const Report = () => {
             </Box>
             <Box sx={{display: 'flex', justifyContent: 'center'}}>
                 <div className="requestListContainer">
-                    <h1>MEDEVAC Requests</h1>
+                    <Typography fontSize="40px" fontWeight="200" paddingBottom="20px" color="text.primary">MEDEVAC Requests</Typography>
                     <RequestList user="responder" requests={allRequests} setMapLocation={setMapLocation}/>
                 </div>
             </Box>

@@ -2,7 +2,7 @@ import RequestList from "../component/RequestList";
 import "./Responder.css";
 import {useEffect, useState} from "react";
 import {fetchRequests, updateStatus} from "../service/service";
-import {Alert, Box, IconButton} from "@mui/material";
+import {Alert, Box, IconButton, Typography} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DetailModal from "../component/DetailModal";
 import {useAuth0, withAuthenticationRequired} from "@auth0/auth0-react";
@@ -62,7 +62,7 @@ const Responder = () => {
             }>{successMessage}</Alert>}
             <div className="Responder">
                 <div className="requestListContainer">
-                    <h1>MEDEVAC Assignment</h1>
+                    <Typography fontSize="40px" fontWeight="200" paddingBottom="20px" color="text.primary">MEDEVAC Assignment</Typography>
                     <RequestList user="responder" requests={requests} onActionClicked={handleMarkComplete}
                                  onViewSelected={onViewClicked}/>
                 </div>

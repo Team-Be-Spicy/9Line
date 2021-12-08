@@ -14,15 +14,17 @@ h2 {
 }
 
 .active-link {
-  color: green;
-  padding: 5px;
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
   text-decoration: none;
   width: 100%;
 }
 
 .inactive-link {
-  color: black;
-  padding: 5px;
+  /*color: black;*/
+  padding: 5px 10px;
+  border-radius: 10px;
   text-decoration: none;
   width: 100%;
 }
@@ -30,7 +32,7 @@ h2 {
 .inactive-link:hover {
   transform: scale(1.01);
   transition-duration: 100ms;
-  background-color: rgb(237, 247, 237);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .top-banner {

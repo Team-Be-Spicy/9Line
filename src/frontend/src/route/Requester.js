@@ -7,7 +7,7 @@ import {
     FormLabel, IconButton,
     MenuItem, Radio, RadioGroup,
     Select,
-    TextField, useMediaQuery
+    TextField, Typography, useMediaQuery
 } from "@mui/material";
 import {useForm, Controller} from "react-hook-form";
 import Button from "@mui/material/Button";
@@ -167,7 +167,7 @@ const Requester = () => {
                 }>Request Submitted. A dispatcher will contact you soon.</Alert>}
 
             <Container maxWidth="sm">
-                <h1>MEDEVAC Request Form</h1>
+                <Typography fontSize="40px" fontWeight="200" paddingBottom="20px" color="text.primary">MEDEVAC Request Form</Typography>
                 <form>
                     <Box sx={{display: 'flex', flexDirection: 'column'}}>
                         <Box sx={{display: 'flex', justifyContent: 'stretch'}}>
@@ -318,6 +318,7 @@ const Requester = () => {
                                                     control={control}
                                                 />
                                             }
+                                            sx={{color: 'text.primary'}}
                                             label={option.label}
                                             key={option.label}
                                         />
@@ -412,6 +413,7 @@ const Requester = () => {
                                                 key={singleOption.label}
                                                 value={singleOption.label}
                                                 label={singleOption.label}
+                                                sx={{color: 'text.primary'}}
                                                 control={<Radio/>}
                                             />)}
                                     </RadioGroup>
