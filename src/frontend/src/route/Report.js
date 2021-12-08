@@ -1,18 +1,34 @@
 import MonthBarChart from "../component/MonthBarChart";
 import PrecedencePieChart from "../component/PrecedencePieChart";
 import RequestLineChart from "../component/RequestLineChart";
-import {Box} from "@mui/material";
+import {Box, CircularProgress} from "@mui/material";
 import RequestList from "../component/RequestList";
 import {useEffect, useState} from "react";
-import {fetchRequests} from "../service/service";
+import {fetchAll, fetchCompleted} from "../service/service";
+import ReportMap from "../component/ReportMap";
+import {data} from "../Dummy-data";
+import {useAuth0} from "@auth0/auth0-react";
 
 
 const Report = () => {
-
+    const {user, getAccessTokenSilently} = useAuth0();
     const [requests, setRequests] = useState([]);
+    const [allRequests, setAllRequests] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [mapLocation, setMapLocation] = useState('');
 
-    useEffect(() => {
-        fetchRequests("dispatcher").then(res => setRequests(res.data));
+    useEffect(async () => {
+        try {
+            const result = await fetchCompleted(await getAccessTokenSilently());
+            const allResults = await fetchAll(await getAccessTokenSilently());
+            setAllRequests(allResults.data);
+            setRequests(result.data);
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setLoading(false)
+        }
+
     }, [])
 
     return (
@@ -30,26 +46,28 @@ const Report = () => {
                                 width: 1
                             }}>
                                 <h2>
-                                    25 {/*placeholder*/}
+                                    {requests.length}
                                     <br/>
                                     Completed Missions
                                 </h2>
                             </Box>
                         </Box>
-                        <PrecedencePieChart/>
+                        <PrecedencePieChart requests={requests}/>
                     </Box>
                     <Box sx={{display: 'flex', flexDirection: "row"}}>
-                        <MonthBarChart/>
-                        <RequestLineChart/>
+                        <MonthBarChart requests={requests}/>
+                        <RequestLineChart requests={requests}/>
                     </Box>
                 </Box>
-                <Box sx={{width: 1 / 2}}>MAP GOES HERE</Box>
+                <Box sx={{width: 1 / 2}}>
+                    {loading ? <CircularProgress/> : <ReportMap mapLocation={mapLocation} requests={allRequests}/>}
+                </Box>
             </Box>
             <Box sx={{display: 'flex', justifyContent: 'center'}}>
-            <div className="requestListContainer">
-                <h1>Completed MEDEVAC Requests</h1>
-                <RequestList user={"responder"} requests={requests}/>
-            </div>
+                <div className="requestListContainer">
+                    <h1>MEDEVAC Requests</h1>
+                    <RequestList user="responder" requests={allRequests} setMapLocation={setMapLocation}/>
+                </div>
             </Box>
         </Box>
     );

@@ -21,6 +21,16 @@ public class RequestController {
        return new ResponseEntity<>(requestService.createRequest(body), HttpStatus.CREATED);
     }
 
+    @GetMapping("/all")
+    private Iterable<Request> getAllRequests(){
+        return this.requestService.getAllRequests();
+    }
+
+    @GetMapping("/complete")
+    private Iterable<Request> getCompleteRequessts(){
+        return this.requestService.getCompleteRequests();
+    }
+
     @GetMapping("/responder/{responderName}")
     private Iterable<Request> getRequestsByRole(@PathVariable(required = false) String responderName) {
         return requestService.getRequestsByRole(responderName);
@@ -31,13 +41,13 @@ public class RequestController {
         return new ResponseEntity<>(requestService.getRequest(id),HttpStatus.OK);
     }
 
-    @PatchMapping("/responder/{id}")
+    @PatchMapping("/responder/update/{id}")
     private ResponseEntity<Request> updateRequestResponder(@PathVariable Long id, @RequestBody Request responder) throws RequestExistsException {
         return new ResponseEntity<>(requestService.updateRequestResponder(id, responder),HttpStatus.OK);
     }
 
     @PatchMapping("/status/{id}")
-    private ResponseEntity<Request> patchStatusRequestById(@PathVariable Long id) throws RequestExistsException {
-        return new ResponseEntity<>(requestService.updateStatus(id),HttpStatus.OK);
+    private ResponseEntity<Request> patchStatusRequestById(@PathVariable Long id, @RequestBody Request request) throws RequestExistsException {
+        return new ResponseEntity<>(requestService.updateStatus(id, request.getStatus()), HttpStatus.OK);
     }
 }

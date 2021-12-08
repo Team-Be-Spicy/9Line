@@ -1,7 +1,7 @@
 import RequestList from "../component/RequestList";
 import "./Responder.css";
 import {useEffect, useState} from "react";
-import {fetchRequests, fetchResponderRequests, updateStatus} from "../service/service";
+import {fetchRequests, updateStatus} from "../service/service";
 import {Alert, Box, IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DetailModal from "../component/DetailModal";
@@ -19,10 +19,13 @@ const Responder = () => {
     const {user, getAccessTokenSilently} = useAuth0();
 
     useEffect(async () => {
-        const token = await getAccessTokenSilently({audience: "https://egor-dev.com", scope: "read:requests"});
-        const response = await fetchRequests(token, user.name);
-        setRequests(response.data);
+        await updateRequests();
     }, [getAccessTokenSilently]);
+
+    const updateRequests = async () => {
+        const response = await fetchRequests(await getAccessTokenSilently(), user.name);
+        setRequests(response.data.filter(d => d.status !== "Complete"));
+    }
 
     const onViewClicked = (requestId) => {
         setData(requests.find(request => request.id === requestId));
@@ -31,13 +34,12 @@ const Responder = () => {
 
     const handleMarkComplete = async (selectedIds) => {
         setSuccessMessage(`${selectedIds.length} Request${(selectedIds.length > 1) ? "s" : ""} Completed`);
-
+        const token = await getAccessTokenSilently();
         setAlert(true);
         for (const id of selectedIds) {
-            await updateStatus(id);
+            await updateStatus(token, id, "Complete");
         }
-        const res = await fetchRequests();
-        setRequests(res.data);
+        await updateRequests();
         closeModal();
     };
 

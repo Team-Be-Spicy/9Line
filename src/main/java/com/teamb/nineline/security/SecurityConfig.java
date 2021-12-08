@@ -22,12 +22,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .mvcMatchers(HttpMethod.GET, "/api/request/responder/**").authenticated()
                 .mvcMatchers(HttpMethod.POST, "/api/request").permitAll()
+                .mvcMatchers(HttpMethod.GET, "/", "/static/**", "/manifest.json", "/*.png", "/*.ico").permitAll()
+                .anyRequest().authenticated()
                 .and().cors()
                 .and().oauth2ResourceServer().jwt();
 
-        http.csrf().disable();
+        http.csrf().ignoringAntMatchers("/api/request/status/**", "/api/request/responder/update/**", "/api/request");
     }
 
     @Bean

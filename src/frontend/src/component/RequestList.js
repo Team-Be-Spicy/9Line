@@ -4,22 +4,33 @@ import {DataGrid} from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import {useState} from "react";
 import {Stack} from "@mui/material";
+import {data} from "../Dummy-data";
 
-const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
+const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLocation}) => {
 
     const [selectedRequestIds, setSelectedRequestIds] = useState([]);
     const [pageSize, setPageSize] = useState(5);
 
-    const statusColumn = {
-        field: "status",
-        headerName: "Status",
+    const response_column = {
+        field: "responder",
+        headerName: "Responder",
         headerClassName: "colHeader",
         headerAlign: "center",
         align: "center",
         flex: 1,
-        minWidth: 100,
+        minWidth: 150,
     };
-    const dispatcherColumns = [
+
+    const columns = [
+        {
+            field: "status",
+            headerName: "Status",
+            headerClassName: "colHeader",
+            headerAlign: "center",
+            align: "center",
+            flex: 1,
+            minWidth: 100,
+        },
         {
             field: "location",
             headerName: "Location",
@@ -90,11 +101,10 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
 
     const buttonText = user === "responder" ? "Mark as Complete" : "Assign";
 
-    const getColumns = () => user === "responder" ? [statusColumn, ...dispatcherColumns] : dispatcherColumns;
-
     const getRows = () => requests && requests.map(request => {
         return {
             id: request.id,
+            responder: request.responder,
             status: request.status,
             location: request.location,
             callSign: request.callSign,
@@ -104,6 +114,9 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
             marking: request.marking,
         }
     });
+
+    const getColumns = () => user === "responder" ? columns : [response_column,...columns];;
+
     return (
         <div className="RequestList">
             {selectedRequestIds.length > 0 ?
@@ -122,6 +135,11 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected}) => {
             }
 
             <DataGrid
+                onCellClick={(params, event) => {
+                    if (params.field === 'location') {
+                        setMapLocation(params.formattedValue);
+                    }
+                }}
                 components={{
                     NoRowsOverlay: () => (
                         <Stack height="150px" alignItems="center" justifyContent="center">

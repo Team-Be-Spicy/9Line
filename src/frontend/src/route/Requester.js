@@ -35,6 +35,7 @@ const Requester = () => {
     const [data, setData] = useState({});
     const [loading, setLoading] = useState(true);
     const [isMapOpen, setIsMapOpen] = useState(false);
+    const [isNavigatorApiAvailable, setIsNavigatorApiAvailable] = useState(false);
     const isSmallScreen = useMediaQuery('(max-width:800px)');
 
     useEffect(() => {
@@ -48,12 +49,14 @@ const Requester = () => {
                 const mgrsLocation = mgrs.forward([position.coords.longitude, position.coords.latitude,], 5);
                 setLocation(mgrsLocation)
                 setLoading(false);
+                setIsNavigatorApiAvailable(true);
             }, () => {
                 console.error("Error getting your location");
                 setLoading(false);
             });
         } else {
             console.error("Geolocation is not supported by this browser.");
+            setIsNavigatorApiAvailable(false);
             setLoading(false);
         }
     }
@@ -69,7 +72,8 @@ const Requester = () => {
         const newData = {
             ...data,
             equipment: ((data.equipment.length === 0) ? 'None' : data.equipment.join(', ')),
-            status: 'Pending'
+            status: 'Pending',
+            date: new Date()
         };
         console.log(newData);
         try {
@@ -79,8 +83,10 @@ const Requester = () => {
             reset({
                 location: '',
                 callSign: '',
-                totalPatient: '0',
-                precedence: 'Urgent',
+                urgent: 0,
+                urgentSurgical: 0,
+                priority: 0,
+                routine: 0,
                 equipment: [],
                 litter: '',
                 ambulatory: '',
@@ -94,6 +100,7 @@ const Requester = () => {
             console.log(e);
         }
     };
+
 
     const handleSelect = (value) => {
         const isPresent = selectedItems.indexOf(value);
@@ -142,22 +149,22 @@ const Requester = () => {
         },
     ];
 
+
     return (
         <>
             {isMapOpen &&
-            <MapModal setLocation={setLocation} open={isMapOpen} handleClose={() => setIsMapOpen(false)}/>}
+                <MapModal setLocation={setLocation} open={isMapOpen} handleClose={() => setIsMapOpen(false)}/>}
             {alert &&
-            <Alert sx={{marginBottom: '28px', display: 'flex', alignItems: 'center'}} severity="success" action={
-                <Box sx={{display: 'flex', flexWrap: 'no-wrap'}}>
-                    <Button color="success" onClick={handleClickOpen}>View Details</Button>
-                    <IconButton
-                        color='success'
-                        onClick={() => setAlert(false)}
-                    >
-                        <CloseIcon/>
-                    </IconButton>
-                </Box>
-            }>Request Submitted. A dispatcher will contact you soon.</Alert>}
+                <Alert sx={{marginBottom: '28px', display: 'flex', alignItems: 'center'}} severity="success" action={
+                    <Box sx={{display: 'flex', flexWrap: 'no-wrap'}}>
+                        <Button color="success" onClick={handleClickOpen}>View Details</Button>
+                        <IconButton
+                            color='success'
+                            onClick={() => setAlert(false)}>
+                            <CloseIcon/>
+                        </IconButton>
+                    </Box>
+                }>Request Submitted. A dispatcher will contact you soon.</Alert>}
 
             <Container maxWidth="sm">
                 <h1>MEDEVAC Request Form</h1>
@@ -180,7 +187,8 @@ const Requester = () => {
                                         label="Location"/>
                                 )}
                             />
-                            <IconButton onClick={() => getCurrentLocation()} sx={{marginLeft: '6px'}} color="warning"
+                            <IconButton disabled={!isNavigatorApiAvailable} onClick={() => getCurrentLocation()}
+                                        sx={{marginLeft: '6px'}} color="warning"
                                         size="large">
                                 <PersonPinIcon fontSize="large"/>
                             </IconButton>
@@ -207,46 +215,88 @@ const Requester = () => {
                         />
                     </Box>
 
-                    <Box sx={{display: 'flex', alignItems: 'flex-start', marginTop: '16px'}}>
+                    <Box sx={{display: 'flex', marginTop: '16px'}}>
                         <Controller
                             defaultValue='0'
-                            name='totalPatient'
+                            name='urgent'
                             control={control}
                             rules={{
-                                pattern: /^[1-9]\d*$/i,
+                                pattern: /^[0-9]\d*$/i,
                             }}
-                            render={({field: {onChange, value}, fieldState: {error}}) => (
+                            render={({field: {onChange, value}, fieldState: {error}}) =>
                                 <TextField
                                     error={!!error}
-                                    helperText={error ? PATIENT_NUMBER_NOT_VALID : null}
+                                    helperText={error ? error.message : null}
                                     sx={{marginRight: '16px'}}
+                                    label="Urgent"
+                                    type="number"
                                     onChange={onChange}
                                     value={value}
-                                    label="Patient Number"/>
-                            )}
+
+                                />}
                         />
                         <Controller
-                            defaultValue="Urgent"
+                            defaultValue='0'
+                            name='urgentSurgical'
                             control={control}
-                            name='precedence'
-                            render={({field: {onChange, value}}) => (
-                                <Select sx={{width: '100%'}} onChange={onChange} value={value}>
-                                    <MenuItem value='Urgent'>
-                                        Urgent
-                                    </MenuItem>
-                                    <MenuItem value='Urgent Surgical'>
-                                        Urgent Surgical
-                                    </MenuItem>
-                                    <MenuItem value='Priority'>
-                                        Priority
-                                    </MenuItem>
-                                    <MenuItem value='Routine'>
-                                        Routine
-                                    </MenuItem>
-                                </Select>
-                            )}
+                            rules={{
+                                pattern: /^[0-9]\d*$/i,
+
+                            }}
+                            render={({field: {onChange, value}, fieldState: {error}}) =>
+                                <TextField
+                                    error={!!error}
+                                    helperText={error ? error.message : null}
+                                    sx={{marginRight: '16px'}}
+                                    label="Urgent Surgical"
+                                    type="number"
+                                    onChange={onChange}
+                                    value={value}
+
+                                />}
                         />
+                        <Controller
+                            defaultValue='0'
+                            name='priority'
+                            control={control}
+                            rules={{
+                                pattern: /^[0-9]\d*$/i,
+
+                            }}
+                            render={({field: {onChange, value}, fieldState: {error}}) =>
+                                <TextField
+                                    error={!!error}
+                                    helperText={error ? error.message : null}
+                                    sx={{marginRight: '16px'}}
+                                    label="Priority"
+                                    type="number"
+                                    onChange={onChange}
+                                    value={value}
+
+                                />}
+                        />
+                        <Controller
+                            defaultValue='0'
+                            name='routine'
+                            control={control}
+                            rules={{
+                                pattern: /^[0-9]\d*$/i,
+
+                            }}
+                            render={({field: {onChange, value}, fieldState: {error}}) =>
+                                <TextField
+                                    error={!!error}
+                                    helperText={error ? error.message : null}
+                                    label="Routine"
+                                    type="number"
+                                    onChange={onChange}
+                                    value={value}
+
+                                />}
+                        />
+
                     </Box>
+
 
                     <Box sx={{marginTop: '16px'}}>
                         <FormControl>
