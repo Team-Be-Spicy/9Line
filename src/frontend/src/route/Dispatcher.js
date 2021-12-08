@@ -102,7 +102,8 @@ const Dispatcher = () => {
                     <RequestList user={"dispatcher"}
                                  requests={requests}
                                  onActionClicked={onActionClicked}
-                                 onViewSelected={onViewClicked}/>
+                                 onViewSelected={onViewClicked}
+                                 haveCheckbox={true}/>
                 </div>
             </div>
         </>

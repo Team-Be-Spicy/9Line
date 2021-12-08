@@ -9,6 +9,7 @@ import ReportMap from "../component/ReportMap";
 import {data} from "../Dummy-data";
 import {useAuth0} from "@auth0/auth0-react";
 import {useTheme} from "@mui/material/styles"
+import DetailModal from "../component/DetailModal";
 
 
 const Report = () => {
@@ -17,6 +18,8 @@ const Report = () => {
     const [allRequests, setAllRequests] = useState([]);
     const [loading, setLoading] = useState(true);
     const [mapLocation, setMapLocation] = useState('');
+    const [open, setOpen] = useState(false);
+    const [data, setData] = useState({});
 
     useEffect(async () => {
         try {
@@ -31,6 +34,15 @@ const Report = () => {
         }
 
     }, [])
+
+    const onViewClicked = (requestId) => {
+        setData(allRequests.find(request => request.id === requestId));
+        setOpen(true);
+    };
+
+    const closeModal = () => {
+        setOpen(false);
+    }
 
     return !loading && (
         <Box sx={{width: '100vw'}}>
@@ -49,7 +61,12 @@ const Report = () => {
                 <Box sx={{display: 'flex', justifyContent: 'center'}}>
                     <div className="requestListContainer">
                         <h1>MEDEVAC Requests</h1>
-                        <RequestList user="responder" requests={allRequests} setMapLocation={setMapLocation}/>
+                        <RequestList user="responder" requests={allRequests} setMapLocation={setMapLocation} onViewSelected={onViewClicked} haveCheckbox={false}/>
+                        <DetailModal
+                            data={data}
+                            open={open}
+                            handleClose={closeModal}
+                        />
                     </div>
                 </Box>
             </Box>
