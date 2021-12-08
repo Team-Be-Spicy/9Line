@@ -73,7 +73,6 @@ const RequestLineChart = ({requests}) => {
             alignItems: "center",
             justifyContent: "center",
             height: 1,
-            width: 1 / 2
         }}>
             <Typography fontSize="20px" fontWeight="800" color="text.primary">Request Trends</Typography>
             <ResponsiveContainer height={350} width="100%">

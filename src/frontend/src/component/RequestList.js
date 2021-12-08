@@ -6,10 +6,10 @@ import {useState} from "react";
 import {Stack, Typography} from "@mui/material";
 import {data} from "../Dummy-data";
 
-const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLocation}) => {
-
+const RequestList = ({user, requests, onActionClicked, onViewSelected, haveCheckbox, setMapLocation = null}) => {
     const [selectedRequestIds, setSelectedRequestIds] = useState([]);
     const [pageSize, setPageSize] = useState(5);
+
 
     const response_column = {
         field: "responder",
@@ -50,8 +50,8 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLoc
             minWidth: 100,
         },
         {
-            field: "precedence",
-            headerName: "Precedence",
+            field: "totalPatients",
+            headerName: "Total Patients",
             headerClassName: "colHeader",
             headerAlign: "center",
             align: "center",
@@ -108,7 +108,7 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLoc
             status: request.status,
             location: request.location,
             callSign: request.callSign,
-            precedence: request.precedence,
+            totalPatients: request.urgent + request.urgentSurgical + request.routine + request.priority,
             equipment: request.equipment,
             security: request.security,
             marking: request.marking,
@@ -136,7 +136,7 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLoc
 
             <DataGrid
                 onCellClick={(params, event) => {
-                    if (params.field === 'location') {
+                    if (setMapLocation !== null  && params.field === 'location') {
                         setMapLocation(params.formattedValue);
                     }
                 }}
@@ -154,7 +154,7 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLoc
                 }}
                 style={{border: 0}}
                 columns={getColumns()}
-                checkboxSelection
+                checkboxSelection={haveCheckbox}
                 selectionModel={selectedRequestIds}
                 onSelectionModelChange={params => setSelectedRequestIds(params)}
                 disableSelectionOnClick

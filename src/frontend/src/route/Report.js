@@ -1,13 +1,13 @@
 import MonthBarChart from "../component/MonthBarChart";
 import PrecedencePieChart from "../component/PrecedencePieChart";
 import RequestLineChart from "../component/RequestLineChart";
-import {Box, CircularProgress, Typography} from "@mui/material";
+import {Box, Grid, Typography} from "@mui/material";
 import RequestList from "../component/RequestList";
 import {useEffect, useState} from "react";
 import {fetchAll, fetchCompleted} from "../service/service";
 import ReportMap from "../component/ReportMap";
-import {data} from "../Dummy-data";
 import {useAuth0} from "@auth0/auth0-react";
+import DetailModal from "../component/DetailModal";
 
 
 const Report = () => {
@@ -16,6 +16,8 @@ const Report = () => {
     const [allRequests, setAllRequests] = useState([]);
     const [loading, setLoading] = useState(true);
     const [mapLocation, setMapLocation] = useState('');
+    const [open, setOpen] = useState(false);
+    const [data, setData] = useState({});
 
     useEffect(async () => {
         try {
@@ -31,43 +33,40 @@ const Report = () => {
 
     }, [])
 
-    return (
-        <Box sx={{display: 'flex', flexDirection: "column"}}>
-            <Box sx={{display: 'flex', flexDirection: "row"}}>
-                <Box sx={{display: 'flex', flexDirection: "column", width: 1 / 2}}>
-                    <Box sx={{display: 'flex', flexDirection: "row"}}>
-                        <Box sx={{height: 1, width: 1 / 2}}>
-                            <Box sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                height: 1,
-                                width: 1
-                            }}>
-                                <Typography fontSize="30px" fontWeight="200" paddingBottom="20px" color="text.primary">
-                                    {requests.length}
-                                    <br/>
-                                    Completed Missions
-                                </Typography>
-                            </Box>
-                        </Box>
-                        <PrecedencePieChart requests={requests}/>
-                    </Box>
-                    <Box sx={{display: 'flex', flexDirection: "row"}}>
-                        <MonthBarChart requests={requests}/>
-                        <RequestLineChart requests={requests}/>
-                    </Box>
+    const onViewClicked = (requestId) => {
+        setData(allRequests.find(request => request.id === requestId));
+        setOpen(true);
+    };
+
+    const closeModal = () => {
+        setOpen(false);
+    }
+
+    return !loading && (
+        <Box sx={{width: '100vw'}}>
+            <Typography align={'center'} variant={"h5"} color="text-primary" fontSize="30px" fontWeight="200">
+                {requests.length} Completed Missions
+            </Typography>
+            <div style={{width:"100%", height:'60vh'}}>
+                <ReportMap  mapLocation={mapLocation} requests={allRequests}/>
+            </div>
+            <Grid container>
+                <Grid xs={12} md={6}> <PrecedencePieChart requests={requests}/></Grid>
+                <Grid xs={12} md={6}> <MonthBarChart requests={requests}/></Grid>
+            </Grid>
+            <RequestLineChart requests={requests}/>
+            <Box>
+                <Box sx={{display: 'flex', justifyContent: 'center'}}>
+                    <div className="requestListContainer">
+                        <Typography fontSize="40px" fontWeight="200" paddingBottom="20px" color="text.primary">MEDEVAC Requests</h1>
+                        <RequestList user="responder" requests={allRequests} setMapLocation={setMapLocation} onViewSelected={onViewClicked} haveCheckbox={false}/>
+                        <DetailModal
+                            data={data}
+                            open={open}
+                            handleClose={closeModal}
+                        />
+                    </div>
                 </Box>
-                <Box sx={{width: 1 / 2}}>
-                    {loading ? <CircularProgress/> : <ReportMap mapLocation={mapLocation} requests={allRequests}/>}
-                </Box>
-            </Box>
-            <Box sx={{display: 'flex', justifyContent: 'center'}}>
-                <div className="requestListContainer">
-                    <Typography fontSize="40px" fontWeight="200" paddingBottom="20px" color="text.primary">MEDEVAC Requests</Typography>
-                    <RequestList user="responder" requests={allRequests} setMapLocation={setMapLocation}/>
-                </div>
             </Box>
         </Box>
     );
