@@ -18,6 +18,7 @@ const DetailModal = ({button1Label, button2Label, button1Action, button2Action, 
         }} open={open}>
             <DialogTitle sx={{ m: 0, p: 2 }}>MEDEVAC Request
             <IconButton
+                data-cy="btnClose"
                 onClick={handleClose}
                 sx={{
                     position: 'absolute',
@@ -30,7 +31,7 @@ const DetailModal = ({button1Label, button2Label, button1Action, button2Action, 
             </IconButton>
         </DialogTitle>
             <DialogContent dividers sx={{alignContent:"center"}}>
-                <ModalRow label="Status" value={data.status || 'Pending'}/>
+                <ModalRow data_cy="detailStatus" label="Status" value={data.status || 'Pending'}/>
                 <ModalRow label='Location' value={data.location}/>
                 <ModalRow label="Call Sign" value={data.callSign}/>
                 <ModalRow label="Number of Patients" value={data.totalPatient}/>

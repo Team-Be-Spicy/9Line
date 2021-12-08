@@ -9,7 +9,7 @@ import {data} from "../Dummy-data";
 const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLocation}) => {
 
     const [selectedRequestIds, setSelectedRequestIds] = useState([]);
-    const [pageSize, setPageSize] = useState(5);
+    const [pageSize, setPageSize] = useState(10);
 
     const response_column = {
         field: "responder",
@@ -122,7 +122,7 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLoc
             {selectedRequestIds.length > 0 ?
                 <div className="actionButtonContainer">
                     <p>{selectedRequestIds.length} selected</p>
-                    <Button color="success" variant="outlined" onClick={() => {
+                    <Button data-cy="btnAction" color="success" variant="outlined" onClick={() => {
                         onActionClicked(selectedRequestIds);
                         setSelectedRequestIds([]);
                     }}>
@@ -162,7 +162,7 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected, setMapLoc
                 pageSize={pageSize}
                 hideFooterSelectedRowCount
                 onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                rowsPerPageOptions={[5, 10, 25]}
+                rowsPerPageOptions={[10, 20, 30]}
                 pagination
                 autoHeight {...getRows()}
             />

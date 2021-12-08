@@ -30,6 +30,42 @@ Cypress.Commands.add('login', () => {
     };
     cy.request(options);
 })
+
+Cypress.Commands.add('getBySel', (selector, ...args) => {
+    return cy.get(`[data-cy=${selector}]`, ...args)
+})
+
+Cypress.Commands.add('submitRequestForm', () => {
+    cy.getBySel("location").type("Miami, FL")
+    cy.getBySel("radio").type("35.950 / Dustoff / ABC")
+    cy.getBySel("urgentPatient").type("{backspace}4")
+    cy.getBySel("urgentSurgPatient").type("{backspace}3")
+    cy.getBySel("priorityPatient").type("{backspace}2")
+    cy.getBySel("routinePatient").type("{backspace}1")
+    cy.getBySel("eqNone").click()
+    cy.getBySel("eqHoist").click()
+    cy.getBySel("eqExtraction").click()
+    cy.getBySel("eqVentilator").click()
+    cy.getBySel("litterPatient").type("3")
+    cy.getBySel("ambulatoryPatient").type("7")
+    cy.getBySel("securitySelect").click()
+    cy.getBySel("securityEscort").click()
+    cy.getBySel("mkPanels").click()
+    cy.getBySel("mkPyro").click()
+    cy.getBySel("mkSmoke").click()
+    cy.getBySel("mkNone").click()
+    cy.getBySel("mkOther").click()
+    cy.getBySel("mkSmoke").click()
+    cy.getBySel("selNationality").click()
+    cy.getBySel("natCivilian").click()
+    cy.getBySel("selNBC").click()
+    cy.getBySel("nbcBio").click()
+    cy.getBySel("btnSubmit").click()
+
+
+})
+
+
 //
 //
 // -- This is a child command --
