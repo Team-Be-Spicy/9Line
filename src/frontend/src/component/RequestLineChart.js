@@ -74,7 +74,7 @@ const RequestLineChart = ({requests}) => {
             justifyContent: "center",
             height: 1,
         }}>
-            <Typography fontSize="20px" fontWeight="800" color="text.primary">Request Trends</Typography>
+            <Typography fontSize="20px" fontWeight="800" color="text.secondary">Request Trends</Typography>
             <ResponsiveContainer height={350} width="100%">
                 <AreaChart
                     data={months}

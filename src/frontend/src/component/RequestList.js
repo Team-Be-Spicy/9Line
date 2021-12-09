@@ -116,12 +116,14 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected, haveCheck
         }
     });
 
-    const getColumns = () => user === "responder" ? columns : [response_column,...columns];;
+    const getColumns = () => user === "responder" ? columns : [response_column, ...columns];
+    ;
 
     return (
         <div className="RequestList">
             {selectedRequestIds.length > 0 ?
-                <Box sx={{backgroundColor: 'rgba(38,255,0,0.1)'}} padding="10px" borderRadius="10px" className="actionButtonContainer">
+                <Box sx={{backgroundColor: 'rgba(38,255,0,0.1)'}} padding="10px" borderRadius="10px"
+                     className="actionButtonContainer">
                     <Typography color="text.primary">{selectedRequestIds.length} selected</Typography>
                     <Button data-cy="btnAction" color="success" variant="outlined" onClick={() => {
                         onActionClicked(selectedRequestIds);
@@ -132,12 +134,11 @@ const RequestList = ({user, requests, onActionClicked, onViewSelected, haveCheck
                 </Box>
 
                 :
-                <Typography color="text.secondary" fontSize="20px" fontWeight="800">Requests</Typography>
-            }
+                setMapLocation && <Typography color="text.secondary" fontSize="20px" fontWeight="800" textAlign={"center"}>MEDEVAC Request(s)</Typography>}
 
             <DataGrid
                 onCellClick={(params, event) => {
-                    if (setMapLocation !== null  && params.field === 'location') {
+                    if (setMapLocation !== null && params.field === 'location') {
                         setMapLocation(params.formattedValue);
                     }
                 }}
