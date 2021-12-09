@@ -16,14 +16,17 @@ const Responder = () => {
     const [open, setOpen] = useState(false);
     const [data, setData] = useState({});
 
-    const {user, getAccessTokenSilently} = useAuth0();
+    const {user, getAccessTokenSilently,getAccessTokenWithPopup,isAuthenticated} = useAuth0();
+    const options = {scope: "update:requests read:requests", audience: "https://egor-dev.com"}
 
     useEffect(async () => {
-        await updateRequests();
-    }, [getAccessTokenSilently]);
+        if (isAuthenticated) {
+            await updateRequests();
+        }
+    }, [isAuthenticated]);
 
     const updateRequests = async () => {
-        const response = await fetchRequests(await getAccessTokenSilently(), user.name);
+        const response = await fetchRequests(await getToken(), user.name);
         setRequests(response.data.filter(d => d.status !== "Complete"));
     }
 
@@ -32,12 +35,21 @@ const Responder = () => {
         setOpen(true);
     };
 
+    const getToken = async () => {
+        let token = "";
+        try {
+            token = await getAccessTokenSilently(options);
+        }catch{
+            token = await getAccessTokenWithPopup(options);
+        }
+        return token;
+    }
+
     const handleMarkComplete = async (selectedIds) => {
         setSuccessMessage(`${selectedIds.length} Request${(selectedIds.length > 1) ? "s" : ""} Completed`);
-        const token = await getAccessTokenSilently();
         setAlert(true);
         for (const id of selectedIds) {
-            await updateStatus(token, id, "Complete");
+            await updateStatus(await getToken(), id, "Complete");
         }
         await updateRequests();
         closeModal();

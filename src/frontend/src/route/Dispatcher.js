@@ -18,18 +18,22 @@ const Dispatcher = () => {
     const [assignOpen, setAssignOpen] = useState(false);
     const [selectedIDs, setSelectedIDs] = useState([]);
     const [selectedResponder, setSelectedResponder] = useState("responder1@nineline.com");
-
-    const {user, getAccessTokenSilently} = useAuth0();
+    const options = {scope: "update:requests assign:requests", audience: "https://egor-dev.com"};
+    const {getAccessTokenSilently} = useAuth0();
 
     useEffect(async () => {
         await fetchFromDB();
     }, []);
 
-    const fetchFromDB = async () => setRequests((await fetchRequests(await getAccessTokenSilently(), user.name)).data.filter(r => r.status !== "Complete"));
+    const fetchFromDB = async () => {
+        const token = await getAccessTokenSilently(options);
+        setRequests((await fetchRequests(token)).data.filter(r => r.status !== "Complete"))
+        // console.log(token);
+    };
 
     const assignResponderToSingle = async () => {
-        const token = await getAccessTokenSilently();
-
+        const token = await getAccessTokenSilently(options);
+        console.log(token);
         await updateResponder(token, currentRequest.id, selectedResponder);
         await updateStatus(token, currentRequest.id, "Assigned");
         setAlert(true);
@@ -38,7 +42,8 @@ const Dispatcher = () => {
     }
 
     const assignResponderToMultiple = async () => {
-        const token = await getAccessTokenSilently();
+        const token = await getAccessTokenSilently(options);
+        console.log(token);
         for (const id of selectedIDs) {
             await updateResponder(token, id, selectedResponder);
             await updateStatus(token, id, "Assigned");

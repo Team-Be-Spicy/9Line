@@ -14,6 +14,7 @@ import NavigationList from "./component/NavigationList";
 import Report from "./route/Report";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import {checkUserRole} from "./service/service";
 
 const default_links = [
     {id: 0, title: "Submit a Request", path: "/"}
@@ -32,17 +33,66 @@ const dispatcher_links = [
 
 const App = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const {user, isAuthenticated, loginWithRedirect, logout} = useAuth0();
+    const {
+        user,
+        isAuthenticated,
+        isLoading,
+        loginWithRedirect,
+        logout,
+        getAccessTokenSilently,
+        getAccessTokenWithPopup
+    } = useAuth0();
     const [userName, setUserName] = useState("");
     const [links, setLinks] = useState(default_links);
     const [mode, setMode] = React.useState('dark');
+    const dispatcherOptions = {
+        scope: "update:requests assign:requests",
+        audience: "https://egor-dev.com"
+    }
+    const responderOptions = {
+        scope: "update:requests read:requests",
+        audience: "https://egor-dev.com"
+    }
 
-    useEffect(() => {
+    useEffect(async () => {
         setUserName(isAuthenticated ? user.name : "");
-        if (user && user.name) {
-            setLinks(user.name.startsWith("responder") ? responder_links : user.name.startsWith("dispatcher") ? dispatcher_links : default_links);
+        if (isAuthenticated) {
+            const roles = await getRoles();
+            setLinks(roles.includes("SCOPE_assign:requests") ? dispatcher_links : roles.includes("SCOPE_read:requests") ? responder_links : default_links);
         }
     }, [isAuthenticated])
+
+    // Try to get the responder's permissions, if this doesn't work that means the user is not a responder so try dispatcher permissions
+    const getRoles = async () => {
+        let response = null;
+        try {
+            const token = await getToken(responderOptions);
+            // console.log(token);
+            response = await checkUserRole(token);
+            if (response && response.data) {
+                return response.data
+            }
+        } catch {
+            // either not authenticated or not a responder
+        }
+        try {
+            response = await checkUserRole(await getToken(dispatcherOptions))
+        } catch {
+            // either not authenticated or not a dispatcher
+        }
+        return response ? response.data : [];
+    }
+
+    // Try to get the token silently first, this should work in production, but doesn't always work in dev.
+    const getToken = async (options) => {
+        let token = "";
+        try {
+            token = await getAccessTokenSilently(options);
+        } catch {
+            token = await getAccessTokenWithPopup(options);
+        }
+        return token;
+    }
 
     const colorMode = React.useMemo(
         () => ({
@@ -101,9 +151,10 @@ const App = () => {
                     </Stack>
 
                     <Stack direction="row" alignItems="center" paddingRight="20px">
-                    <Typography color="text.primary" style={{paddingRight: '12px'}}>{userName}</Typography>
-                        <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
-                            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon sx={{color: 'black'}}/>}
+                        <Typography color="text.primary" style={{paddingRight: '12px'}}>{userName}</Typography>
+                        <IconButton sx={{ml: 1}} onClick={colorMode.toggleColorMode} color="inherit">
+                            {theme.palette.mode === 'dark' ? <Brightness7Icon/> :
+                                <Brightness4Icon sx={{color: 'black'}}/>}
                         </IconButton>
                     </Stack>
 

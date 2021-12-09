@@ -12,7 +12,7 @@ import {
 import {useForm, Controller} from "react-hook-form";
 import Button from "@mui/material/Button";
 import {useEffect, useState, useRef} from "react";
-import {submitForm} from "../service/service";
+import {checkUserRole, submitForm} from "../service/service";
 import DetailModal from "../component/DetailModal";
 import CloseIcon from "@mui/icons-material/Close";
 import {
@@ -26,6 +26,9 @@ import mgrs from "mgrs";
 import PersonPinIcon from '@mui/icons-material/PersonPin';
 import MapIcon from '@mui/icons-material/Map';
 import MapModal from "../component/MapModal";
+import {useAuth0} from "@auth0/auth0-react";
+import {getRoles} from "@testing-library/react";
+import {useNavigate} from "react-router-dom";
 
 const Requester = () => {
     const [selectedItems, setSelectedItems] = useState([]);
@@ -38,9 +41,39 @@ const Requester = () => {
     const [isNavigatorApiAvailable, setIsNavigatorApiAvailable] = useState(false);
     const isSmallScreen = useMediaQuery('(max-width:800px)');
 
+    const {isAuthenticated,getAccessTokenWithPopup,getAccessTokenSilently,isLoading} = useAuth0();
+    const options = {scope: "read:requests assign:requests", audience: "https://egor-dev.com"};
+    let navigate = useNavigate();
+
     useEffect(() => {
         getCurrentLocation();
+
     }, []);
+
+    // useEffect(async () => {
+    //     const response = await checkUserRole(await getToken());
+    //     if(isAuthenticated && !isLoading){
+    //         console.log(response.data);
+    //         if (response.data.includes("SCOPE_assign:requests")){
+    //             console.log("dispatcher");
+    //             navigate("/dispatcher")
+    //         }else if (response.data.includes("SCOPE_read:requests")){
+    //             console.log("responder");
+    //             navigate("/responder")
+    //         }
+    //     }
+    // }, [isAuthenticated,isLoading]);
+
+    const getToken = async () => {
+        let token = "";
+        try {
+            token = await getAccessTokenSilently(options);
+        }catch{
+            token = await getAccessTokenWithPopup(options);
+        }
+        console.log(token);
+        return token;
+    }
 
     const getCurrentLocation = () => {
         if (navigator.geolocation) {
