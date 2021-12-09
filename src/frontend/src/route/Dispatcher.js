@@ -31,7 +31,7 @@ const Dispatcher = () => {
         setRequests((await fetchRequests(token)).data.filter(r => r.status !== "Complete"))
         const resp = await getResponders(token);
         const responderNames = resp.data.map(r => r.email);
-        console.log(responderNames);
+        // console.log(responderNames);
         setResponders(responderNames);
         setSelectedResponder(responderNames[0]);
     };
