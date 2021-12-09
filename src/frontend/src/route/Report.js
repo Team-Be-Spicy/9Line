@@ -1,7 +1,7 @@
 import MonthBarChart from "../component/MonthBarChart";
 import PrecedencePieChart from "../component/PrecedencePieChart";
 import RequestLineChart from "../component/RequestLineChart";
-import {Box, Grid, Typography} from "@mui/material";
+import {Box, Card, Grid, Typography} from "@mui/material";
 import RequestList from "../component/RequestList";
 import {useEffect, useState} from "react";
 import {fetchAll, fetchCompleted} from "../service/service";
@@ -43,31 +43,38 @@ const Report = () => {
     }
 
     return !loading && (
-        <Box sx={{width: '100vw'}}>
-            <Typography align={'center'} variant={"h5"} color="text.primary" fontSize="30px" fontWeight="200">
-                {requests.length} Completed Missions
-            </Typography>
-            <div style={{width: "100%", height: '60vh'}}>
+        <Box sx={{width: '100%', paddingBottom: '24px'}}>
+            {/*<Typography align={'center'} variant={"h5"} color="text.primary" fontSize="30px" fontWeight="200">*/}
+            {/*    {requests.length} Completed Missions*/}
+            {/*</Typography>*/}
+            <div style={{width: "100%", height: '75vh'}}>
                 <ReportMap mapLocation={mapLocation} requests={allRequests}/>
             </div>
-            <Grid container>
-                <Grid xs={12} md={6}> <PrecedencePieChart requests={requests}/></Grid>
-                <Grid xs={12} md={6}> <MonthBarChart requests={requests}/></Grid>
+            <Grid sx={{marginY: '24px'}} container>
+                <Grid item xs={12} md={6}><Card elevation={4} sx={{
+                    marginLeft: '24px',
+                    marginRight: '12px',
+                    paddingY: '12px'
+                }}><PrecedencePieChart requests={requests}/></Card></Grid>
+                <Grid item xs={12} md={6}><Card elevation={4} sx={{
+                    marginLeft: '12px',
+                    marginRight: '24px',
+                    paddingRight: '24px',
+                    paddingY: '12px'
+                }}><MonthBarChart requests={requests}/></Card></Grid>
             </Grid>
-            <RequestLineChart requests={requests}/>
+            <Card elevation={4} sx={{marginX: '24px', paddingY: '12px'}}><RequestLineChart requests={requests}/></Card>
             <Box>
-                <Box sx={{display: 'flex', justifyContent: 'center'}}>
-                    <div className="requestListContainer">
-                        <Typography fontSize="40px" fontWeight="200" paddingBottom="20px" color="text.primary">MEDEVAC
-                            Requests</Typography>
+                <Box sx={{ marginTop: '24px', marginX: '24px' }}>
+                    <Card elevation={4} sx={{paddingY: '12px', width: "100%"}}>
                         <RequestList user="responder" requests={allRequests} setMapLocation={setMapLocation}
                                      onViewSelected={onViewClicked} haveCheckbox={false}/>
-                        <DetailModal
-                            data={data}
-                            open={open}
-                            handleClose={closeModal}
-                        />
-                    </div>
+                    </Card>
+                    <DetailModal
+                        data={data}
+                        open={open}
+                        handleClose={closeModal}
+                    />
                 </Box>
             </Box>
         </Box>

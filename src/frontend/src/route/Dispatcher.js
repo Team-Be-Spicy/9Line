@@ -33,7 +33,7 @@ const Dispatcher = () => {
 
     const assignResponderToSingle = async () => {
         const token = await getAccessTokenSilently(options);
-        console.log(token);
+        // console.log(token);
         await updateResponder(token, currentRequest.id, selectedResponder);
         await updateStatus(token, currentRequest.id, "Assigned");
         setAlert(true);
@@ -43,7 +43,7 @@ const Dispatcher = () => {
 
     const assignResponderToMultiple = async () => {
         const token = await getAccessTokenSilently(options);
-        console.log(token);
+        // console.log(token);
         for (const id of selectedIDs) {
             await updateResponder(token, id, selectedResponder);
             await updateStatus(token, id, "Assigned");

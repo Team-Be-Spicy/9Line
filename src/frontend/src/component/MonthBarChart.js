@@ -58,7 +58,7 @@ const MonthBarChart = ({requests}) => {
 
     return (
         <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: 1}}>
-            <Typography fontSize="20px" fontWeight="800" color="text.primary">Responder Activity</Typography>
+            <Typography fontSize="20px" fontWeight="800" color="text.secondary">Responder Activity</Typography>
             <ResponsiveContainer height={350} width="100%">
             <BarChart data={months}>
                 <CartesianGrid strokeDasharray="3 3" />

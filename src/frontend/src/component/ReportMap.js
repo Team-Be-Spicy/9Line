@@ -59,18 +59,25 @@ const ReportMap = ({requests, mapLocation}) => {
 
     const createPoints = () => {
         let points = [];
+
         requests.map(point => {
+            let mapPoint = [];
+            try {
+                mapPoint = convertMgrsToLatLng(point.location)
+            } catch (e) {
+                console.log(e);
+                return null;
+            }
             points.push(
                 {
                     'type': 'Feature',
                     'properties': {
                         'responder': point.responder,
                         'status': point.status
-
                     },
                     'geometry': {
                         'type': 'Point',
-                        'coordinates': convertMgrsToLatLng(point.location)
+                        'coordinates': mapPoint
                     }
                 },
             );
@@ -184,7 +191,7 @@ const ReportMap = ({requests, mapLocation}) => {
     return (
         <div
             ref={mapContainer}
-            style={{width: "100%", height: "100%", borderRadius: '15px'}}
+            style={{width: "100%", height: "100%"}}
         />
 
     );

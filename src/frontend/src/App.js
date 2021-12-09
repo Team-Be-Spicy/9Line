@@ -2,7 +2,7 @@ import './App.css';
 import React, {useEffect, useState} from 'react';
 import Requester from "./route/Requester";
 import Responder from "./route/Responder";
-import {Route, Routes} from "react-router-dom";
+import {NavLink, Route, Routes} from "react-router-dom";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Dispatcher from "./route/Dispatcher";
@@ -44,7 +44,7 @@ const App = () => {
     } = useAuth0();
     const [userName, setUserName] = useState("");
     const [links, setLinks] = useState(default_links);
-    const [mode, setMode] = React.useState('dark');
+    const [mode, setMode] = React.useState('light');
     const dispatcherOptions = {
         scope: "update:requests assign:requests",
         audience: "https://egor-dev.com"
@@ -55,7 +55,7 @@ const App = () => {
     }
 
     useEffect(async () => {
-        setUserName(isAuthenticated ? user.name : "");
+        setUserName(isAuthenticated && user ? user.name : "");
         if (isAuthenticated) {
             const roles = await getRoles();
             setLinks(roles.includes("SCOPE_assign:requests") ? dispatcher_links : roles.includes("SCOPE_read:requests") ? responder_links : default_links);
@@ -115,20 +115,18 @@ const App = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box bgcolor="background.default" height="100%" minHeight="100vh">
+            <Box bgcolor="background.default" height="100%" minHeight="100vh" paddingBottom="5px">
                 <AppBar sx={{
                     display: "flex",
                     flexDirection: "row",
                     height: '60px',
-                    backgroundColor: 'action.hover',
-                    position: 'relative',
+                    backgroundColor: 'background.default',
+                    position: 'sticky',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     marginBottom: '20px'
                 }}>
-
-                    <Stack direction="row" sx={{backgroundColor: 'palette.background.default'}}>
-
+                    <Stack direction="row">
                         <MenuIcon sx={{cursor: 'pointer', margin: '12px', color: "#737373"}}
                                   onClick={() => setIsDrawerOpen(true)}>Test</MenuIcon>
                         <Drawer
@@ -143,11 +141,9 @@ const App = () => {
                                 logout={logout}
                                 hideDrawer={() => setIsDrawerOpen(false)}/>
                         </Drawer>
-
-
-                        <Box sx={{marginLeft: '20px'}}>
+                        <NavLink id="appBarLogo" to="/" style={{marginLeft: "20px"}}>
                             <img src={SWFLogo} alt={"swf logo"}/>
-                        </Box>
+                        </NavLink>
                     </Stack>
 
                     <Stack direction="row" alignItems="center" paddingRight="20px">
