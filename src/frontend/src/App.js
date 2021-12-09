@@ -42,6 +42,7 @@ const App = () => {
         getAccessTokenSilently,
         getAccessTokenWithPopup
     } = useAuth0();
+    const [loadingText, setLoadingText] = useState("loading default");
     const [userName, setUserName] = useState("");
     const [links, setLinks] = useState(default_links);
     const [mode, setMode] = React.useState('light');
@@ -66,10 +67,12 @@ const App = () => {
     const getRoles = async () => {
         let response = null;
         try {
-            console.log("trying dispatcher permissions");
+            // console.log("trying dispatcher permissions");
             const token = await getToken(dispatcherOptions);
-            console.log(token);
+            // console.log(token);
             response = await checkUserRole(token);
+            // console.log("roles");
+            // console.log(response.data);
             if (response && response.data) {
                 return response.data
             }
@@ -77,7 +80,7 @@ const App = () => {
             // either not authenticated or not a responder
         }
         try {
-            console.log("trying responder permissions");
+            // console.log("trying responder permissions");
             response = await checkUserRole(await getToken(responderOptions));
         } catch {
             // either not authenticated or not a dispatcher
