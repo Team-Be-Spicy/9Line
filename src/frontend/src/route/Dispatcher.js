@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import "./Dispatcher.css";
 import RequestList from "../component/RequestList";
 import DetailModal from "../component/DetailModal";
-import {fetchRequests, updateResponder, updateStatus} from "../service/service";
+import {fetchRequests, getResponders, updateResponder, updateStatus} from "../service/service";
 import AssignResponderModal from "../component/AssignResponderModal";
 import {Alert, Box, IconButton, Typography} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -18,6 +18,7 @@ const Dispatcher = () => {
     const [assignOpen, setAssignOpen] = useState(false);
     const [selectedIDs, setSelectedIDs] = useState([]);
     const [selectedResponder, setSelectedResponder] = useState("responder1@nineline.com");
+    const [responders, setResponders] = useState([]);
     const options = {scope: "update:requests assign:requests", audience: "https://egor-dev.com"};
     const {getAccessTokenSilently} = useAuth0();
 
@@ -28,7 +29,11 @@ const Dispatcher = () => {
     const fetchFromDB = async () => {
         const token = await getAccessTokenSilently(options);
         setRequests((await fetchRequests(token)).data.filter(r => r.status !== "Complete"))
-        // console.log(token);
+        const resp = await getResponders(token);
+        const responderNames = resp.data.map(r => r.email);
+        console.log(responderNames);
+        setResponders(responderNames);
+        setSelectedResponder(responderNames[0]);
     };
 
     const assignResponderToSingle = async () => {
@@ -87,6 +92,7 @@ const Dispatcher = () => {
             }>Assigned to {selectedResponder}</Alert>}
             <AssignResponderModal open={assignOpen}
                                   handleClose={handleAssignClose}
+                                  responders={responders}
                                   selectedResponder={selectedResponder}
                                   setSelectedResponder={setSelectedResponder}
                                   assignResponder={assignResponderToMultiple}/>
@@ -98,6 +104,7 @@ const Dispatcher = () => {
                          button2Label={"cancel"}
                          button2Action={handleDetailClose}
                          isDispatcher={true}
+                         responders={responders}
                          selectedResponder={selectedResponder}
                          setSelectedResponder={setSelectedResponder}
             />

@@ -58,7 +58,7 @@ const App = () => {
         setUserName(isAuthenticated && user ? user.name : "");
         if (isAuthenticated) {
             const roles = await getRoles();
-            setLinks(roles.includes("SCOPE_assign:requests") ? dispatcher_links : roles.includes("SCOPE_read:requests") ? responder_links : default_links);
+            setLinks(roles.includes("SCOPE_assign:requests") ? dispatcher_links : roles.includes("SCOPE_update:requests") ? responder_links : default_links);
         }
     }, [isAuthenticated])
 
@@ -66,8 +66,9 @@ const App = () => {
     const getRoles = async () => {
         let response = null;
         try {
-            const token = await getToken(responderOptions);
-            // console.log(token);
+            console.log("trying dispatcher permissions");
+            const token = await getToken(dispatcherOptions);
+            console.log(token);
             response = await checkUserRole(token);
             if (response && response.data) {
                 return response.data
@@ -76,7 +77,8 @@ const App = () => {
             // either not authenticated or not a responder
         }
         try {
-            response = await checkUserRole(await getToken(dispatcherOptions))
+            console.log("trying responder permissions");
+            response = await checkUserRole(await getToken(responderOptions));
         } catch {
             // either not authenticated or not a dispatcher
         }

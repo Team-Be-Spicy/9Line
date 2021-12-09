@@ -3,10 +3,10 @@ package com.teamb.nineline.controller;
 import com.teamb.nineline.exception.RequestExistsException;
 import com.teamb.nineline.model.Request;
 import com.teamb.nineline.service.RequestService;
+import com.teamb.nineline.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class RequestController {
 
     private RequestService requestService;
+    private UserService userService;
 
     @PostMapping
     private ResponseEntity<Request> createNewRequest(@RequestBody Request body){
@@ -58,5 +59,10 @@ public class RequestController {
     private ResponseEntity<String> getRole(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return new ResponseEntity<>(authentication.getAuthorities().toString(),HttpStatus.OK);
+    }
+
+    @GetMapping("/responders")
+    private ResponseEntity<String> getResponders(){
+        return new ResponseEntity<>(userService.getResponders(),HttpStatus.OK);
     }
 }

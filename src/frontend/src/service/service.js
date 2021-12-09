@@ -28,3 +28,7 @@ export const checkUserRole = async (token) => {
     return await axios.get('/api/request/role', {headers: {Authorization: `Bearer ${token}`}});
 }
 
+export const getResponders = async (token) => {
+    return await axios.get('/api/request/responders', {headers: {Authorization: `Bearer ${token}`}});
+}
+

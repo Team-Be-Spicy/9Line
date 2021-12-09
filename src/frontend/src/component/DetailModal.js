@@ -11,6 +11,7 @@ import ModalRow from "./ModalRow";
 
 
 const DetailModal = ({
+                         responders,
                          button1Label,
                          button2Label,
                          button1Action,
@@ -28,20 +29,20 @@ const DetailModal = ({
         <Dialog fullWidth onClose={() => {
         }} open={open}>
             <DialogTitle sx={{m: 0, p: 2}}>MEDEVAC Request
-            <IconButton
-                data-cy="btnClose"
-                onClick={handleClose}
-                sx={{
-                    position: 'absolute',
-                    right: 8,
-                    top: 8,
-                    color: (theme) => theme.palette.grey[500],
-                }}
-            >
-                <CloseIcon/>
-            </IconButton>
-        </DialogTitle>
-            <DialogContent dividers sx={{alignContent:"center"}}>
+                <IconButton
+                    data-cy="btnClose"
+                    onClick={handleClose}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: (theme) => theme.palette.grey[500],
+                    }}
+                >
+                    <CloseIcon/>
+                </IconButton>
+            </DialogTitle>
+            <DialogContent dividers sx={{alignContent: "center"}}>
                 <ModalRow data_cy="detailStatus" label="Status" value={data.status || 'Pending'}/>
                 <ModalRow label='Location' value={data.location}/>
                 <ModalRow label="Call Sign" value={data.callSign}/>
@@ -60,25 +61,29 @@ const DetailModal = ({
                     defaultValue={selectedResponder}
                     onChange={(e) => setSelectedResponder(e.target.value)}
                     sx={{width: '100%'}}>
-                    <MenuItem value='responder1@nineline.com'>
-                        Responder One
-                    </MenuItem>
-                    <MenuItem value='responder2@nineline.com'>
-                        Responder Two
-                    </MenuItem>
-                    <MenuItem value='responder3@nineline.com'>
-                        Responder Three
-                    </MenuItem>
-                </Select>}
-            </DialogContent>
-            {(button1Label || button2Label) && <DialogActions>
-                <Button color={"success"} onClick={button1Action}> <Typography
-                    fontWeight={"bold"}> {button1Label}  </Typography> </Button>
-                <Button color={"success"} onClick={button2Action}> <Typography
-                    fontWeight={"bold"}> {button2Label}  </Typography> </Button>
-            </DialogActions>}
-        </Dialog>
-    )
-}
+                    {responders && responders.map(responder =>
+                        <MenuItem key={responder} value={responder}>{responder}</MenuItem>
+                    )}
 
-export default DetailModal;
+                    {/*<MenuItem value='responder1@nineline.com'>*/}
+                    {/*    Responder One*/}
+                    {/*</MenuItem>*/}
+                    {/*<MenuItem value='responder2@nineline.com'>*/}
+                    {/*    Responder Two*/}
+                    {/*</MenuItem>*/}
+                    {/*<MenuItem value='responder3@nineline.com'>*/}
+                    {/*    Responder Three*/}
+                    {/*</MenuItem>*/}
+                        </Select>}
+                </DialogContent>
+                {(button1Label || button2Label) && <DialogActions>
+                    <Button color={"success"} onClick={button1Action}> <Typography
+                    fontWeight={"bold"}> {button1Label}  </Typography> </Button>
+                    <Button color={"success"} onClick={button2Action}> <Typography
+                    fontWeight={"bold"}> {button2Label}  </Typography> </Button>
+                    </DialogActions>}
+                    </Dialog>
+                    )
+                }
+
+                export default DetailModal;
