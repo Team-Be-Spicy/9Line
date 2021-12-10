@@ -24,6 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .mvcMatchers(HttpMethod.POST, "/api/request").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/", "/static/**", "/manifest.json", "/*.png", "/*.ico").permitAll()
+                .mvcMatchers(HttpMethod.PATCH, "/api/request/responder/update/**").hasAuthority("SCOPE_assign:requests")
+                .mvcMatchers(HttpMethod.PATCH, "/api/request/status/**").hasAuthority("SCOPE_update:requests")
+                .mvcMatchers(HttpMethod.GET, "/api/request/responders").hasAuthority("SCOPE_assign:requests")
                 .anyRequest().authenticated()
                 .and().cors()
                 .and().oauth2ResourceServer().jwt();

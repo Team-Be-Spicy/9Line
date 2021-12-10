@@ -23,4 +23,5 @@ spring:
 
 auth0:
   audience: https://egor-dev.com
+  clientSecret: sampleclientsecret
 

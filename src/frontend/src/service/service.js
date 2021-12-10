@@ -24,3 +24,11 @@ export const updateResponder = async (token, id, respName) => {
     return await axios.patch('/api/request/responder/update/' + id, {responder: respName}, {headers: {Authorization: `Bearer ${token}`}});
 }
 
+export const checkUserRole = async (token) => {
+    return await axios.get('/api/request/role', {headers: {Authorization: `Bearer ${token}`}});
+}
+
+export const getResponders = async (token) => {
+    return await axios.get('/api/request/responders', {headers: {Authorization: `Bearer ${token}`}});
+}
+

@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close'
 
-const AssignResponderModal = ({open, handleClose, assignResponder, setSelectedResponder, selectedResponder}) => {
+const AssignResponderModal = ({responders, open, handleClose, assignResponder, setSelectedResponder, selectedResponder}) => {
 
     return (
         <Dialog fullWidth onClose={() => {
@@ -32,15 +32,18 @@ const AssignResponderModal = ({open, handleClose, assignResponder, setSelectedRe
                     defaultValue={selectedResponder}
                     onChange={(e) => setSelectedResponder(e.target.value)}
                     sx={{width: '100%'}} >
-                    <MenuItem value='responder1@nineline.com'>
-                        Responder One
-                    </MenuItem>
-                    <MenuItem value='responder2@nineline.com'>
-                        Responder Two
-                    </MenuItem>
-                    <MenuItem value='responder3@nineline.com'>
-                        Responder Three
-                    </MenuItem>
+                    {responders && responders.map(responder =>
+                        <MenuItem key={responder} value={responder}>{responder}</MenuItem>
+                    )}
+                    {/*<MenuItem value='responder1@nineline.com'>*/}
+                    {/*    Responder One*/}
+                    {/*</MenuItem>*/}
+                    {/*<MenuItem value='responder2@nineline.com'>*/}
+                    {/*    Responder Two*/}
+                    {/*</MenuItem>*/}
+                    {/*<MenuItem value='responder3@nineline.com'>*/}
+                    {/*    Responder Three*/}
+                    {/*</MenuItem>*/}
                 </Select>
 
             </DialogContent>

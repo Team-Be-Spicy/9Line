@@ -4,6 +4,9 @@ import com.teamb.nineline.exception.RequestExistsException;
 import com.teamb.nineline.model.Request;
 import com.teamb.nineline.repository.RequestRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,7 +15,6 @@ public class RequestService {
 
     private static final String REQUEST_NOT_FOUND = "Request not found";
     public static final String COMPLETE = "Complete";
-    public static final String DISPATCHER = "dispatcher@nineline.com";
 
     private RequestRepository requestRepository;
 
@@ -21,11 +23,21 @@ public class RequestService {
     }
 
     public Iterable<Request> getRequestsByRole(String responderName){
-        if (responderName.equals(DISPATCHER)){
-            return this.requestRepository.findAll();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)){
+            // There is an authenticated user
+            var authorities = authentication.getAuthorities();
+            if (authorities.toString().contains("SCOPE_assign:requests")){
+                // dispatcher
+                return this.requestRepository.findAll();
+            }
+            if (authorities.toString().contains("SCOPE_read:requests")) {
+                // responder
+                return this.requestRepository.findAllByResponder(responderName);
+            }
         }
-
-        return this.requestRepository.findAllByResponder(responderName);
+        // not authenticated. shouldn't ever make it this far
+        return null;
     }
 
     public Iterable<Request> getAllRequests(){
